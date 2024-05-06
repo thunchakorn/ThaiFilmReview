@@ -1,0 +1,55 @@
+{% extends "layout/main.html" %}
+
+{% block title %}
+  หนังไทย
+{% endblock  %}
+
+{% block content %}
+<div class="container mx-auto px-4 mt-4">
+  <h2 class="prose">
+    รายชื่อหนัง
+  </h2>
+  <div>
+    <p>filter by</p>
+    <p>sorted by</p>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ใบปิด</th>
+          <th>ชื่อไทย</th>
+          <th>ชื่ออังกฤษ</th>
+          <th>วันที่เข้าฉาย</th>
+          <th>ระยะเวลา (นาที)</th>
+          <th>ประเภท</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for film in object_list  %}
+          <tr>
+            <th>
+              <img class="w-20 md:w-40" src="{{film.poster.url}}">
+            </th>
+            <th>
+              {{ film.name }}
+            </th>
+            <td>
+              {{ film.en_name }}
+            </td>
+            <td>
+              {{ film.release_date }}
+            </td>
+            <td>
+              {{ film.duration }}
+            </td>
+            <td>
+              {% for genre in film.genres.all %}{{ genre }}, {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}
