@@ -55,13 +55,13 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=100)),
-                ("en_name", models.CharField(max_length=100, null=True)),
-                ("release_date", models.DateField(null=True)),
-                ("year", models.IntegerField()),
+                ("en_name", models.CharField(max_length=100, null=True, blank=True)),
+                ("release_date", models.DateField(null=True, blank=True)),
                 (
                     "duration",
                     models.IntegerField(
                         null=True,
+                        blank=True,
                         validators=[
                             django.core.validators.MinValueValidator(
                                 0, "Duration must be greater than 1 minute"
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                         ],
                     ),
                 ),
-                ("poster", models.ImageField(null=True, upload_to="film_poster/")),
+                ("poster", models.ImageField(null=True, blank=True, upload_to="film_poster/")),
                 ("genres", models.ManyToManyField(to="films.genre")),
                 (
                     "directors",
@@ -77,6 +77,7 @@ class Migration(migrations.Migration):
                         related_name="directed_films", to="films.person"
                     ),
                 ),
+                ("trailer_link", models.URLField(max_length=100, blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -91,7 +92,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=100, null=True)),
+                ("name", models.CharField(max_length=100, null=True, blank=True)),
                 (
                     "film",
                     models.ForeignKey(
