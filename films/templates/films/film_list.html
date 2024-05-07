@@ -5,13 +5,15 @@
 {% endblock  %}
 
 {% block content %}
-<div class="container mx-auto px-4 mt-4">
-  <h2 class="prose">
-    รายชื่อหนัง
-  </h2>
+<div class="container mx-auto px-4 mt-4 space-y-2">
   <div>
-    <p>filter by</p>
-    <p>sorted by</p>
+    <div class="prose prose-2xl">
+      <h1>รายชื่อหนัง</h1>
+    </div>
+    <form method="GET" action="{% url 'films:list' %}">
+      {{ form.as_div }}
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
   </div>
   <div class="overflow-x-auto">
     <table class="table">
@@ -27,7 +29,7 @@
         {% for film in object_list  %}
           <tr>
             <th>
-              <img src="{{film.poster.url}}">
+              <img class="max-h-60" src="{{film.poster.url}}">
             </th>
             <th>
               <a href="{% url 'films:detail' film.slug %}">
@@ -44,6 +46,19 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+  <div class="flex justify-end">
+    <div class="join">
+      {% if page_obj.has_previous %}
+      <a href="?page=1" class="join-item btn btn-sm">«</a>
+      <a href="?page={{ page_obj.previous_page_number }}" class="join-item btn btn-sm">‹</a>
+      {% endif %}
+      <button class="join-item btn btn-disabled btn-sm">{{ page_obj.number }}</button>
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="join-item btn btn-sm">›</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="join-item btn btn-sm">»</a>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock content %}
