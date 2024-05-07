@@ -20,16 +20,14 @@
           <th>ใบปิด</th>
           <th>ชื่อไทย</th>
           <th>ชื่ออังกฤษ</th>
-          <th>วันที่เข้าฉาย</th>
-          <th>ระยะเวลา (นาที)</th>
-          <th>ประเภท</th>
+          <th>ปีที่เข้าฉาย</th>
         </tr>
       </thead>
       <tbody>
         {% for film in object_list  %}
           <tr>
             <th>
-              <img class="w-20 md:w-40" src="{{film.poster.url}}">
+              <img src="{{film.poster.url}}">
             </th>
             <th>
               <a href="{% url 'films:detail' film.slug %}">
@@ -40,13 +38,7 @@
               {{ film.slug }}
             </td>
             <td>
-              {{ film.release_date }}
-            </td>
-            <td>
-              {{ film.duration }}
-            </td>
-            <td>
-              {% for genre in film.genres.all %}{{ genre }}, {% endfor %}
+              {{ film.release_date|date:"Y" }}
             </td>
           </tr>
         {% endfor %}

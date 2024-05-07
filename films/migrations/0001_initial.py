@@ -38,8 +38,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("first_name", models.CharField(max_length=100)),
-                ("last_name", models.CharField(max_length=100)),
+                ("name", models.CharField(max_length=200)),
             ],
         ),
         migrations.CreateModel(
@@ -78,6 +77,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("trailer_link", models.URLField(max_length=100, blank=True, null=True)),
+                ("synopsis", models.CharField(blank=True, max_length=1000, null=True)),
                 ("slug", models.CharField(
                     blank=True,
                     default="",
