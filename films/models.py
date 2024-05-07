@@ -1,5 +1,7 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
+
+from common.utils import slugify
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
@@ -25,9 +27,15 @@ class Film(models.Model):
     actors = models.ManyToManyField(to=Person, through='Role', related_name='acted_films')
     directors = models.ManyToManyField(to=Person, related_name='directed_films')
     trailer_link = models.URLField(max_length=200, null=True, blank=True)
+    slug = models.CharField(default="", null=False, blank=True, max_length = 200, validators=[RegexValidator(regex=r"^[\u0E00-\u0E7Fa-zA-Z0-9_]+\Z")])
 
     def __str__(self) -> str:
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
 
 class Role(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)

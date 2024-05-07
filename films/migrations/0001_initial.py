@@ -78,6 +78,16 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("trailer_link", models.URLField(max_length=100, blank=True, null=True)),
+                ("slug", models.CharField(
+                    blank=True,
+                    default="",
+                    max_length=200,
+                    validators=[
+                        django.core.validators.RegexValidator(
+                            regex="^[\\u0E00-\\u0E7Fa-zA-Z0-9_]+\\Z"
+                        )
+                    ],
+                )),
             ],
         ),
         migrations.CreateModel(

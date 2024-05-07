@@ -32,10 +32,12 @@
               <img class="w-20 md:w-40" src="{{film.poster.url}}">
             </th>
             <th>
-              {{ film.name }}
+              <a href="{% url 'films:detail' film.slug %}">
+                {{ film.name }}
+              </a>
             </th>
             <td>
-              {{ film.en_name }}
+              {{ film.slug }}
             </td>
             <td>
               {{ film.release_date }}
