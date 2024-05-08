@@ -5,17 +5,21 @@
 {% endblock  %}
 
 {% block content %}
-<div class="container mx-auto px-4 my-4">
+<div class="space-y-2">
   <div class="card md:card-side min-h-90 bg-base-100 shadow-xl glass">
     <figure class="shrink-0"><img class="h-full w-full" src="{{ object.poster.url }}" alt="Poster"/></figure>
     <div class="card-body">
-      <h1 class="card-title">{{ object.name }} {% if object.en_name %}({{object.en_name}}){% endif %}</h1>
-      <h2>{{ object.release_date }}</h2>
-      <h2>{% for genre in film.genres.all %}<div class="badge badge-neutral">{{genre|upper}}</div>{% endfor %}</h2></h2>
+      <p class="card-title">{{ object.name }} {% if object.en_name %}({{object.en_name}}){% endif %}</p>
+      <p>{{ object.release_date }}</p>
+      <div>
+        {% for genre in film.genres.all %}
+          <div class="badge badge-neutral">{{genre|upper}}</div>
+        {% endfor %}
+      </div>
       <p class="line-clamp-2 grow-0 hover:line-clamp-none">{{ object.synopsis }}</p>
-      <h2 class="prose prose-xl">ผู้กำกับ</h2>
+      <p class="font-medium">ผู้กำกับ</p>
       <p>{{ film.directors.all|join:", "}}</p>
-      <h2 class="prose prose-xl">นักแสดง</h2>
+      <p class="font-medium">นักแสดง</p>
       <ul>
         {% for role in object.role_set.all  %}
         <li>
