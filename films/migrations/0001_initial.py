@@ -76,7 +76,7 @@ class Migration(migrations.Migration):
                         related_name="directed_films", to="films.person"
                     ),
                 ),
-                ("trailer_link", models.URLField(max_length=100, blank=True, null=True)),
+                ("trailer_link", models.URLField(blank=True, null=True)),
                 ("synopsis", models.CharField(blank=True, max_length=1000, null=True)),
                 ("slug", models.CharField(
                     blank=True,

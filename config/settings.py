@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     "films.apps.FilmsConfig",
     "layout.apps.LayoutConfig",
+    "reviews.apps.ReviewsConfig",
 ]
 
 MIDDLEWARE = [
