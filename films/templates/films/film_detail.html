@@ -1,4 +1,4 @@
-{% extends "layout/main.html" %}
+{% extends "base.html" %}
 
 {% block title %}
   {{ object.name }}
@@ -28,11 +28,9 @@
         {% endfor %}
       </ul>
       <div class="card-actions justify-end">
-        <button class="btn btn-primary">
-          <a href="{{ object.trailer_link }}">
-            Watch trailer
-          </a>
-        </button>
+        <a href="{{ object.trailer_link }}" class="btn btn-sm btn-primary">
+          Watch trailer
+        </a>
       </div>
     </div>
   </div>
