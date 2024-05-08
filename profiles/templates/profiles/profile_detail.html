@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.user.username }}{% endblock title %}
+
+{% block content %}
+
+<section class="hero bg-base-300">
+
+</section>
+
+  <div class="hero-content flex-col md:flex-row">
+    <div class="avatar max-w-sm shadow-2xl">
+      <div class="w-24 rounded">
+        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+      </div>
+    </div>
+    <div class="space-y-4 flex flex-col items-center md:items-start">
+      <h1 class="text-5xl font-bold">{{ object.user.username }}</h1>
+      
+      <p>{% if object.bio %}{{ object.bio }}{% endif %}</p>
+      
+      <div class="stats stats-horizontal shadow">
+        <div class="stat">
+          <div class="stat-title">Followers</div>
+          <div class="stat-value">{{ object.followers.all.count }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Reviews</div>
+          <div class="stat-value">{{ object.reviews.all.count }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Likes</div>
+          <div class="stat-value">{{ likes_received_count }}</div>
+        </div>
+    </div>
+  </div>
+
+{% endblock content %}
