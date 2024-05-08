@@ -1,14 +1,16 @@
 from django.db import models
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 from films.models import Film, Person
+from profiles.models import Profile
 
 
 class Review(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="reviews"
+    )
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="reviews")
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
@@ -30,21 +32,34 @@ class Review(models.Model):
     is_spoiler = models.BooleanField(null=True, blank=True)
     short_review = models.CharField(max_length=64)
     full_review = models.CharField(max_length=12000)
-    mvp_actor = models.ForeignKey(Person, on_delete=models.CASCADE)
+    mvp_actor = models.ForeignKey(
+        Person,
+        on_delete=models.CASCADE,
+        related_name="mvps",
+        # limit_choices_to=Q(acted_films__id=F("film")),
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["user", "film"], name="unique_review")
+            models.UniqueConstraint(fields=["profile", "film"], name="unique_review")
         ]
 
     def __str__(self) -> str:
-        return f"{self.user}: {self.film}"
+        return f"{self.profile}-{self.film}"
 
 
 class Comment(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="comments"
+    )
+    review = models.ForeignKey(
+        Review, on_delete=models.CASCADE, related_name="comments"
+    )
     text = models.CharField(max_length=1000)
+
+    def __str__(self) -> str:
+        return f"{self.review}:{self.id}"
 
 
 class Like(models.Model):
@@ -52,5 +67,9 @@ class Like(models.Model):
         LIKE = 1
         DISLIKE = 0
 
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="likes")
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="likes")
     value = models.IntegerField(choices=LikeValue)
+
+    def __str__(self) -> str:
+        return f"{self.review}:{self.get_value_display()}"

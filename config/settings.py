@@ -17,7 +17,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Default app name
-APP_NAME = 'TFRW'
+APP_NAME = "TFRW"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     "django_filters",
-
     "films.apps.FilmsConfig",
     "layout.apps.LayoutConfig",
     "reviews.apps.ReviewsConfig",
+    "profiles.apps.ProfilesConfig",
 ]
 
 MIDDLEWARE = [
@@ -133,7 +133,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 INTERNAL_IPS = [
     "127.0.0.1",
