@@ -21,11 +21,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path("", include("layout.urls")),
+    path("", include("home.urls")),
     path("admin/", admin.site.urls),
     path("films/", include("films.urls")),
     path("profiles/", include("profiles.urls")),
-    # path("users/", include("django.contrib.auth.urls")),
+    path("users/", include("django.contrib.auth.urls")),
 ]
 
 

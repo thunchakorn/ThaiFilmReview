@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_filters",
     "films.apps.FilmsConfig",
-    "layout.apps.LayoutConfig",
+    "home.apps.HomeConfig",
     "reviews.apps.ReviewsConfig",
     "profiles.apps.ProfilesConfig",
 ]
@@ -72,7 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "layout.context_processors.settings",
+                "home.context_processors.settings",
             ],
         },
     },
