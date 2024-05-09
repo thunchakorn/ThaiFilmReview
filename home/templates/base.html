@@ -56,6 +56,8 @@
           {{ user.username|first }}
         </div>
         <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52">
+          <li><a href="{% url 'profiles:main' user.profile.slug %}">My Profile</a></li>
+          <li><a href="{% url 'profiles:update' %}">Edit Profile</a></li>
           <li>
             <form method="post" action="{% url 'account_logout' %}">
               {% csrf_token %}

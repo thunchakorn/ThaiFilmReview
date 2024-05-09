@@ -12,12 +12,14 @@ Login
 Form is error
 {% endif %}
 
-<form method="post" action="{% url "account_signup" %}">
-  {% csrf_token %}
-  {{ form|crispy }}
-  <input type="submit" class="btn btn-primary btn-sm" value="Sign up" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
-
+<div class="max-w-md mx-auto my-auto space-y-4">
+  <h1 class="text-4xl font-bold">Sign Up</h1>
+  <form method="post" action="{% url "account_signup" %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-primary btn-sm" value="Submit" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+</div>
 
 {% endblock content %}

@@ -4,14 +4,16 @@
 {% block title %}{{ object.user }} profile update{% endblock title %}
 
 {% block content %}
-
-<div>
-  <form method="post" action="{% url 'profiles:update' %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="Submit" class="btn btn-sm btn-success">
-    <input type="submit" value="Cancel" class="btn btn-sm btn-error" onclick="window.location.href='{% url 'profiles:main' user.profile.id  %}';return false;">
-  </form>
+<div class="max-w-lg mx-auto space-y-4 glass p-12 rounded-lg">
+  <h1 class="text-4xl font-bold">Edit profile</h1>
+  <div>
+    <form method="post" action="{% url 'profiles:update' %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Submit" class="btn btn-sm btn-primary">
+      <input type="submit" value="Cancel" class="btn btn-sm btn-error" onclick="window.location.href='{% url 'profiles:main' user.profile.slug  %}';return false;">
+    </form>
+  </div>
 </div>
 
 {% endblock content %}

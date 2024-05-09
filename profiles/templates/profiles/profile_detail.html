@@ -9,7 +9,7 @@
 </section>
 
   <div class="hero-content flex-col md:flex-row">
-    <div class="avatar max-w-sm shadow-2xl">
+    <div class="max-w-sm">
       <div class="w-24 rounded">
         {% if object.profile_pic %}
           <img src="{{ object.profile_pic.url }}" />
@@ -24,8 +24,9 @@
     </div>
     <div class="space-y-4 flex flex-col items-center md:items-start">
       <h1 class="text-5xl font-bold">{{ object.user.username }}</h1>
-      
-      <p>{% if object.bio %}{{ object.bio }}{% endif %}</p>
+      <p>
+        {% if object.bio %}{{ object.bio }}{% endif %}
+      </p>
       
       <div class="stats stats-horizontal shadow">
         <div class="stat">
