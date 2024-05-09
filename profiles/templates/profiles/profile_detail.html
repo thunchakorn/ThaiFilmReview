@@ -11,7 +11,15 @@
   <div class="hero-content flex-col md:flex-row">
     <div class="avatar max-w-sm shadow-2xl">
       <div class="w-24 rounded">
-        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        {% if object.profile_pic %}
+          <img src="{{ object.profile_pic.url }}" />
+        {% else %}
+          <div class="avatar placeholder">
+            <div class="bg-neutral text-neutral-content w-24">
+              <span class="text-3xl">{{ object.user.username|first }}</span>
+            </div>
+          </div> 
+        {% endif %}
       </div>
     </div>
     <div class="space-y-4 flex flex-col items-center md:items-start">

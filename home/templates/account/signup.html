@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load allauth %}
 
 {% block title %}
 Login
@@ -10,13 +12,11 @@ Login
 Form is error
 {% endif %}
 
-<form method="post" action="{% url "login" %}">
+<form method="post" action="{% url "account_signup" %}">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn btn-primary" value="Login" />
+  {{ form|crispy }}
+  <input type="submit" class="btn btn-primary btn-sm" value="Sign up" />
   <input type="hidden" name="next" value="{{ next }}" />
-
-
 </form>
 
 

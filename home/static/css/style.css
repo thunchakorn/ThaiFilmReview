@@ -15,7 +15,7 @@ body {
   /* secondary focus */
   --sf: 39.26% 0.072 178.49;
   /* secondary content */
-  --sc: 0 0% 10%;
+  --sc: 100% 0 0;
 
   /* accent */
   --a: 71.09% 0.073 89.33;

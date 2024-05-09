@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load allauth %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+
+{% if form.error %}
+Form is error
+{% endif %}
+
+<form method="post" action="{% url "account_login" %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit" class="btn btn-primary btn-sm" value="Log In" />
+  <a href="{% url 'account_signup' %}" class="btn btn-sm btn-secondary">Sign Up</a>
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+
+{% endblock content %}
