@@ -2,18 +2,14 @@ body {
     font-family: 'Kanit', 'Arial Narrow', Arial, sans-serif;
 }
 
-[data-theme='my_light'] {
+[data-theme='light'] {
   /* primary */
   --p: 85.68% 0.157 94.09;
-  /* primary focus */
-  --pf: 88.38% 0.172 93.52;
   /* primary content */
-  --pc: 48 83% 100%;
+  --pc: 0% 0 33;
 
   /* secondary */
   --s: 39.26% 0.072 178.49;
-  /* secondary focus */
-  --sf: 39.26% 0.072 178.49;
   /* secondary content */
   --sc: 100% 0 0;
 
@@ -21,8 +17,6 @@ body {
   --a: 71.09% 0.073 89.33;
   /* accent content */
   --ac: 0 0% 100%;
-  /* accent focus */
-  --af: 71.09% 0.073 89.33;
 
   /* info */
   --in: 80.91% 0.096 251.81;
@@ -46,8 +40,6 @@ body {
 
   /* neutral */
   --n: 95.55% 0.051 87.4;
-  /* neutral focus */
-  --nf: 95.55% 0.051 87.4;
   /* neutral content */
   --nc: 220 13% 69%;
 
@@ -58,7 +50,7 @@ body {
   /* base 300 */
   --b3: 219 18% 15%;
   /* base content */
-  --bc: 220 13% 69%;
+  --bc: 27.8078% 0.029596 256.847952;
 
   /* other settings */
   --rounded-box: 1rem;
@@ -73,7 +65,7 @@ body {
   --tab-radius: 0.5rem;
 }
 
-[data-theme='my_dark'] {
+[data-theme='dark'] {
   /* primary */
   --in:72.06% 0.191 231.6;
   --su:64.8% 0.150 160;
@@ -103,5 +95,5 @@ body {
   --b1:25.3267% 0.015896 252.417568;
   --b2:23.2607% 0.013807 253.100675;
   --b3:21.1484% 0.01165 254.087939;
-  --bc:74.6477% 0.0216 264.435964
+  --bc:74.6477% 0.0216 264.435964;
 }

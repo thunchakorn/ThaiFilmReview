@@ -17,7 +17,7 @@
   <style type="text/tailwindcss">
     @layer utilities {
       .myh1 {
-        @apply text-2xl font-medium
+        @apply text-4xl font-bold
       }
     }
   </style>
@@ -38,11 +38,11 @@
 <body>
   <header class="navbar sticky bg-base-100 top-0 border-b z-50">
     <div class="flex-1 navbar-start">
-      <a class="btn btn-ghost text-xl" href="{% url 'home:main' %}"><h1 class="myh1 text-primary">รีวิวหนังไทย</h1></a>
+      <a class="btn btn-ghost text-xl" href="{% url 'reviews:home' %}"><h1 class="myh1 text-primary">รีวิวหนังไทย</h1></a>
     </div>
     <div class="navbar-end space-x-2">
       <label class="swap swap-rotate" >
-        <input type="checkbox" data-toggle-theme="my_light,my_dark" data-act-class="ACTIVECLASS" />
+        <input type="checkbox" data-toggle-theme="light,dark" data-act-class="ACTIVECLASS" />
         <!-- sun icon -->
         <svg class="swap-off fill-current w-10 h-10 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
         
@@ -75,7 +75,7 @@
   </header>
   <navbar class="flex justify-evenly items-center border-t fixed left-0 bottom-0 w-full h-10 z-40 md:top-14 md:h-full md:w-10 md:border-r md:border-t-0 md:flex-col bg-base-100">
     <div class="size-6 flex place-items-center place-content-center">
-      <a href="{% url 'home:main' %}" >
+      <a href="{% url 'reviews:home' %}" >
         <svg class="size-6 hover:size-8 ease-out duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
           <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>
@@ -83,7 +83,14 @@
       </a>
     </div>
     <div>icon</div>
-    <div>icon</div>
+    <div>
+      <a href="{% url 'reviews:create' %}" >
+        <svg class="size-6 hover:size-8 ease-out duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+        </svg>
+      </a>
+    </div>
     <div>icon</div>
     <div class="size-6 flex place-items-center place-content-center">
       <a href="{% url 'films:list' %}" >

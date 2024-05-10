@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="max-w-lg mx-auto space-y-4 glass p-12 rounded-lg">
-  <h1 class="text-4xl font-bold">Edit profile</h1>
+  <h1 class="myh1">Edit profile</h1>
   <div>
     <form method="post" action="{% url 'profiles:update' %}">
       {% csrf_token %}

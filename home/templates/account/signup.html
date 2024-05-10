@@ -13,7 +13,7 @@ Form is error
 {% endif %}
 
 <div class="max-w-md mx-auto my-auto space-y-4">
-  <h1 class="text-4xl font-bold">Sign Up</h1>
+  <h1 class="myh1">Sign Up</h1>
   <form method="post" action="{% url "account_signup" %}">
     {% csrf_token %}
     {{ form|crispy }}

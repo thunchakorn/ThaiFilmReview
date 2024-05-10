@@ -28,6 +28,9 @@
         {% endfor %}
       </ul>
       <div class="card-actions justify-end">
+        <a href="{% url 'reviews:create' %}?film_id={{object.id}}" class="btn btn-sm btn-primary">
+          Write a Review
+        </a>
         <a href="{{ object.trailer_link }}" class="btn btn-sm btn-primary">
           Watch trailer
         </a>
