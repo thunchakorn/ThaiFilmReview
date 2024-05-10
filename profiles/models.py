@@ -26,3 +26,6 @@ class Profile(models.Model):
         if not self.slug:
             self.slug = slugify(self.user.username)
         return super().save(*args, **kwargs)
+
+    # TODO:
+    # resize validate and resize avatar pic
