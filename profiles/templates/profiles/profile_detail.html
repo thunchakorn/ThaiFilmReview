@@ -4,9 +4,8 @@
 
 {% block content %}
 
-<section class="hero bg-base-300">
+<section class="hero bg-base-100 glass">
 
-</section>
   <div class="hero-content flex-col md:flex-row max-w-lg mx-auto">
     <div class="max-w-sm">
       <div class="w-24 rounded">
@@ -41,6 +40,23 @@
           <div class="stat-value">{{ likes_received_count }}</div>
         </div>
     </div>
+    {% if user.is_authenticated and user.profile != object.user.profile %}
+    <div>
+      <button 
+        class="btn btn-primary btn-sm"
+        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        hx-post={% url "profiles:follow" object.slug %}
+        hx-trigger="click throttle:1s"
+      >
+        {% if is_user_follow %}
+          Unfollow
+        {% else %}
+          Follow
+        {% endif %}
+      </button>
+    </div>
+    {% endif %}
   </div>
+</section>
 
 {% endblock content %}

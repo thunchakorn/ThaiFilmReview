@@ -1,11 +1,10 @@
 from typing import Any
 
 from django.views import View
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 from django.urls import reverse
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from profiles.models import Profile
@@ -18,11 +17,16 @@ class ProfileDetail(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        likes_received_count = Like.objects.filter(
-            review__profile=self.object.id
-        ).count()
+        likes_received_count = Like.objects.filter(review__profile=self.object).count()
 
         context["likes_received_count"] = likes_received_count
+
+        if self.request.user.is_authenticated:
+            profile = kwargs["object"]
+            context["is_user_follow"] = profile.followers.filter(
+                id=self.request.user.profile.id
+            ).exists()
+
         return context
 
 
@@ -49,3 +53,19 @@ class ProfileUpdate(LoginRequiredMixin, View):
         return redirect(
             reverse("profiles:main", kwargs={"slug": self.request.user.profile.slug})
         )
+
+
+class ProfileFollowToggle(LoginRequiredMixin, View):
+    def post(self, request: HttpRequest, slug):
+        target_profile = get_object_or_404(Profile, slug=slug)
+        user_profile = request.user.profile
+
+        if user_profile == target_profile:
+            return HttpResponseNotAllowed("Cannot follow yourself")
+
+        if target_profile.followers.filter(id=user_profile.id).exists():
+            target_profile.followers.remove(user_profile)
+            return HttpResponse("Follow")
+        else:
+            target_profile.followers.add(user_profile)
+            return HttpResponse("Unfollow")
