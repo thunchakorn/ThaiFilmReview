@@ -1,14 +1,20 @@
 {% extends "base.html" %}
+{% load range %}
 
 {% block title %}Reviews{% endblock title %}
 
 {% block content %}
-<div class="space-y-2">
+<div class="mx-auto">
   {% for review in review_list  %}
-    <div class="card card-side bg-base-100 shadow-xl">
-      <figure><img src="{{ review.film.poster.url }}" alt="Movie Poster"></figure>
+    <div class="card md:card-side bg-base-100 shadow-xl">
+      <figure><img class="w-full" src="{{ review.film.poster.url }}" alt="Movie Poster"></figure>
       <div class="card-body">
-        <h1 class="card-title text-primary-content">{{ review.film }} by {{ review.profile }}</h1>
+        <h1 class="card-title">{{ review.film }} by <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a></h1>
+        <div class="rating rating-lg">
+          {% for i in 5|get_range  %}
+            <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div class="divider"></div>
