@@ -4,13 +4,28 @@
 {% block title %}Reviews{% endblock title %}
 
 {% block content %}
-<div class="mx-auto">
+<div class="mx-auto max-w-md md:max-w-none">
   {% for review in review_list  %}
-    <div class="card md:card-side bg-base-100 shadow-xl">
-      <figure><img class="w-full" src="{{ review.film.poster.url }}" alt="Movie Poster"></figure>
+    <div class="card md:card-side bg-base-100 shadow-xl ">
+      <figure class="relative">
+        <div class="absolute text-white h-full w-full flex flex-col justify-end bg-gradient-to-t from-black">
+          <div class="text-center text-4xl text-primary font-normal -mb-4 font-serif">“</div>
+          <div class="text-center text-xl text-primary px-4">
+            {{ review.short_review }}
+          </div>
+          <div class="text-center text-4xl font-normal text-primary -mb-4 font-serif">”</div>
+          <div class="text-center text-xl font-bold text-primary px-4 pb-2">- {{ review.profile }}</div>
+        </div>
+        <img class="w-full" src="{{ review.film.poster.url }}" alt="Movie Poster">
+      </figure>
       <div class="card-body">
-        <h1 class="card-title">{{ review.film }} by <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a></h1>
-        <div class="rating rating-lg">
+        <h2 class="card-title myh2">
+          <a class="link link-primary" href="{% url "films:detail" review.film.slug %}">
+            {{ review.film }} 
+          </a>
+          by 
+          <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a></h1>
+        <div class="rating rating-md">
           {% for i in 5|get_range  %}
             <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
           {% endfor %}

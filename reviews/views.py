@@ -14,7 +14,6 @@ from films.models import Film
 class ReviewListView(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
-            print("authen", request.user)
             reviews = Review.objects.all()
             cntx = {"review_list": reviews}
             return render(request, "reviews/review_list.html", cntx)

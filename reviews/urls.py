@@ -6,6 +6,6 @@ app_name = "reviews"
 
 urlpatterns = [
     path("", ReviewListView.as_view(), name="home"),
-    path("create/", ReviewCreateView.as_view(), name="create"),
-    path("<int:pk>/", ReviewDetailView.as_view(), name="detail"),
+    path("reviews/create/", ReviewCreateView.as_view(), name="create"),
+    path("reviews/<int:pk>/", ReviewDetailView.as_view(), name="detail"),
 ]

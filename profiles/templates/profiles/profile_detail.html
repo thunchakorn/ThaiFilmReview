@@ -48,7 +48,7 @@
         hx-post={% url "profiles:follow" object.slug %}
         hx-trigger="click throttle:1s"
       >
-        {% if is_user_follow %}
+        {% if is_profile_follow %}
           Unfollow
         {% else %}
           Follow

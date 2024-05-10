@@ -25,3 +25,14 @@ class FilmListView(ListView):
 
 class FilmDetailView(DetailView):
     model = Film
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            film = kwargs["object"]
+            context["profile_review"] = self.request.user.profile.reviews.filter(
+                film=film
+            ).first()
+
+        return context

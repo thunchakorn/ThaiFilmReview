@@ -23,7 +23,7 @@ class ProfileDetail(DetailView):
 
         if self.request.user.is_authenticated:
             profile = kwargs["object"]
-            context["is_user_follow"] = profile.followers.filter(
+            context["is_profile_follow"] = profile.followers.filter(
                 id=self.request.user.profile.id
             ).exists()
 

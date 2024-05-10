@@ -7,7 +7,9 @@
 {% block content %}
 <div class="space-y-2">
   <div class="card md:card-side min-h-90 bg-base-100 shadow-xl glass">
-    <figure class="shrink-0"><img class="h-full w-full" src="{{ object.poster.url }}" alt="Poster"/></figure>
+    <figure class="shrink-0">
+      <img class="h-full w-full" src="{{ object.poster.url }}" alt="Poster"/>
+    </figure>
     <div class="card-body">
       <p class="card-title">{{ object.name }} {% if object.en_name %}({{object.en_name}}){% endif %}</p>
       <p>{{ object.release_date }}</p>
@@ -28,9 +30,17 @@
         {% endfor %}
       </ul>
       <div class="card-actions justify-end">
-        <a href="{% url 'reviews:create' %}?film_id={{object.id}}" class="btn btn-sm btn-primary">
-          Write a Review
-        </a>
+        {% if user.is_authenticated  %}
+          {% if profile_review  %}
+            <a href="{% url 'reviews:detail' profile_review.id  %}" class="btn btn-sm btn-primary">
+              My Review
+            </a>
+          {% else %}
+            <a href="{% url 'reviews:create' %}?film_id={{object.id}}" class="btn btn-sm btn-primary">
+              Write a Review
+            </a>
+          {% endif %}
+        {% endif %}
         <a href="{{ object.trailer_link }}" class="btn btn-sm btn-primary">
           Watch trailer
         </a>
