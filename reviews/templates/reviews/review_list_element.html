@@ -13,21 +13,23 @@
       </div>
       <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster">
     </figure>
-    <div class="card-body space-y-2 grow-0">
-      <h2 class="card-title myh2">
-        <a class="link link-primary" href="{% url "films:detail" review.film.slug %}">
-          {{ review.film }} 
-        </a>
-        by 
-        <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a>
-      </h2>
-      <div class="rating rating-md">
-        {% for i in 5|get_range  %}
-          <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
-        {% endfor %}
-      </div>
-      <div class="line-clamp-3 md:line-clamp-5">
-        {{ review.full_review }}
+    <div class="card-body grow-0 w-full justify-between">
+      <div class="space-y-2">
+        <h2 class="card-title myh2">
+          <a class="link link-primary" href="{% url "films:detail" review.film.slug %}">
+            {{ review.film }} 
+          </a>
+          by 
+          <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a>
+        </h2>
+        <div class="rating rating-md">
+          {% for i in 5|get_range  %}
+            <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
+          {% endfor %}
+        </div>
+        <div class="line-clamp-3 md:line-clamp-5">
+          {{ review.full_review }}
+        </div>
       </div>
       <div class="card-actions justify-between">
         <svg aria-label="Like" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">

@@ -2,8 +2,14 @@ body {
     font-family: 'Kanit', 'Arial Narrow', Arial, sans-serif;
 }
 
-.htmx-indicator{
+.htmx-indicator {
   display:none;
+}
+.htmx-request .htmx-indicator {
+  display:inline;
+}
+.htmx-request.htmx-indicator {
+  display:inline;
 }
 
 [data-theme='light'] {
