@@ -1,8 +1,7 @@
 from typing import Any
-from django.http import HttpRequest
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, ListView
 from django.urls import reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,16 +10,25 @@ from reviews.models import Review
 from films.models import Film
 
 
-class ReviewListView(View):
-    def get(self, request: HttpRequest):
-        if request.user.is_authenticated:
-            reviews = Review.objects.all()
-            cntx = {"review_list": reviews}
-            return render(request, "reviews/review_list.html", cntx)
-        else:
-            reviews = Review.objects.all()
-            cntx = {"review_list": reviews}
-            return render(request, "reviews/review_list.html", cntx)
+class ReviewListView(ListView):
+    model = Review
+    paginate_by = 2
+    context_object_name = "review_list"
+    ordering = ["-created_at"]
+
+    def get_template_names(self) -> list[str]:
+        if self.request.htmx:
+            return ["reviews/review_list_element.html"]
+        return super().get_template_names()
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        if self.request.user.is_authenticated:
+            reviews = qs.filter(
+                profile_id__in=self.request.user.profile.followings.all()
+            )
+
+        return reviews
 
 
 class ReviewDetailView(DetailView):

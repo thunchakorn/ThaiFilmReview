@@ -2,6 +2,10 @@ body {
     font-family: 'Kanit', 'Arial Narrow', Arial, sans-serif;
 }
 
+.htmx-indicator{
+  display:none;
+}
+
 [data-theme='light'] {
   /* primary */
   --p: 85.68% 0.157 94.09;
