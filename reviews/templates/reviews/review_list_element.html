@@ -9,7 +9,7 @@
           {{ review.short_review }}
         </div>
         <div class="text-center text-4xl font-normal text-primary -mb-4 font-serif">”</div>
-        <div class="text-center text-xl font-bold text-primary px-4 pb-2">- {{ review.profile }}</div>
+        <div class="text-center text-sm font-bold text-primary px-4 pb-2">- {{ review.profile }}</div>
       </div>
       <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster">
     </figure>
@@ -31,11 +31,22 @@
           {{ review.full_review }}
         </div>
       </div>
-      <div class="card-actions justify-between">
-        <svg aria-label="Like" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
-          <title>Like</title>
-          <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
-        </svg>
+      <div class="card-actions justify-between items-center">
+        <div class="join">
+          <button class="btn join-item btn-sm rounded-l-full border-primary btn-primary">
+            👍  {{ review.likes__count }}
+          </button>
+          <button class="btn join-item btn-sm rounded-r-full border-error">👎</button>
+        </div>
+        <div class="flex space-x-1 items-center">
+          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"/>
+          </svg>
+          <p>
+            {{ review.comments__count }}
+          </p>
+        </div>
         <div class="flex">
           <div>
             <a class="link link-secondary" href="{% url "reviews:detail" review.id %}">อ่านรีวิวเต็ม</a>

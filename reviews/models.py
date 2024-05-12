@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -47,6 +48,16 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f"{self.profile}-{self.film}"
+
+    def get_absolute_url(self):
+        # define this to be able to view on site on admin page
+        # https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_absolute_url
+        # TODO: add to other model
+        return reverse("reviews:detail", kwargs={"pk": self.pk})
+
+    @property
+    def get_comment_count(self) -> int:
+        return self.comments.all().count()
 
 
 class Comment(models.Model):

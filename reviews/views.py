@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, CreateView, ListView
 from django.urls import reverse
+from django.db.models import Count, Q
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -24,11 +25,15 @@ class ReviewListView(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         if self.request.user.is_authenticated:
-            reviews = qs.filter(
-                profile_id__in=self.request.user.profile.followings.all()
-            )
+            qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
 
-        return reviews
+        qs = qs.annotate(
+            likes__count=Count("likes", filter=Q(likes__value=1)),
+            dislikes__count=Count("likes", filter=Q(likes__value=0)),
+            comments__count=Count("comments"),
+        )
+
+        return qs
 
 
 class ReviewDetailView(DetailView):
