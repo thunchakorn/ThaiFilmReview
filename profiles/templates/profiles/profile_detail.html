@@ -8,9 +8,9 @@
 
   <div class="hero-content flex-col md:flex-row max-w-lg mx-auto">
     <div class="max-w-sm">
-      <div class="w-24 rounded">
+      <div class="w-24">
         {% if object.profile_pic %}
-          <img src="{{ object.profile_pic.url }}" />
+          <img class="rounded-full" src="{{ object.profile_pic.url }}" />
         {% else %}
           <div class="avatar placeholder">
             <div class="bg-neutral text-neutral-content w-24">

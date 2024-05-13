@@ -51,7 +51,7 @@ class ProfileUpdate(LoginRequiredMixin, View):
         profile.save()
 
         return redirect(
-            reverse("profiles:main", kwargs={"slug": self.request.user.profile.slug})
+            reverse("profiles:detail", kwargs={"slug": self.request.user.profile.slug})
         )
 
 
