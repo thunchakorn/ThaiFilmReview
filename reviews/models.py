@@ -55,10 +55,6 @@ class Review(models.Model):
         # TODO: add to other model
         return reverse("reviews:detail", kwargs={"pk": self.pk})
 
-    @property
-    def get_comment_count(self) -> int:
-        return self.comments.all().count()
-
 
 class Comment(models.Model):
     profile = models.ForeignKey(
@@ -76,11 +72,11 @@ class Comment(models.Model):
 class Like(models.Model):
     class LikeValue(models.IntegerChoices):
         LIKE = 1
-        DISLIKE = 0
+        DISLIKE = -1
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="likes")
     review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="likes")
     value = models.IntegerField(choices=LikeValue)
 
     def __str__(self) -> str:
-        return f"{self.review}:{self.get_value_display()}"
+        return f"{self.profile}->{self.review}:{self.get_value_display()}"

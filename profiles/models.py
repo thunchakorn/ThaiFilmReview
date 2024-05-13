@@ -6,12 +6,12 @@ from django.utils.text import slugify
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pic/")
+    # TODO: resize profile picture when upload
     bio = models.CharField(max_length=1000, null=True, blank=True)
     followings = models.ManyToManyField(
         "self",
         symmetrical=False,
         related_name="followers",
-        null=True,
         blank=True,
     )
     slug = models.SlugField(default="", null=False, blank=True, max_length=200)

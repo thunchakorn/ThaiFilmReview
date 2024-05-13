@@ -132,7 +132,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("value", models.IntegerField(choices=[(1, "Like"), (0, "Dislike")])),
+                ("value", models.IntegerField(choices=[(1, "Like"), (-1, "Dislike")])),
                 (
                     "profile",
                     models.ForeignKey(

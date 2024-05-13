@@ -1,11 +1,12 @@
 from django.urls import path
 
-from reviews.views import ReviewCreateView, ReviewDetailView, ReviewListView
+from reviews import views
 
 app_name = "reviews"
 
 urlpatterns = [
-    path("", ReviewListView.as_view(), name="feed"),
-    path("reviews/create/", ReviewCreateView.as_view(), name="create"),
-    path("reviews/<int:pk>/", ReviewDetailView.as_view(), name="detail"),
+    path("", views.ReviewListView.as_view(), name="feed"),
+    path("reviews/create/", views.ReviewCreateView.as_view(), name="create"),
+    path("reviews/<int:pk>/", views.ReviewDetailView.as_view(), name="detail"),
+    path("reviews/<int:pk>/like/", views.LikeReview.as_view(), name="like-toggle"),
 ]

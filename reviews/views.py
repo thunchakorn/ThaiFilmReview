@@ -3,11 +3,11 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, CreateView, ListView
 from django.urls import reverse
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Subquery, OuterRef
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from reviews.models import Review
+from reviews.models import Review, Like
 from films.models import Film
 
 
@@ -19,21 +19,63 @@ class ReviewListView(ListView):
 
     def get_template_names(self) -> list[str]:
         if self.request.htmx:
-            return ["reviews/review_list_element.html"]
+            return ["reviews/partials/review_list_element.html"]
         return super().get_template_names()
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         if self.request.user.is_authenticated:
             qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
+            qs = qs.annotate(
+                is_like_by_profile=Subquery(
+                    Like.objects.filter(
+                        profile=self.request.user.profile, review=OuterRef("pk")
+                    ).values("value")
+                )
+            )
 
         qs = qs.annotate(
             likes__count=Count("likes", filter=Q(likes__value=1)),
-            dislikes__count=Count("likes", filter=Q(likes__value=0)),
+            dislikes__count=Count("likes", filter=Q(likes__value=-1)),
             comments__count=Count("comments"),
         )
 
         return qs
+
+
+class LikeReview(LoginRequiredMixin, View):
+    template_name = "reviews/partials/review_likes_button.html"
+
+    def post(self, request, pk: int):
+        profile = self.request.user.profile
+        like_value = int(request.GET["value"])
+        like_instance = Like.objects.filter(profile=profile, review_id=pk).first()
+
+        if not like_instance:
+            like = Like(review_id=pk, profile=profile, value=like_value)
+            like.save()
+        elif like_instance.value == like_value:
+            like_instance.delete()
+        else:
+            like_instance.value = like_value
+            like_instance.save()
+
+        qs = Review.objects.filter(id=pk).annotate(
+            likes__count=Count("likes", filter=Q(likes__value=1)),
+            dislikes__count=Count("likes", filter=Q(likes__value=-1)),
+            comments__count=Count("comments"),
+            is_like_by_profile=Subquery(
+                Like.objects.filter(
+                    profile=self.request.user.profile, review=OuterRef("pk")
+                ).values("value")
+            ),
+        )
+
+        return render(
+            request,
+            self.template_name,
+            context={"review": qs.first()},
+        )
 
 
 class ReviewDetailView(DetailView):
