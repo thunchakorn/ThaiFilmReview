@@ -1,10 +1,10 @@
 {% load range %}
 
 {% for review in review_list %}
-  <div class="card md:card-side bg-base-100 shadow-xl md:h-80">
+  <article class="card md:card-side bg-base-100 shadow-xl md:h-80">
     <figure class="relative shrink-0 select-none">
       <div class="absolute text-white h-full w-full flex flex-col justify-end bg-gradient-to-t from-black">
-        <div class="text-center text-4xl text-primary font-normal -mb-4 font-serif">“</div>
+        <div class="text-center text-4xl text-primary font-normal -mb-5 font-serif">“</div>
         <div class="text-center text-2xl md:text-base text-primary px-4 ">
           {{ review.short_review }}
         </div>
@@ -20,7 +20,7 @@
             {{ review.film }} 
           </a>
           โดย 
-          <a class="link link-primary" href="{% url "profiles:main" review.profile %}">{{ review.profile }}</a>
+          <a class="link link-primary" href="{% url "profiles:detail" review.profile %}">{{ review.profile }}</a>
         </h2>
         <div class="rating rating-md">
           {% for i in 5|get_range  %}
@@ -59,11 +59,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </article>
   {% if forloop.last and page_obj.has_next %}
-    <div class="divider" hx-get="{% url "reviews:feed" %}?page={{ page_obj.number|add:1 }}" hx-trigger="revealed" hx-swap="afterend" hx-target="this" hx-indicator="#indicator"></div>
+    <div class="divider my-0.5" hx-get="{% url "reviews:feed" %}?page={{ page_obj.number|add:1 }}" hx-trigger="revealed" hx-swap="afterend" hx-target="this" hx-indicator="#indicator"></div>
 
   {% else %}
-    <div class="divider"></div>
+    <div class="divider my-0.5"></div>
   {% endif %}
 {% endfor %}
