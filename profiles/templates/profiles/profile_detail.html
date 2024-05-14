@@ -1,62 +1,73 @@
 {% extends "base.html" %}
 
-{% block title %}{{ object.user.username }}{% endblock title %}
+{% block title %}{{ profile.user.username }}{% endblock title %}
 
 {% block content %}
-
-<section class="hero bg-base-100 glass">
-
-  <div class="hero-content flex-col md:flex-row max-w-lg mx-auto">
-    <div class="max-w-sm">
-      <div class="w-24">
-        {% if object.profile_pic %}
-          <img class="rounded-3xl" src="{{ object.profile_pic.url }}" />
-        {% else %}
-          <div class="avatar placeholder">
-            <div class="bg-neutral text-neutral-content w-24">
-              <span class="text-3xl">{{ object.user.username|first }}</span>
-            </div>
-          </div> 
-        {% endif %}
+<div class="mx-auto max-w-md md:max-w-2xl bg-base-200 space-y-2 md:mb-2">
+  <section class="hero bg-base-100 glass">
+    <div class="hero-content flex-col md:flex-row max-w-lg mx-auto">
+      <div class="max-w-sm">
+        <div class="w-24 ">
+          {% if profile.profile_pic %}
+            <img class="rounded-3xl" src="{{ profile.profile_pic.url }}" />
+          {% else %}
+            <div class="avatar placeholder rounded-3xl">
+              <div class="bg-neutral text-neutral-content w-24 rounded-3xl">
+                <span class="text-3xl">{{ profile.user.username|first }}</span>
+              </div>
+            </div> 
+          {% endif %}
+        </div>
       </div>
+      <div class="space-y-4 flex flex-col items-center md:items-start">
+        <h1 class="text-5xl font-bold">{{ profile.user.username }}</h1>
+        <p>
+          {% if profile.bio %}{{ profile.bio }}{% endif %}
+        </p>
+        
+        <div class="stats stats-horizontal shadow">
+          <div class="stat">
+            <div class="stat-title">#ผู้ติดตาม</div>
+            <div class="stat-value">{{ profile.followers.all.count }}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">#รีวิว</div>
+            <div class="stat-value">{{ profile.reviews.all.count }}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">#ไลค์</div>
+            <div class="stat-value">{{ likes_received_count }}</div>
+          </div>
+      </div>
+      {% if user.is_authenticated and user.profile != profile %}
+      <div>
+        <button 
+          class="btn btn-primary btn-sm"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+          hx-post={% url "profiles:follow" object.slug %}
+          hx-trigger="click throttle:1s"
+        >
+          {% if is_profile_follow %}
+            Unfollow
+          {% else %}
+            Follow
+          {% endif %}
+        </button>
+      </div>
+      {% elif user.is_authenticated and user.profile == profile %}
+      <div>
+        <button class="b">
+
+        </button>
+      </div>
+      {% endif %}
     </div>
-    <div class="space-y-4 flex flex-col items-center md:items-start">
-      <h1 class="text-5xl font-bold">{{ object.user.username }}</h1>
-      <p>
-        {% if object.bio %}{{ object.bio }}{% endif %}
-      </p>
-      
-      <div class="stats stats-horizontal shadow">
-        <div class="stat">
-          <div class="stat-title">Followers</div>
-          <div class="stat-value">{{ object.followers.all.count }}</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title">Reviews</div>
-          <div class="stat-value">{{ object.reviews.all.count }}</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title">Likes</div>
-          <div class="stat-value">{{ likes_received_count }}</div>
-        </div>
-    </div>
-    {% if user.is_authenticated and user.profile != object.user.profile %}
-    <div>
-      <button 
-        class="btn btn-primary btn-sm"
-        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-        hx-post={% url "profiles:follow" object.slug %}
-        hx-trigger="click throttle:1s"
-      >
-        {% if is_profile_follow %}
-          Unfollow
-        {% else %}
-          Follow
-        {% endif %}
-      </button>
-    </div>
-    {% endif %}
+  </section>
+  <div 
+    hx-get="{% url "reviews:list" %}?page=1&profile_id={{profile.id}}" 
+    hx-trigger="intersect once" 
+  >
   </div>
-</section>
+</div>
 
 {% endblock content %}

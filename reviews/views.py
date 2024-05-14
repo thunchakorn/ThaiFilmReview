@@ -19,11 +19,18 @@ class ReviewListView(ListView):
 
     def get_template_names(self) -> list[str]:
         if self.request.htmx:
-            return ["reviews/partials/review_list_element.html"]
+            return ["reviews/partials/review_list.html"]
         return super().get_template_names()
 
-    def get_queryset(self, **kwargs):
-        if self.request.user.is_authenticated:
+    def get_queryset(self):
+        query_profile_id = self.request.GET.get("profile_id")
+        if query_profile_id:
+            qs = self.model.objects.with_like_and_comment(
+                profile=self.request.user.profile
+            )
+            qs = qs.filter(profile_id=query_profile_id)
+
+        elif self.request.user.is_authenticated:
             qs = self.model.objects.with_like_and_comment(
                 profile=self.request.user.profile
             )
@@ -38,6 +45,11 @@ class ReviewListView(ListView):
             qs = qs.order_by(*ordering)
 
         return qs
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        ctx["profile_id"] = self.request.GET.get("profile_id")
+        return ctx
 
 
 class LikeReview(LoginRequiredMixin, View):
