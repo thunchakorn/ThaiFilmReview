@@ -1,9 +1,9 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, CreateView, ListView
 from django.urls import reverse
-from django.db.models import Count, Q, Subquery, OuterRef
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -23,22 +23,19 @@ class ReviewListView(ListView):
         return super().get_template_names()
 
     def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
         if self.request.user.is_authenticated:
-            qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
-            qs = qs.annotate(
-                is_like_by_profile=Subquery(
-                    Like.objects.filter(
-                        profile=self.request.user.profile, review=OuterRef("pk")
-                    ).values("value")
-                )
+            qs = self.model.objects.with_like_and_comment(
+                profile=self.request.user.profile
             )
+            qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
+        else:
+            qs = self.model.objects.with_like_and_comment()
 
-        qs = qs.annotate(
-            likes__count=Count("likes", filter=Q(likes__value=1)),
-            dislikes__count=Count("likes", filter=Q(likes__value=-1)),
-            comments__count=Count("comments"),
-        )
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, str):
+                ordering = (ordering,)
+            qs = qs.order_by(*ordering)
 
         return qs
 
@@ -60,16 +57,9 @@ class LikeReview(LoginRequiredMixin, View):
             like_instance.value = like_value
             like_instance.save()
 
-        qs = Review.objects.filter(id=pk).annotate(
-            likes__count=Count("likes", filter=Q(likes__value=1)),
-            dislikes__count=Count("likes", filter=Q(likes__value=-1)),
-            comments__count=Count("comments"),
-            is_like_by_profile=Subquery(
-                Like.objects.filter(
-                    profile=self.request.user.profile, review=OuterRef("pk")
-                ).values("value")
-            ),
-        )
+        qs = Review.objects.with_like_and_comment(
+            profile=self.request.user.profile
+        ).filter(id=pk)
 
         return render(
             request,
@@ -80,6 +70,14 @@ class LikeReview(LoginRequiredMixin, View):
 
 class ReviewDetailView(DetailView):
     model = Review
+
+    def get_queryset(self) -> QuerySet[Any]:
+        if self.request.user.is_authenticated:
+            return self.model.objects.with_like_and_comment(
+                profile=self.request.user.profile
+            )
+
+        return self.model.objects.with_like_and_comment()
 
 
 class ReviewCreateView(CreateView, LoginRequiredMixin):

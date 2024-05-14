@@ -7,6 +7,26 @@ from films.models import Film, Person
 from profiles.models import Profile
 
 
+class ReviewsManager(models.Manager):
+    def with_like_and_comment(self, profile=None):
+        self = self.annotate(
+            likes__count=models.Count("likes", filter=models.Q(likes__value=1)),
+            dislikes__count=models.Count("likes", filter=models.Q(likes__value=-1)),
+            comment__count=models.Count("comments"),
+        )
+
+        if profile:
+            self = self.annotate(
+                profile_like_value=models.Subquery(
+                    Like.objects.filter(
+                        profile=profile, review=models.OuterRef("pk")
+                    ).values("value")
+                )
+            )
+
+        return self
+
+
 class Review(models.Model):
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="reviews"
@@ -40,6 +60,7 @@ class Review(models.Model):
         # limit_choices_to=Q(acted_films__id=F("film")),
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    objects = ReviewsManager()
 
     class Meta:
         constraints = [

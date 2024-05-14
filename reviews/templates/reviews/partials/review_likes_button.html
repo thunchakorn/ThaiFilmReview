@@ -1,6 +1,6 @@
 <div class="join" id="likesarea-{{review.id}}">
   <button 
-    class="btn join-item btn-sm border-primary {% if review.is_like_by_profile == 1 %}btn-primary{% endif %}"
+    class="btn join-item btn-sm border-primary {% if review.profile_like_value == 1 %}btn-primary{% endif %}"
     {% if not user.is_authenticated %} disabled {% endif %}
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-post="{% url 'reviews:like-toggle' review.id %}?value=1"
@@ -10,7 +10,7 @@
     👍  {{ review.likes__count }}
   </button>
   <button
-    class="btn join-item btn-sm rounded-r-full border-error {% if review.is_like_by_profile == -1 %}btn-error{% endif %}"
+    class="btn join-item btn-sm rounded-r-full border-error {% if review.profile_like_value == -1 %}btn-error{% endif %}"
     {% if not user.is_authenticated %} disabled {% endif %}
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-post="{% url 'reviews:like-toggle' review.id %}?value=-1"
