@@ -1,0 +1,12 @@
+<div class="chat chat-start">
+  <div class="chat-image avatar">
+    <div class="w-12 rounded-2xl">
+      <img alt="profile pic" src={{ comment.profile.profile_pic.url }} />
+    </div>
+  </div>
+  <div class="chat-header">
+    {{ comment.profile }}
+    <time class="text-xs opacity-50">{{ comment.created_at }}</time>
+  </div>
+  <div class="chat-bubble">{{ comment.text }}</div>
+</div>

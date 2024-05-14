@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from reviews.models import Review, Like
+from reviews.models import Review, Like, Comment
 from films.models import Film
 
 
@@ -57,14 +57,30 @@ class LikeReview(LoginRequiredMixin, View):
             like_instance.value = like_value
             like_instance.save()
 
-        qs = Review.objects.with_like_and_comment(
+        review = Review.objects.with_like_and_comment(
             profile=self.request.user.profile
-        ).filter(id=pk)
+        ).get(id=pk)
 
         return render(
             request,
             self.template_name,
-            context={"review": qs.first()},
+            context={"review": review},
+        )
+
+
+class CommentReview(LoginRequiredMixin, View):
+    template_name = "reviews/partials/review_comment.html"
+
+    def post(self, request, pk: int):
+        comment = Comment.objects.create(
+            profile=request.user.profile, review_id=pk, text=request.POST["text"]
+        )
+        comment.save()
+
+        return render(
+            request,
+            self.template_name,
+            context={"comment": comment},
         )
 
 

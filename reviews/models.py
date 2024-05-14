@@ -82,6 +82,11 @@ class Review(models.Model):
 
 
 class Comment(models.Model):
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
+
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="comments"
     )
