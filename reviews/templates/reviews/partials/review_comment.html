@@ -1,7 +1,15 @@
 <div class="chat chat-start">
   <div class="chat-image avatar">
     <div class="w-12 rounded-2xl">
-      <img alt="profile pic" src={{ comment.profile.profile_pic.url }} />
+      {% if comment.profile.profile_pic %}
+        <img src="{{ comment.profile.profile_pic.url }}" />
+      {% else %}
+        <div class="avatar placeholder">
+          <div class="bg-primary text-primary-content size-12">
+            <span class="text-xl">{{ comment.profile.user.username|first }}</span>
+          </div>
+        </div> 
+      {% endif %}
     </div>
   </div>
   <div class="chat-header">
