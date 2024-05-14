@@ -10,9 +10,13 @@ from profiles.models import Profile
 class ReviewsManager(models.Manager):
     def with_like_and_comment(self, profile=None):
         self = self.annotate(
-            likes__count=models.Count("likes", filter=models.Q(likes__value=1)),
-            dislikes__count=models.Count("likes", filter=models.Q(likes__value=-1)),
-            comment__count=models.Count("comments"),
+            likes__count=models.Count(
+                "likes", filter=models.Q(likes__value=1), distinct=True
+            ),
+            dislikes__count=models.Count(
+                "likes", filter=models.Q(likes__value=-1), distinct=True
+            ),
+            comments__count=models.Count("comments", distinct=True),
         )
 
         if profile:
@@ -85,6 +89,8 @@ class Comment(models.Model):
         Review, on_delete=models.CASCADE, related_name="comments"
     )
     text = models.CharField(max_length=1000)
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f"{self.review}:{self.id}"
