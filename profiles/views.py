@@ -1,33 +1,42 @@
 from typing import Any
 
+from django.db.models.query import QuerySet
 from django.views import View
 from django.views.generic import DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q, Exists, OuterRef
 
 from profiles.models import Profile
 from profiles.forms import ProfileForm
-from reviews.models import Like
 
 
 class ProfileDetail(DetailView):
     model = Profile
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        likes_received_count = Like.objects.filter(review__profile=self.object).count()
-
-        context["likes_received_count"] = likes_received_count
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.annotate(
+            followers_count=Count("followers", distinct=True),
+            reviews_count=Count("reviews", distinct=True),
+            likes_received_count=Count("reviews", filter=Q(reviews__likes__value=1)),
+        )
 
         if self.request.user.is_authenticated:
-            profile = kwargs["object"]
-            context["is_profile_follow"] = profile.followers.filter(
-                id=self.request.user.profile.id
-            ).exists()
+            qs = qs.annotate(
+                is_profile_follow=Exists(
+                    Profile.objects.filter(
+                        id=OuterRef(
+                            "id",
+                        ),
+                        followers=self.request.user.profile,
+                    )
+                )
+            )
 
-        return context
+        return qs
 
 
 class ProfileUpdate(LoginRequiredMixin, View):

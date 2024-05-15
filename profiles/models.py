@@ -4,7 +4,9 @@ from django.utils.text import slugify
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile"
+    )
     profile_pic = models.ImageField(null=True, blank=True, upload_to="profile_pic/")
     # TODO: resize profile picture when upload
     bio = models.CharField(max_length=1000, null=True, blank=True)
