@@ -1,5 +1,5 @@
 from typing import Any
-from django.db.models import Count, Avg
+from django.db.models import Count, Avg, Exists, OuterRef
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
 
@@ -32,4 +32,14 @@ class FilmDetailView(DetailView):
         qs = qs.annotate(
             reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
         )
+
+        if self.request.user.is_authenticated:
+            qs = qs.annotate(
+                is_user_review=Exists(
+                    Film.objects.filter(
+                        id=OuterRef("id"), reviews__profile=self.request.user.profile
+                    )
+                )
+            )
+
         return qs
