@@ -24,19 +24,24 @@ class ReviewListView(ListView):
 
     def get_queryset(self):
         query_profile_id = self.request.GET.get("profile_id")
-        if query_profile_id:
-            qs = self.model.objects.with_like_and_comment(
-                profile=self.request.user.profile
+        query_film_id = self.request.GET.get("film_id")
+
+        qs = self.model.objects.with_like_and_comment(
+            profile=(
+                self.request.user.profile
+                if self.request.user.is_authenticated
+                else None
             )
+        )
+
+        if query_profile_id:
             qs = qs.filter(profile_id=query_profile_id)
 
-        elif self.request.user.is_authenticated:
-            qs = self.model.objects.with_like_and_comment(
-                profile=self.request.user.profile
-            )
+        if query_film_id:
+            qs = qs.filter(film_id=query_film_id)
+
+        if not (query_profile_id or query_film_id):
             qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
-        else:
-            qs = self.model.objects.with_like_and_comment()
 
         ordering = self.get_ordering()
         if ordering:
