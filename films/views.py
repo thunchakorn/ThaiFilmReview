@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models import Count, Avg
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
 
@@ -26,13 +27,9 @@ class FilmListView(ListView):
 class FilmDetailView(DetailView):
     model = Film
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-
-        if self.request.user.is_authenticated:
-            film = kwargs["object"]
-            context["profile_review"] = self.request.user.profile.reviews.filter(
-                film=film
-            ).first()
-
-        return context
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.annotate(
+            reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
+        )
+        return qs

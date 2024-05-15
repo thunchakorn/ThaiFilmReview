@@ -5,47 +5,63 @@
 {% endblock  %}
 
 {% block content %}
-<div class="space-y-2">
-  <div class="card md:card-side min-h-90 bg-base-100 shadow-xl glass">
+<div class="max-w-md md:max-w-2xl mx-auto space-y-2">
+  <section class="card md:card-side min-h-90 bg-base-100 glass">
     <figure class="shrink-0">
       <img class="h-full w-full" src="{{ object.poster.url }}" alt="Poster"/>
     </figure>
     <div class="card-body">
-      <p class="card-title">{{ object.name }} {% if object.en_name %}({{object.en_name}}){% endif %}</p>
-      <p>{{ object.release_date }}</p>
+      <h1 class="card-title myh1">{{ object.name }}</h1>
+      {% if object.en_name %}
+      {% endif %}
       <div>
+        {{ object.release_date }} / 
         {% for genre in film.genres.all %}
           <div class="badge badge-neutral">{{genre|upper}}</div>
         {% endfor %}
       </div>
-      <p class="line-clamp-2 grow-0 hover:line-clamp-none">{{ object.synopsis }}</p>
-      <p class="font-medium">ผู้กำกับ</p>
-      <p>{{ film.directors.all|join:", "}}</p>
-      <p class="font-medium">นักแสดง</p>
-      <ul>
-        {% for role in object.role_set.all  %}
-        <li>
-          {{ role.person }} ({{ role }})
-        </li>
+      <div>
+        <div class="text-lg font-medium">ผู้กำกับ</div>
+        <div>{{ film.directors.all|join:", "}}</div>
+      </div>
+      <div>
+        <div class="text-lg font-medium">นักแสดงนำ</div>
+        <div class="grid grid-cols-6">
+            {% for role in object.role_set.all  %}
+            <p class='col-span-4'>
+              {{ role.person }} 
+            </p>
+            <p class='col-span-2'>
+              {{ role }}
+            </p>
+            {% endfor %}
+        </div>
+      </div>
+      <div>
+        <div class="text-lg font-medium">ลิงค์</div>
+        {% for link in film.links.all %}
+        <div class="link" href={{link.link}}>{{link|upper}}</div>
         {% endfor %}
-      </ul>
-      <div class="card-actions justify-end">
-        {% if user.is_authenticated  %}
-          {% if profile_review  %}
-            <a href="{% url 'reviews:detail' profile_review.id  %}" class="btn btn-sm btn-primary">
-              My Review
-            </a>
-          {% else %}
-            <a href="{% url 'reviews:create' %}?film_id={{object.id}}" class="btn btn-sm btn-primary">
-              Write a Review
-            </a>
-          {% endif %}
-        {% endif %}
-        <a href="{{ object.trailer_link }}" class="btn btn-sm btn-primary">
-          Watch trailer
-        </a>
+      </div>
+      <div class="stats stats-horizontal shadow">
+        <div class="stat">
+          <div class="stat-title">#รีวิว</div>
+          <div class="stat-value">{{ film.reviews_count }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">คะแนนเฉลี่ย</div>
+          <div class="stat-value">{{ film.average_rating }}</div>
+        </div>
       </div>
     </div>
+  </section>
+  {% comment %} <section class="w-full bg-base-100 rounded-2xl">
+  </section> {% endcomment %}
+  <div 
+    hx-get="{% url "reviews:list" %}?page=1&film_id={{film.id}}" 
+    hx-trigger="intersect once" 
+  >
   </div>
+  
 </div>
 {% endblock content %}
