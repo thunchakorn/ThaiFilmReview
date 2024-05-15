@@ -38,10 +38,13 @@
         </div>
       </div>
       <div>
-        <div class="text-lg font-medium">ลิงค์</div>
+        <div class="flex items-center space-x-0.5">
+          <div class="text-lg font-medium">ลิงค์: </div>
+
         {% for link in film.links.all %}
-        <div class="link" href={{link.link}}>{{link|upper}}</div>
+          <a class="link" href={{link.link}}>{{ link.name }}</a>, 
         {% endfor %}
+        </div>
       </div>
       <div class="stats stats-horizontal shadow">
         <div class="stat">
@@ -52,6 +55,8 @@
           <div class="stat-title">คะแนนเฉลี่ย</div>
           <div class="stat-value">{{ film.average_rating }}</div>
         </div>
+      </div>
+      <div class="card-actions justify-center items-center">
       </div>
     </div>
   </section>
