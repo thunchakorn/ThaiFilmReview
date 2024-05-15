@@ -153,6 +153,7 @@ class Migration(migrations.Migration):
         ),
         migrations.CreateModel(
             name="Comment",
+            options={"ordering": ["-created_at"]},
             fields=[
                 (
                     "id",

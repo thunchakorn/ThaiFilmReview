@@ -54,21 +54,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=100)),
-                ("en_name", models.CharField(max_length=100, null=True, blank=True)),
                 ("release_date", models.DateField(null=True, blank=True)),
                 (
-                    "duration",
-                    models.IntegerField(
-                        null=True,
-                        blank=True,
-                        validators=[
-                            django.core.validators.MinValueValidator(
-                                0, "Duration must be greater than 1 minute"
-                            )
-                        ],
-                    ),
+                    "poster",
+                    models.ImageField(null=True, blank=True, upload_to="film_poster/"),
                 ),
-                ("poster", models.ImageField(null=True, blank=True, upload_to="film_poster/")),
                 ("genres", models.ManyToManyField(to="films.genre")),
                 (
                     "directors",
@@ -76,18 +66,19 @@ class Migration(migrations.Migration):
                         related_name="directed_films", to="films.person"
                     ),
                 ),
-                ("trailer_link", models.URLField(blank=True, null=True)),
-                ("synopsis", models.CharField(blank=True, max_length=1000, null=True)),
-                ("slug", models.CharField(
-                    blank=True,
-                    default="",
-                    max_length=200,
-                    validators=[
-                        django.core.validators.RegexValidator(
-                            regex="^[\\u0E00-\\u0E7Fa-zA-Z0-9_]+\\Z"
-                        )
-                    ],
-                )),
+                (
+                    "slug",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        max_length=200,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                regex="^[\\u0E00-\\u0E7Fa-zA-Z0-9_]+\\Z"
+                            )
+                        ],
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
@@ -113,6 +104,30 @@ class Migration(migrations.Migration):
                     "person",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE, to="films.person"
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="Link",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=100, null=True)),
+                ("link", models.URLField(blank=True, null=True)),
+                (
+                    "film",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="links",
+                        to="films.film",
                     ),
                 ),
             ],

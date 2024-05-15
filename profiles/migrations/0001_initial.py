@@ -37,7 +37,6 @@ class Migration(migrations.Migration):
                     "followings",
                     models.ManyToManyField(
                         blank=True,
-                        null=True,
                         related_name="followers",
                         to="profiles.profile",
                     ),
