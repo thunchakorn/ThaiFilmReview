@@ -4,7 +4,7 @@ from films.models import Film, Genre
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Field, Div
 
 
 class FilmFilterForm(forms.Form):
@@ -13,6 +13,7 @@ class FilmFilterForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_class = "grid grid-cols-2 grid-flow-row gap-x-2"
         self.helper.form_method = "get"
+        self.helper.field_class = "mb-1"
 
         self.helper.add_input(Submit("submit", "Submit", css_class="btn-sm"))
 
@@ -33,15 +34,12 @@ class FilmFilter(django_filters.FilterSet):
 
     genres = django_filters.ModelMultipleChoiceFilter(
         queryset=get_genres,
-        label="ประเภท",
-        # empty_label=None,
+        label="ประเภท (กด Ctrl หรือ ⌘ แล้วคลิก)",
         widget=forms.SelectMultiple,
     )
 
-    o = django_filters.OrderingFilter(
-        # tuple-mapping retains order
+    order_by = django_filters.OrderingFilter(
         fields=(("release_date", "release_date"),),
-        # labels do not need to retain order
         field_labels={
             "release_date": "วันที่เข้าฉาย",
         },

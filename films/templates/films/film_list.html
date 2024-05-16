@@ -10,13 +10,13 @@
   <h1 class="myh1">รายชื่อหนัง</h1>
   {% crispy form form.helper %}
   <div class="overflow-x-auto">
-    <table class="table table-zebra">
+    <table class="table table-pin-cols">
       <thead>
         <tr>
-          <th>ใบปิด</th>
           <th>ชื่อเรื่อง</th>
-          <th>ประเภท</th>
+          <th>ใบปิด</th>
           <th>ปีที่เข้าฉาย</th>
+          <th>ประเภท</th>
           <th>#รีวิว</th>
           <th>คะแนนเฉลี่ย</th>
         </tr>
@@ -24,14 +24,16 @@
       <tbody>
         {% for film in film_list  %}
           <tr>
-            <th>
-              <img class="min-w-32 w-32 object-contain" src="{{film.poster.url}}">
-            </th>
             <th class="min-w-24">
-              <a href="{% url 'films:detail' film.slug %}">
+              <a href="{% url 'films:detail' film.slug %}" class="hover:underline">
                 {{ film.name }}
               </a>
             </th>
+            <td>
+              <a href="{% url 'films:detail' film.slug %}">
+                <img class="min-w-32 w-32 object-contain" src="{{film.poster.url}}">
+              </a>
+            </td>
             <td>
               {{ film.release_date|date:"Y" }}
             </td>
