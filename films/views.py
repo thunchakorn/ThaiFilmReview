@@ -57,3 +57,6 @@ class FilmDetailView(DetailView):
             )
 
         return qs
+
+
+# TODO: add rest api for query film data
