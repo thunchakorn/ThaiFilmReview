@@ -9,18 +9,22 @@ from films.filters import FilmFilter
 
 class FilmListView(ListView):
     model = Film
-    paginate_by = 1
+    paginate_by = 2
     ordering = ["-release_date", "name"]
     context_object_name = "film_list"
 
     def get_queryset(self) -> QuerySet[Any]:
-        queryset = super().get_queryset()
-        self.filterset = FilmFilter(self.request.GET, queryset=queryset)
+        qs = super().get_queryset()
+        qs = qs.annotate(
+            reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
+        )
+        self.filterset = FilmFilter(self.request.GET, queryset=qs)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["form"] = self.filterset.form
+        print(context["film_list"])
         return context
 
 

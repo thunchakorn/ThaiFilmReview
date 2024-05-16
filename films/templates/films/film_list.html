@@ -1,46 +1,48 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
   หนังไทย
 {% endblock  %}
 
 {% block content %}
-<div class="space-y-2">
-  <div>
-    <div>
-      <h1>รายชื่อหนัง</h1>
-    </div>
-    <form method="GET" action="{% url 'films:list' %}">
-      {{ form.as_div }}
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-  </div>
+<div class="px-1 max-w-md md:max-w-2xl mx-auto space-y-2">
+  <h1 class="myh1">รายชื่อหนัง</h1>
+  {% crispy form form.helper %}
   <div class="overflow-x-auto">
-    <table class="table">
+    <table class="table table-zebra">
       <thead>
         <tr>
           <th>ใบปิด</th>
-          <th>ชื่อไทย</th>
-          <th>ชื่ออังกฤษ</th>
+          <th>ชื่อเรื่อง</th>
+          <th>ประเภท</th>
           <th>ปีที่เข้าฉาย</th>
+          <th>#รีวิว</th>
+          <th>คะแนนเฉลี่ย</th>
         </tr>
       </thead>
       <tbody>
         {% for film in film_list  %}
           <tr>
             <th>
-              <img class="max-h-60" src="{{film.poster.url}}">
+              <img class="min-w-32 w-32 object-contain" src="{{film.poster.url}}">
             </th>
-            <th>
+            <th class="min-w-24">
               <a href="{% url 'films:detail' film.slug %}">
                 {{ film.name }}
               </a>
             </th>
             <td>
-              {{ film.en_name }}
+              {{ film.release_date|date:"Y" }}
             </td>
             <td>
-              {{ film.release_date|date:"Y" }}
+              {{ film.genres.all|join:", " }}
+            </td>
+            <td>
+              {{ film.reviews_count }}
+            </td>
+            <td>
+              {{ film.average_rating }}
             </td>
           </tr>
         {% endfor %}
