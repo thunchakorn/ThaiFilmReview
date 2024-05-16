@@ -7,13 +7,9 @@
 {% block content %}
 <div class="max-w-lg space-y-4 mx-auto">
   <h1 class="myh1">
-    Create Review
+    เขียนรีวิวหนัง
   </h1>
-  <form action="{% url "reviews:create" %}" method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-primary" type="submit">Submit</button>
-  </form>
+  {% crispy form %}
 </div>
 
 {% endblock content %}

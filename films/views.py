@@ -18,13 +18,23 @@ class FilmListView(ListView):
         qs = qs.annotate(
             reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
         )
+
+        if self.request.user.is_authenticated:
+            qs = qs.annotate(
+                is_user_review=Exists(
+                    Film.objects.filter(
+                        id=OuterRef("id"), reviews__profile=self.request.user.profile
+                    )
+                )
+            )
+
         self.filterset = FilmFilter(self.request.GET, queryset=qs)
+
         return self.filterset.qs
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["form"] = self.filterset.form
-        print(context["film_list"])
         return context
 
 
