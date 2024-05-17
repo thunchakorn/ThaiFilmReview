@@ -18,7 +18,7 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.form_tag = False
+        self.helper.label_class = "my-form-label block mb-1"
         self.helper.layout = Layout(
             Field("profile_pic", css_class="file-input"),
             "bio",

@@ -14,6 +14,7 @@ class FilmFilterForm(forms.Form):
         self.helper.form_class = "grid grid-cols-2 grid-flow-row gap-x-2"
         self.helper.form_method = "get"
         self.helper.field_class = "mb-1"
+        self.helper.label_class = "my-form-label block mb-1"
 
         self.helper.add_input(Submit("submit", "Submit", css_class="btn-sm"))
 

@@ -23,6 +23,7 @@ class ReviewForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.field_class = "mb-1"
+        self.helper.label_class = "my-form-label block mb-1"
 
         self.helper.layout = Layout(
             Fieldset(

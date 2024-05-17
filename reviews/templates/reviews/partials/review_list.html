@@ -16,11 +16,12 @@
     <div class="card-body grow-0 w-full justify-between">
       <div class="space-y-2">
         <h2 class="card-title myh2">
-          <a class="link link-primary" href="{% url "films:detail" review.film.slug %}">
+          <a class="hover:underline" href="{% url "films:detail" review.film.slug %}">
             {{ review.film }} 
           </a>
           โดย 
-          <a class="link link-primary" href="{% url "profiles:detail" review.profile %}">{{ review.profile }}</a>
+          <a class="hover:underline" href="{% url "profiles:detail" review.profile %}">{{ review.profile }}</a>
+          <img src="{{review.profile.profile_pic.url}}" alt="profile-pic" class="size-8 rounded-xl">
         </h2>
         <div class="rating rating-md">
           {% for i in 5|get_range  %}
@@ -49,7 +50,7 @@
               ⚠️
             </div>
             {% endif %}
-            <a class="link link-secondary" href="{% url "reviews:detail" review.id %}">อ่านรีวิวเต็ม</a>
+            <a class="link link-primary" href="{% url "reviews:detail" review.id %}">อ่านรีวิวเต็ม</a>
             
           </div>
         </div>
