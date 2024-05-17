@@ -43,7 +43,9 @@ class ReviewListView(ListView):
         if query_film_id:
             qs = qs.filter(film_id=query_film_id)
 
-        if not (query_profile_id or query_film_id):
+        if self.request.user.is_authenticated and not (
+            query_profile_id or query_film_id
+        ):
             qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
 
         ordering = self.get_ordering()
@@ -60,10 +62,16 @@ class ReviewListView(ListView):
         return ctx
 
 
-class LikeReview(LoginRequiredMixin, View):
+class LikeReview(View):
     template_name = "reviews/partials/review_likes_button.html"
 
     def post(self, request, pk: int):
+
+        if not request.user.is_authenticated and self.request.htmx:
+            response = HttpResponse("Login")
+            response["HX-Redirect"] = reverse("account_login")
+            return response
+
         profile = self.request.user.profile
         like_value = int(request.GET["value"])
         like_instance = Like.objects.filter(profile=profile, review_id=pk).first()
@@ -116,7 +124,7 @@ class ReviewDetailView(DetailView):
         return self.model.objects.with_like_and_comment()
 
 
-class ReviewCreateView(View, LoginRequiredMixin):
+class ReviewCreateView(LoginRequiredMixin, View):
     form_class = ReviewForm
     template_name = "reviews/review_form.html"
 
@@ -125,11 +133,6 @@ class ReviewCreateView(View, LoginRequiredMixin):
         film = get_object_or_404(Film, slug=kwargs["slug"])
         ctx = {"form": form, "film": film}
         return render(request, self.template_name, ctx)
-
-    def form_valid(self, form):
-        form.instance.profile = self.request.user.profile
-        form.instance.film = self.kwargs["slug"]
-        return super().form_valid(form)
 
     def post(self, request: HttpRequest, **kwargs: Any) -> HttpResponse:
         form = ReviewForm(request.POST)
