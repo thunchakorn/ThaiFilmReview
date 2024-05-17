@@ -1,13 +1,16 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import DetailView, CreateView, ListView
+from django.views.generic import DetailView, ListView
 from django.urls import reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from reviews.models import Review, Like, Comment
+from reviews.forms import ReviewForm
+
 from films.models import Film
 
 
@@ -113,33 +116,31 @@ class ReviewDetailView(DetailView):
         return self.model.objects.with_like_and_comment()
 
 
-class ReviewCreateView(CreateView, LoginRequiredMixin):
-    model = Review
-    fields = [
-        "film",
-        "rating",
-        "screenplay_rating",
-        "acting_rating",
-        "production_rating",
-        "cinematography_rating",
-        "sound_rating",
-        "is_spoiler",
-        "short_review",
-        "full_review",
-        "mvp_actor",
-    ]
+class ReviewCreateView(View, LoginRequiredMixin):
+    form_class = ReviewForm
+    template_name = "reviews/review_form.html"
+
+    def get(self, request, **kwargs):
+        form = ReviewForm()
+        film = get_object_or_404(Film, slug=kwargs["slug"])
+        ctx = {"form": form, "film": film}
+        return render(request, self.template_name, ctx)
 
     def form_valid(self, form):
         form.instance.profile = self.request.user.profile
+        form.instance.film = self.kwargs["slug"]
         return super().form_valid(form)
 
-    def get_success_url(self) -> str:
-        id = self.object.id
-        return reverse("reviews:detail", kwargs={"pk": id})
+    def post(self, request: HttpRequest, **kwargs: Any) -> HttpResponse:
+        form = ReviewForm(request.POST)
+        film = get_object_or_404(Film, slug=kwargs["slug"])
+        if not form.is_valid():
+            ctx = {"form": form}
+            return render(request, self.template_name, ctx)
 
-    def get_initial(self) -> dict[str, Any]:
-        initial = super().get_initial()
-        if "film_id" in self.request.GET:
-            film_id = self.request.GET["film_id"]
-            initial["film"] = Film.objects.get(id=film_id)
-        return initial
+        form.instance.profile = self.request.user.profile
+        form.instance.film = film
+
+        review = form.save()
+
+        return redirect(reverse("reviews:detail", kwargs={"pk": review.pk}))

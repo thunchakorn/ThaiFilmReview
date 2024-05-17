@@ -57,12 +57,7 @@ class Review(models.Model):
     is_spoiler = models.BooleanField(null=True, blank=True)
     short_review = models.CharField(max_length=64)
     full_review = models.CharField(max_length=12000)
-    mvp_actor = models.ForeignKey(
-        Person,
-        on_delete=models.CASCADE,
-        related_name="mvps",
-        # limit_choices_to=Q(acted_films__id=F("film")),
-    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     objects = ReviewsManager()
 

@@ -103,14 +103,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "mvp_actor",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="mvps",
-                        to="films.person",
-                    ),
-                ),
-                (
                     "profile",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,

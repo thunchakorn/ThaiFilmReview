@@ -5,11 +5,11 @@
 {% block title %}Create review{% endblock title %}
 
 {% block content %}
-<div class="max-w-lg space-y-4 mx-auto">
+<div class="max-w-lg space-y-4 mx-auto px-1">
   <h1 class="myh1">
-    เขียนรีวิวหนัง
+    รีวิวหนัง {{ film.name }} ({{ film.release_date|date:"Y" }})
   </h1>
-  {% crispy form %}
+  {% crispy form form.helper %}
 </div>
 
 {% endblock content %}
