@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load cache %}
 
 {% block title %}Criteria{% endblock title %}
 
 {% block content %}
+{% cache 86400 criteria %}
 <div class="space-y-4">
   <h1 class="myh1">เกณฑ์พิจารณาการให้คะแนนแต่ละด้าน</h1>
   <div>
@@ -88,6 +90,6 @@
   <div>
   </div>
 </div>
-
+{% endcache %}
 
 {% endblock content %}
