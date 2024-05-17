@@ -37,8 +37,8 @@ class ReviewForm(forms.ModelForm):
             ),
             Fieldset(
                 "เขียนรีวิว",
-                "is_spoiler",
                 "short_review",
+                "is_spoiler",
                 "full_review",
             ),
         )
@@ -92,11 +92,11 @@ class ReviewForm(forms.ModelForm):
 
     is_spoiler = forms.BooleanField(
         required=True,
-        label="รีวิวมีสปอยล์",
+        label="รีวิวเต็มมีสปอยล์หรือไม่",
     )
     is_spoiler.widget.attrs["class"] = "checkbox"
 
-    short_review = forms.CharField(max_length=64, label="รีวิวย่อ")
+    short_review = forms.CharField(max_length=64, label="รีวิวย่อ (ห้ามสปอยล์)")
     full_review = forms.CharField(
         max_length=12000, label="รีวิวเต็ม", widget=forms.Textarea
     )
