@@ -50,18 +50,17 @@ class ProfileUpdate(LoginRequiredMixin, View):
 
     def post(self, request):
         profile = get_object_or_404(Profile, id=request.user.profile.id)
+        if request.FILES:
+            request.FILES["profile_pic"].name = f"{request.user.username}.jpg"
         form = ProfileForm(request.POST, request.FILES or None, instance=profile)
 
         if not form.is_valid():
             ctx = {"form": form}
             return render(request, self.template_name, ctx)
 
-        profile = form.save(commit=False)
-        profile.save()
+        profile = form.save()
 
-        return redirect(
-            reverse("profiles:detail", kwargs={"slug": self.request.user.profile.slug})
-        )
+        return redirect(reverse("profiles:detail", kwargs={"slug": profile.slug}))
 
 
 class ProfileFollowToggle(LoginRequiredMixin, View):

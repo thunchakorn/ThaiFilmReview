@@ -4,16 +4,12 @@
 {% block title %}{{ object.user }} profile update{% endblock title %}
 
 {% block content %}
-<div class="max-w-lg mx-auto space-y-4 glass p-12 rounded-lg">
-  <h1 class="myh1">Edit profile</h1>
-  <div>
-    <form method="post" action="{% url 'profiles:update' %}">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <input type="submit" value="Submit" class="btn btn-sm btn-primary">
-      <input type="submit" value="Cancel" class="btn btn-sm btn-error" onclick="window.location.href='{% url 'profiles:detail' user.profile.slug  %}';return false;">
-    </form>
-  </div>
+<div class="max-w-lg mx-auto space-y-4 glass p-4">
+  <h1 class="myh1">แก้ไขโปรไฟล์</h1>
+  {% if form.profile_pic.value %}<img class="mx-auto rounded-3xl" src="/{{ form.profile_pic.value }}">{% endif %}
+  <form method="post" enctype="multipart/form-data" action="{% url 'profiles:update'%}">
+    {% crispy form form.helper %}
+  </form>
 </div>
 
 {% endblock content %}

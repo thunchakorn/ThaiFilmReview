@@ -1,12 +1,29 @@
-from django.forms import ModelForm
+from django import forms
+
 from profiles.models import Profile
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Field
 
 
 # Create the form class.
-class ProfileForm(ModelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = [
-            "bio",
             "profile_pic",
+            "bio",
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Field("profile_pic", css_class="file-input"),
+            "bio",
+            Submit("submit", "Submit", css_class="btn-sm"),
+        )
+
+    bio = forms.CharField(max_length=1000, label="เกี่ยวกับฉัน")
+    profile_pic = forms.ImageField(label="รูปโปรไฟล์")
