@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.shortcuts import render, redirect
+from django.views.generic import View
+from django.urls import reverse
 
 
-class MainView(TemplateView):
-    template_name = "home/main.html"
+def main_view(request):
+    return redirect(reverse("reviews:list"))
 
 
 class CriteriaView(View):
