@@ -91,10 +91,7 @@ class ReviewForm(forms.ModelForm):
         widget=StarRatingWidget,
     )
 
-    is_spoiler = forms.BooleanField(
-        required=True,
-        label="รีวิวเต็มมีสปอยล์หรือไม่",
-    )
+    is_spoiler = forms.BooleanField(label="รีวิวเต็มมีสปอยล์หรือไม่", required=False)
     is_spoiler.widget.attrs["class"] = "checkbox"
 
     short_review = forms.CharField(max_length=64, label="รีวิวย่อ (ห้ามสปอยล์)")

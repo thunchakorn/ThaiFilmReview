@@ -7,6 +7,7 @@ from django.views.generic import DetailView, ListView
 from django.urls import reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from reviews.models import Review, Like, Comment
 from reviews.forms import ReviewForm
@@ -145,5 +146,6 @@ class ReviewCreateView(LoginRequiredMixin, View):
         form.instance.film = film
 
         review = form.save()
+        messages.add_message(request, messages.SUCCESS, f"รีวิว {film} สำเร็จ")
 
         return redirect(reverse("reviews:detail", kwargs={"pk": review.pk}))

@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q, Exists, OuterRef
+from django.contrib import messages
 
 from profiles.models import Profile
 from profiles.forms import ProfileForm
@@ -59,6 +60,7 @@ class ProfileUpdate(LoginRequiredMixin, View):
             return render(request, self.template_name, ctx)
 
         profile = form.save()
+        messages.add_message(request, messages.SUCCESS, "อัปเดตโปรไฟล์สำเร็จ")
 
         return redirect(reverse("profiles:detail", kwargs={"slug": profile.slug}))
 
