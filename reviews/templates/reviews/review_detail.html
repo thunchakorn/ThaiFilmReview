@@ -44,7 +44,7 @@
           </a>
         </p>
       </div>
-      {% if user.is_authenticated  %}
+      {% if user.is_authenticated and user.profile == review.profile  %}
         <div class="card-actions justify-end mt-auto">
           <a href="{% url "reviews:update" review.pk %}">
             <button class="btn btn-sm btn-info">
