@@ -53,7 +53,6 @@ class ReviewForm(forms.ModelForm):
         label="ภาพรวม",
         coerce=int,
         widget=StarRatingWidget,
-        # initial=1,
     )
     screenplay_rating = forms.TypedChoiceField(
         choices=RATING_CHOICES,

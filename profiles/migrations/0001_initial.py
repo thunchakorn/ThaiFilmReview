@@ -3,6 +3,7 @@
 import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
+from profiles.models import OverwriteStorage
 
 
 class Migration(migrations.Migration):
@@ -28,7 +29,12 @@ class Migration(migrations.Migration):
                 ("bio", models.CharField(blank=True, max_length=1000, null=True)),
                 (
                     "profile_pic",
-                    models.ImageField(blank=True, null=True, upload_to="profile_pic/"),
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="profile_pic/",
+                        storage=OverwriteStorage(),
+                    ),
                 ),
                 ("slug", models.SlugField(blank=True, default="", max_length=200)),
                 ("updated", models.DateTimeField(auto_now=True)),

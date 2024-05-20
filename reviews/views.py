@@ -1,12 +1,20 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from django.views.generic import DetailView, ListView
-from django.urls import reverse
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.views import View
+from django.views.generic import (
+    DetailView,
+    ListView,
+    DeleteView,
+    UpdateView,
+    CreateView,
+)
+from django.urls import reverse, reverse_lazy
+
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 
 from reviews.models import Review, Like, Comment
@@ -125,27 +133,65 @@ class ReviewDetailView(DetailView):
         return self.model.objects.with_like_and_comment()
 
 
-class ReviewCreateView(LoginRequiredMixin, View):
+class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = ReviewForm
     template_name = "reviews/review_form.html"
+    success_message = "สร้างรีวิว {film} สำเร็จ"
 
-    def get(self, request, **kwargs):
-        form = ReviewForm()
-        film = get_object_or_404(Film, slug=kwargs["slug"])
-        ctx = {"form": form, "film": film}
-        return render(request, self.template_name, ctx)
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        film = get_object_or_404(Film, slug=self.kwargs["slug"])
+        ctx["film"] = film
+        return ctx
 
-    def post(self, request: HttpRequest, **kwargs: Any) -> HttpResponse:
-        form = ReviewForm(request.POST)
-        film = get_object_or_404(Film, slug=kwargs["slug"])
-        if not form.is_valid():
-            ctx = {"form": form}
-            return render(request, self.template_name, ctx)
+    def form_valid(self, form):
+        film = get_object_or_404(Film, slug=self.kwargs["slug"])
+        object = form.save(commit=False)
 
-        form.instance.profile = self.request.user.profile
-        form.instance.film = film
+        object.profile = self.request.user.profile
+        object.film = film
 
-        review = form.save()
-        messages.add_message(request, messages.SUCCESS, f"รีวิว {film} สำเร็จ")
+        object.save()
+        return super().form_valid(form)
 
-        return redirect(reverse("reviews:detail", kwargs={"pk": review.pk}))
+    def get_success_url(self):
+        return reverse("reviews:detail", kwargs={"pk": self.object.pk})
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message.format(film=self.object.film)
+
+
+class ReviewUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView
+):
+    template_name = "reviews/review_form.html"
+    model = Review
+    form_class = ReviewForm
+    success_message = "แก้ไขรีวิว {film} สำเร็จ"
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.profile == self.request.user.profile
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        ctx["film"] = ctx["object"].film
+        return ctx
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message.format(film=self.object.film)
+
+
+class ReviewDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
+    model = Review
+    success_message = "ลบรีวิว {film} สำเร็จ"
+    success_url = reverse_lazy("reviews:list")
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.profile == self.request.user.profile
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message.format(film=self.object.film)

@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.core.validators import RegexValidator
 
@@ -36,12 +37,15 @@ class Film(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} ({self.release_date.year})"
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("films:detail", kwargs={"slug": self.slug})
 
 
 class Role(models.Model):

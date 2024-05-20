@@ -23,9 +23,7 @@ class OverwriteStorage(FileSystemStorage):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile"
-    )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     profile_pic = models.ImageField(
         null=True, blank=True, upload_to="profile_pic/", storage=OverwriteStorage()
     )

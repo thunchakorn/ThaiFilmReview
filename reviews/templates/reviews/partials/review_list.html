@@ -16,7 +16,7 @@
     <div class="card-body grow-0 w-full justify-between">
       <div class="space-y-2">
         <h2 class="card-title myh2">
-          <a class="hover:underline" href="{% url "films:detail" review.film.slug %}">
+          <a class="hover:underline" href="{{ review.film.get_absolute_url}}">
             {{ review.film }} 
           </a>
           โดย 
@@ -50,7 +50,7 @@
               ⚠️
             </div>
             {% endif %}
-            <a class="link link-primary" href="{% url "reviews:detail" review.id %}">อ่านรีวิวเต็ม</a>
+            <a class="link link-primary" href="{{ review.get_absolute_url }}">อ่านรีวิวเต็ม</a>
             
           </div>
         </div>

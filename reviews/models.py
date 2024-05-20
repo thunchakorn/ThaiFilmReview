@@ -1,9 +1,10 @@
+import uuid
+
 from django.db import models
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-from films.models import Film, Person
+from films.models import Film
 from profiles.models import Profile
 
 
@@ -32,6 +33,8 @@ class ReviewsManager(models.Manager):
 
 
 class Review(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="reviews"
     )
