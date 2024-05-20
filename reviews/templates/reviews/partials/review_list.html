@@ -20,8 +20,10 @@
             {{ review.film }} 
           </a>
           โดย 
-          <a class="hover:underline" href="{% url "profiles:detail" review.profile %}">{{ review.profile }}</a>
-          <img src="{{review.profile.profile_pic.url}}" alt="profile-pic" class="size-8 rounded-xl">
+          <a class="hover:underline flex space-x-1" href="{% url "profiles:detail" review.profile %}">
+            <p>{{ review.profile }}</p>
+            <img src="{{review.profile.profile_pic.url}}" alt="profile-pic" class="size-8 rounded-xl">
+          </a>
         </h2>
         <div class="rating rating-md">
           {% for i in 5|get_range  %}
@@ -71,4 +73,9 @@
   {% else %}
     <div class="divider my-0.5"></div>
   {% endif %}
+
+{% empty %}
+<h1 class="myh2 mt-12 text-center">
+  - ไม่มีรีวิว - 
+</h1>
 {% endfor %}

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {{ object.name }}
+  {{ film.name }}
 {% endblock  %}
 
 {% block content %}
 <div class="max-w-md md:max-w-2xl mx-auto space-y-2">
   <section class="card md:card-side min-h-90 bg-base-100 glass">
     <figure class="shrink-0">
-      <img class="h-full w-full" src="{{ object.poster.url }}" alt="Poster"/>
+      <img class="h-full w-full" src="{{ film.poster.url }}" alt="Poster"/>
     </figure>
     <div class="card-body px-4 py-2">
-      <h1 class="card-title myh1">{{ object.name }}</h1>
-      {% if object.en_name %}
+      <h1 class="card-title myh1">{{ film.name }}</h1>
+      {% if film.en_name %}
       {% endif %}
       <div>
-        {{ object.release_date }} / 
+        {{ film.release_date }} / 
         {% for genre in film.genres.all %}
           <div class="badge badge-neutral">{{genre|upper}}</div>
         {% endfor %}
@@ -27,7 +27,7 @@
       <div>
         <div class="text-lg font-medium">นักแสดงนำ</div>
         <div class="grid grid-cols-6">
-            {% for role in object.role_set.all  %}
+            {% for role in film.role_set.all  %}
             <p class='col-span-4'>
               {{ role.person }} 
             </p>

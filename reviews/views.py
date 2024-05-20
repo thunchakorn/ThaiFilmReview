@@ -63,7 +63,7 @@ class ReviewListView(ListView):
                 ordering = (ordering,)
             qs = qs.order_by(*ordering)
 
-        return qs
+        return qs.select_related("film", "profile")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
@@ -128,9 +128,9 @@ class ReviewDetailView(DetailView):
         if self.request.user.is_authenticated:
             return self.model.objects.with_like_and_comment(
                 profile=self.request.user.profile
-            )
+            ).select_related("film", "profile")
 
-        return self.model.objects.with_like_and_comment()
+        return self.model.objects.with_like_and_comment().select_related("film")
 
 
 class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

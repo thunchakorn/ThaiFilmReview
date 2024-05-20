@@ -74,8 +74,7 @@ class Review(models.Model):
 
     def get_absolute_url(self):
         # define this to be able to view on site on admin page
-        # https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.get_absolute_url
-        # TODO: add to other model
+        # and object.get_absolute_url in template
         return reverse("reviews:detail", kwargs={"pk": self.pk})
 
 

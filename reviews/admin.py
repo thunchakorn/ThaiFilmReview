@@ -26,6 +26,7 @@ class ReviewAdmin(admin.ModelAdmin):
     ]
     list_display = ["__str__", "is_spoiler"]
     inlines = [CommentInline]
+    search_fields = ["film__name"]
 
 
 admin.site.register(Review, ReviewAdmin)
