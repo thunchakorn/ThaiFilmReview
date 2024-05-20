@@ -2,9 +2,11 @@ from typing import Any
 from django.db.models import Count, Avg, Exists, OuterRef
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
+from rest_framework import viewsets
 
 from films.models import Film
 from films.filters import FilmFilter
+from films.serializers import FilmSerializer
 
 
 class FilmListView(ListView):
@@ -36,6 +38,11 @@ class FilmListView(ListView):
         context = super().get_context_data(**kwargs)
         context["form"] = self.filterset.form
         return context
+
+
+class FilmViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
 
 class FilmDetailView(DetailView):

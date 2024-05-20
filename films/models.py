@@ -54,7 +54,7 @@ class Role(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.person}-{self.name}"
 
 
 class Link(models.Model):

@@ -27,7 +27,7 @@ urlpatterns = [
     path("films/", include("films.urls")),
     path("profiles/", include("profiles.urls")),
     path("accounts/", include("allauth.urls")),
-    # path("", include("reviews.urls")),
+    # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # path("", include("django.contrib.auth.urls")),
 ]
 
