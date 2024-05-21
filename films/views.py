@@ -6,7 +6,7 @@ from rest_framework import viewsets
 
 from films.models import Film
 from films.filters import FilmFilter
-from films.serializers import FilmSerializer
+from films import serializers
 
 
 class FilmListView(ListView):
@@ -41,8 +41,13 @@ class FilmListView(ListView):
 
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Film.objects.all()
-    serializer_class = FilmSerializer
+    queryset = Film.objects.all().annotate(avg_rating=Avg("reviews__rating"))
+    lookup_field = "slug"
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return serializers.FilmDetailSerializer
+        return serializers.FilmListSerializer
 
 
 class FilmDetailView(DetailView):

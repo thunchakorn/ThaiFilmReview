@@ -1,21 +1,16 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from . import views
+from films import views
 from reviews.views import ReviewCreateView
 
 router = DefaultRouter()
-router.register(
-    r"",
-    views.FilmViewSet,
-)
+router.register(r"films", views.FilmViewSet)
 
 app_name = "films"
 
-
 urlpatterns = [
     path("", views.FilmListView.as_view(), name="list"),
-    path("api/", include(router.urls)),
     path("<str:slug>/", views.FilmDetailView.as_view(), name="detail"),
     path(
         "<str:slug>/review/create/",
