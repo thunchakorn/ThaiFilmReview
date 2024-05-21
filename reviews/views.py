@@ -82,7 +82,7 @@ class LikeReview(View):
             return response
 
         profile = self.request.user.profile
-        like_value = int(request.GET["value"])
+        like_value = int(request.GET.get("value"))
         like_instance = Like.objects.filter(profile=profile, review_id=pk).first()
 
         if not like_instance:
@@ -110,7 +110,7 @@ class CommentReview(LoginRequiredMixin, View):
 
     def post(self, request, pk: int):
         comment = Comment.objects.create(
-            profile=request.user.profile, review_id=pk, text=request.POST["text"]
+            profile=request.user.profile, review_id=pk, text=request.POST.get("text")
         )
         comment.save()
 

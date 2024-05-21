@@ -74,6 +74,8 @@
         <ul tabindex="0" class="menu dropdown-content mt-3 p-2 shadow rounded-box w-52 bg-base-100">
           <li><a href="{% url 'profiles:detail' user.profile.slug %}">My Profile</a></li>
           <li><a href="{% url 'profiles:update' %}">Edit Profile</a></li>
+          <li><a href="{% url 'account_email' %}">Email Management</a></li>
+          <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
           <li onclick="logoutForm.submit();">
             <form id="logoutForm" method="post" action="{% url 'account_logout' %}">
               {% csrf_token %}
