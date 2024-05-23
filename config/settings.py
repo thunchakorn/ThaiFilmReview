@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-(1mo=!yrwopz)w(3ckyjl*i41&#=0su!v@lrp_up%02^ntz58o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -141,7 +141,16 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+# EMAIL
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+
+EMAIL_HOST_USER = "s.thunchakorn@gmail.com"
+EMAIL_HOST_PASSWORD = ""
 
 
 # Internationalization
@@ -149,7 +158,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Bangkok"
 
 USE_I18N = True
 
@@ -182,3 +191,5 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_SIGNUP_REDIRECT_URL = "profiles:update"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True

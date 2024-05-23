@@ -35,7 +35,7 @@ class FilmFilter(django_filters.FilterSet):
 
     genres = django_filters.ModelMultipleChoiceFilter(
         queryset=get_genres,
-        label="ประเภท (กด Ctrl หรือ ⌘ แล้วคลิก)",
+        label="ประเภท (กด Ctrl/⌘ + คลิก)",
         widget=forms.SelectMultiple,
     )
 
