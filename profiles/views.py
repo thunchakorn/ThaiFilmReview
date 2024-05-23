@@ -5,9 +5,9 @@ from django.views import View
 from django.views.generic import DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Q, Exists, OuterRef
+from django.db.models import Count, Q
 from django.contrib import messages
 
 from profiles.models import Profile
@@ -25,19 +25,15 @@ class ProfileDetail(DetailView):
             likes_received_count=Count("reviews", filter=Q(reviews__likes__value=1)),
         )
 
-        if self.request.user.is_authenticated:
-            qs = qs.annotate(
-                is_profile_follow=Exists(
-                    Profile.objects.filter(
-                        id=OuterRef(
-                            "id",
-                        ),
-                        followers=self.request.user.profile,
-                    )
-                )
-            )
-
         return qs
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context["is_follow"] = self.object.followers.filter(
+                user=self.request.user
+            ).exists()
+        return context
 
 
 class ProfileUpdate(LoginRequiredMixin, View):
@@ -71,11 +67,11 @@ class ProfileFollowToggle(LoginRequiredMixin, View):
         user_profile = request.user.profile
 
         if user_profile == target_profile:
-            return HttpResponseNotAllowed("Cannot follow yourself")
+            return HttpResponseForbidden("Cannot follow yourself")
 
         if target_profile.followers.filter(id=user_profile.id).exists():
             target_profile.followers.remove(user_profile)
-            return HttpResponse("Follow")
+            return HttpResponse("Follow", content_type="text/plain")
         else:
             target_profile.followers.add(user_profile)
-            return HttpResponse("Unfollow")
+            return HttpResponse("Unfollow", content_type="text/plain")
