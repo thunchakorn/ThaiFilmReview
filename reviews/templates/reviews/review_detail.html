@@ -13,9 +13,7 @@
       <div class="card-title myh2 flex-col">
         <h2 class="myh2 hover:underline"><a href="{{ review.film.get_absolute_url }}">{{ review.film }}</a></h1>
         <div class="rating rating-lg mb-2">
-          {% for i in 5|get_range  %}
-            <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
-          {% endfor %}
+          {% show_overall_rating review.overall_rating %}
         </div>
         <div class="text-center text-base-content">
           <p class="text-3xl font-normal -mb-5 font-serif">“</p>
@@ -85,7 +83,7 @@
     <h2 class="myh2">คะแนนแต่ละด้าน</h2>
     <div class="grid grid-cols-2 items-center gap-x-2 gap-y-4 md:gap-4">
       <div>
-        ด้านงานบทและการเล่าเรื่อง
+        ด้านงานบทภาพยนตร์
       </div>
       <div class="rating rating-md">
         {% for i in 5|get_range  %}
@@ -93,7 +91,7 @@
         {% endfor %}
       </div>
       <div>
-        ด้านงานการแสดง
+        ด้านงานแสดง
       </div>
       <div class="rating rating-md">
         {% for i in 5|get_range  %}
@@ -109,11 +107,19 @@
         {% endfor %}
       </div>
       <div>
-        ด้านงานภาพและงานสร้าง
+        ด้านงานภาพ
       </div>
       <div class="rating rating-md">
         {% for i in 5|get_range  %}
-          <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.cinematography_rating %} checked {% endif %} />
+          <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.visual_rating %} checked {% endif %} />
+        {% endfor %}
+      </div>
+      <div>
+        ด้านงานกำกับ
+      </div>
+      <div class="rating rating-md">
+        {% for i in 5|get_range  %}
+          <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.direction_rating %} checked {% endif %} />
         {% endfor %}
       </div>
     </div>

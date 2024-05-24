@@ -28,12 +28,11 @@ class ReviewForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 "คะแนน",
-                "rating",
-                "screenplay_rating",
                 "acting_rating",
-                "production_rating",
-                "cinematography_rating",
+                "screenplay_rating",
+                "visual_rating",
                 "sound_rating",
+                "direction_rating",
                 css_class="grid grid-cols-2 grid-flow-row gap-x-2",
             ),
             Fieldset(
@@ -47,20 +46,6 @@ class ReviewForm(forms.ModelForm):
 
     RATING_CHOICES = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
 
-    rating = forms.TypedChoiceField(
-        choices=RATING_CHOICES,
-        required=True,
-        label="ภาพรวม",
-        coerce=int,
-        widget=StarRatingWidget,
-    )
-    screenplay_rating = forms.TypedChoiceField(
-        choices=RATING_CHOICES,
-        required=True,
-        label="ด้านงานบท",
-        coerce=int,
-        widget=StarRatingWidget,
-    )
     acting_rating = forms.TypedChoiceField(
         choices=RATING_CHOICES,
         required=True,
@@ -68,14 +53,21 @@ class ReviewForm(forms.ModelForm):
         coerce=int,
         widget=StarRatingWidget,
     )
-    production_rating = forms.TypedChoiceField(
+    direction_rating = forms.TypedChoiceField(
         choices=RATING_CHOICES,
         required=True,
-        label="ด้านงานสร้าง",
+        label="ด้านงานกำกับ",
         coerce=int,
         widget=StarRatingWidget,
     )
-    cinematography_rating = forms.TypedChoiceField(
+    screenplay_rating = forms.TypedChoiceField(
+        choices=RATING_CHOICES,
+        required=True,
+        label="ด้านงานบทภาพยนตร์",
+        coerce=int,
+        widget=StarRatingWidget,
+    )
+    visual_rating = forms.TypedChoiceField(
         choices=RATING_CHOICES,
         required=True,
         label="ด้านงานภาพ",

@@ -14,11 +14,12 @@ class ReviewAdmin(admin.ModelAdmin):
             "Rating",
             {
                 "fields": [
-                    "rating",
+                    "direction_rating",
                     "screenplay_rating",
                     "acting_rating",
-                    "production_rating",
-                    "cinematography_rating",
+                    "sound_rating",
+                    "visual_rating",
+                    "overall_rating",
                 ]
             },
         ),

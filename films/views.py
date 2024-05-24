@@ -18,7 +18,8 @@ class FilmListView(ListView):
     def get_queryset(self) -> QuerySet[Any]:
         qs = super().get_queryset()
         qs = qs.annotate(
-            reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
+            reviews_count=Count("reviews"),
+            average_rating=Avg("reviews__overall_rating"),
         )
 
         if self.request.user.is_authenticated:
@@ -41,7 +42,7 @@ class FilmListView(ListView):
 
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Film.objects.all().annotate(avg_rating=Avg("reviews__rating"))
+    queryset = Film.objects.all().annotate(avg_rating=Avg("reviews__overall_rating"))
     lookup_field = "slug"
 
     def get_serializer_class(self):
@@ -56,7 +57,8 @@ class FilmDetailView(DetailView):
     def get_queryset(self) -> QuerySet[Any]:
         qs = super().get_queryset()
         qs = qs.annotate(
-            reviews_count=Count("reviews"), average_rating=Avg("reviews__rating")
+            reviews_count=Count("reviews"),
+            average_rating=Avg("reviews__overall_rating"),
         )
 
         if self.request.user.is_authenticated:

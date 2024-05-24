@@ -39,8 +39,8 @@ class Review(models.Model):
         Profile, on_delete=models.CASCADE, related_name="reviews"
     )
     film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="reviews")
-    rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    direction_rating = models.IntegerField(
+        null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     screenplay_rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
@@ -48,15 +48,16 @@ class Review(models.Model):
     acting_rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    production_rating = models.IntegerField(
-        null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
-    )
-    cinematography_rating = models.IntegerField(
+    visual_rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     sound_rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
+    overall_rating = models.FloatField(
+        null=False, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+
     is_spoiler = models.BooleanField(null=True, blank=True)
     short_review = models.CharField(max_length=64)
     full_review = models.CharField(max_length=12000)

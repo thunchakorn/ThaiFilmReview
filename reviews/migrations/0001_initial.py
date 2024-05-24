@@ -28,12 +28,13 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "rating",
-                    models.IntegerField(
+                    "overall_rating",
+                    models.FloatField(
+                        blank=True,
                         validators=[
                             django.core.validators.MinValueValidator(1),
                             django.core.validators.MaxValueValidator(5),
-                        ]
+                        ],
                     ),
                 ),
                 (
@@ -59,7 +60,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "production_rating",
+                    "direction_rating",
                     models.IntegerField(
                         blank=True,
                         null=True,
@@ -70,7 +71,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "cinematography_rating",
+                    "visual_rating",
                     models.IntegerField(
                         blank=True,
                         null=True,

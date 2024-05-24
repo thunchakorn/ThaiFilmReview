@@ -25,11 +25,7 @@
             <img src="{{review.profile.profile_pic.url}}" alt="profile-pic" class="size-8 rounded-xl">
           </a>
         </h2>
-        <div class="rating rating-md">
-          {% for i in 5|get_range  %}
-            <input disabled type="radio" class="mask mask-star-2 bg-prime" {% if i == review.rating %} checked {% endif %} />
-          {% endfor %}
-        </div>
+        {% show_overall_rating review.overall_rating %}
         <div class="line-clamp-3 md:line-clamp-5">
           {{ review.full_review }}
         </div>
