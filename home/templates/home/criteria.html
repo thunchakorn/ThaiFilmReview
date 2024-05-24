@@ -4,7 +4,7 @@
 {% block title %}Criteria{% endblock title %}
 
 {% block content %}
-{% comment %} {% cache 86400 criteria %} {% endcomment %}
+{% cache 86400 criteria %}
 <div class="space-y-4 p-2">
   <h1 class="myh1">เกณฑ์พิจารณาการให้คะแนนแต่ละด้าน</h1>
   <div>
@@ -124,6 +124,6 @@
   <div>
   </div>
 </div>
-{% comment %} {% endcache %} {% endcomment %}
+{% endcache %}
 
 {% endblock content %}
