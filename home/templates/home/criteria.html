@@ -4,92 +4,110 @@
 {% block title %}Criteria{% endblock title %}
 
 {% block content %}
-{% cache 86400 criteria %}
-<div class="space-y-4">
+{% comment %} {% cache 86400 criteria %} {% endcomment %}
+<div class="space-y-4 p-2">
   <h1 class="myh1">เกณฑ์พิจารณาการให้คะแนนแต่ละด้าน</h1>
   <div>
-    <h2 class="myh2">ด้านงานการแสดง</h2>
-    <ul>
+    <h2 class="myh2">ด้านงานแสดง</h2>
+    <ul class="list-inside">
       <li>ความน่าเชื่อถือของการแสดง</li>
       <li>เคมีและการรับส่งระหว่างตัวละคร</li>
-      <li>การแสดงอารมณ์</li>
+      <li>การสื่ออารมณ์ต่างๆ</li>
     </ul>
+    <div class="grid grid-cols-1 justify-items-center max-w-sm mx-auto">
+      <img class="object-contain" src="https://64.media.tumblr.com/1ac1f62e6354a5d7fbfe5d208f10b506/88d5884ac4d56e95-49/s540x810/edcc015e472c7927dfddd268ef0bead3ea9aaf83.gifv">
+      <img class="object-contain" src="https://64.media.tumblr.com/a80ea10fc10cb80221c48b243eba777e/88d5884ac4d56e95-14/s540x810/a7904cb159d8e1d6b6dd00e7b391664b01e4b2b1.gifv">
+      <p class="opacity-70">Marriage Story (2019)</p>
+    </div>
   </div>
+  <div class="divider my-0.5"></div>
+  <div>
+    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
+    <ul class="list-inside">
+      <li>การจัดวางองค์ประกอบของภาพ</li>
+      <li>การจัดแสงและสี</li>
+      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
+      <li>ฉากและของประกอบฉาก</li>
+      <li>แต่งหน้าทำผม</li>
+    </ul>
+    <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2">
+      <div>
+        <img class="object-contain w-auto" src="https://64.media.tumblr.com/0ac35f452591b7ad82c1af0d141e2e2c/tumblr_pshm8rYHHG1qgpaguo6_540.gifv">
+        <p class="text-center opacity-70">Blade Runner 2049 (2017)</p>
+      </div>
+      <div>
+        <img class="object-contain w-auto" src="https://64.media.tumblr.com/dd850cbad7cac1d47a9d7652aa8539b9/48f1140a801016ff-1c/s540x810/6dae5d30da053c708e6f8b0cf7926f28e6edeb83.gifv">
+        <p class="text-center opacity-70">Parasite (2019)</p>
+      </div>
+      <div>
+        <img class="object-contain w-auto" src="https://i.pinimg.com/originals/49/7f/c8/497fc814e5ecdca623e1c4ed3aa98059.gif">
+        <p class="text-center opacity-70">The Shining (1980)</p>
+      </div>
+      <div>
+        <img class="object-contain w-auto" src="https://static01.nyt.com/images/2020/05/14/reader-center/14madmax-burst-max/14madmax-burst-max-blog480-v6.gif">
+        <p class="text-center opacity-70">Mad Max: Fury Road (2015)</p>
+      </div>
+      <div>
+        <img class="object-contain w-auto" src="https://i.makeagif.com/media/2-02-2023/PSgDnT.gif">
+        <p class="text-center opacity-70">La La Land (2016)</p>
+      </div>
+    </div>
+  </div>
+  <div class="divider my-0.5"></div>
   <div>
     <h2 class="myh2" id="sound">
       ด้านงานเสียง
       <a class="headerlink" href="#sound" title="Permalink to this headline">¶</a>
     </h2>
-    <ul>
+    <ul class="list-inside">
       <li>sound effect</li>
       <li>ดนตรีประกอบ</li>
       <li>เพลงประกอบ</li>
       <li>การผสมเสียงและตัดต่อเสียง</li>
     </ul>
+    <iframe class="mx-auto" src="https://www.youtube.com/embed/4JZ-o3iAJv4?si=wWwDfl5cideT9tR4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
+  <div class="divider my-0.5"></div>
   <div>
-    <h2 class="myh2">ด้านงานบทและการเล่าเรื่อง</h2>
-    <ul>
+    <h2 class="myh2">ด้านงานบท</h2>
+    <ul class="list-inside">
+      <li>โครงสร้างของเรื่องราว</li>
       <li>ความสดใหม่ของเรื่อง</li>
       <li>การพัฒนาของตัวละคร</li>
-      <li>ความสะเทือนอารมณ์ของเรื่อง</li>
-      <li>จังหวะการเล่าเรื่องและการลำดับภาพ</li>
-      <li>สิ่งที่หนังสื่อสารออกมา</li>
+      <li>คุณภาพของบทพูด</li>
     </ul>
+    <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2">
+      <div>
+        <img class="object-contain w-auto" src="https://i.kym-cdn.com/photos/images/newsfeed/002/558/518/e28.gif">
+        <p class="text-center opacity-70">Everything Everywhere All at Once (2022)</p>
+      </div>
+      <div>
+        <img class="object-contain w-auto" src="https://pa1.aminoapps.com/6277/92b463c7d3515d16d253c14b77c9e428a511f33a_hq.gif">
+        <p class="text-center opacity-70">Her (2013)</p>
+      </div>
+    </div>
   </div>
+  <div class="divider my-0.5"></div>
   <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
-    <ul>
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
+    <h2 class="myh2">ด้านงานกำกับ</h2>
+    <ul class="list-inside">
+      <li>เอกลักษณ์ส่วนตัวของผู้กำกับ</li>
+      <li>จังหวะการเล่าเรื่องน่าติดตาม</li>
+      <li>การลำดับภาพ</li>
+      <li>ความสะเทือนอารมณ์ของหนัง</li>
+      <li>สารที่หนังสื่อสารออกมา</li>
     </ul>
+    <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2">
+      <div>
+        <img class="object-contain w-auto" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2w5cjk4azY5bWQyNHZudDl6N245cmdzNHo2czQ0eXp1NHRiYTZldCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13Iz0UAOQlWYU/giphy.webp">
+        <p class="text-center opacity-70">The Dark Knight (2008)</p>
+      </div>
+    </div>
   </div>
-  <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
-    <ul>
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
-    </ul>
-  </div>
-  <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
-    <ul>
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
-    </ul>
-  </div>
-  <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
-    <ul>
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
-    </ul>
-  </div>
-  <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
-    <ul>
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
-    </ul>
-  </div>
+  <div class="divider my-0.5"></div>
   <div>
   </div>
 </div>
-{% endcache %}
+{% comment %} {% endcache %} {% endcomment %}
 
 {% endblock content %}
