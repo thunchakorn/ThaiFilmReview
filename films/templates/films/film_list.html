@@ -54,7 +54,11 @@
             </th>
             <td>
               <a href="{{ film.get_absolute_url }}">
-                <img class="min-w-32 w-32 object-contain" src="{{film.poster.url}}">
+                {% if film.poster %}
+                  <img class="min-w-32 w-32 object-contain" src="{{film.poster.url}}">
+                {% else %}
+                <div class="skeleton w-32 h-32"></div>
+                {% endif %}
               </a>
             </td>
             <td>

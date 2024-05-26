@@ -11,7 +11,11 @@
         <div class="text-center text-4xl font-normal text-primary -mb-4 font-serif">”</div>
         <div class="text-center text-sm font-bold text-primary px-4 pb-2">- {{ review.profile }}</div>
       </div>
-      <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster">
+      {% if review.film.poster %}
+        <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster">
+      {% else %}
+        <div class="skeleton w-32 h-48"></div>
+      {% endif %}
     </figure>
     <div class="card-body grow-0 w-full justify-between">
       <div class="space-y-2">

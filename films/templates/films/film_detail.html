@@ -8,7 +8,11 @@
 <div class="max-w-md md:max-w-2xl mx-auto space-y-2">
   <section class="card md:card-side min-h-90 bg-base-100 glass">
     <figure class="shrink-0">
-      <img class="h-full w-full" src="{{ film.poster.url }}" alt="Poster"/>
+      {% if film.poster %}
+        <img class="h-full w-full" src="{{ film.poster.url }}" alt="Poster"/>
+      {% else %}
+        <div class="skeleton w-32 h-48"></div>
+      {% endif %}
     </figure>
     <div class="card-body px-4 py-2">
       <h1 class="card-title myh1">{{ film.name }}</h1>

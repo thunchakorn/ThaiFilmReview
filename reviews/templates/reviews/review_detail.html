@@ -7,7 +7,11 @@
 <article class="mx-auto max-w-md md:max-w-2xl bg-base-200 space-y-2 md:mb-2">
   <section class="card md:card-side bg-base-100 md:h-90">
     <figure class="relative shrink-0 select-none">
-      <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster">
+      {% if review.film.poster %}
+        <img class="w-full md:h-full md:w-none" src="{{ review.film.poster.url }}" alt="Movie Poster"/>
+      {% else %}
+        <div class="skeleton w-32 h-48"></div>
+      {% endif %}
     </figure>
     <div class="card-body grow-0 w-full p-4">
       <div class="card-title myh2 flex-col">
