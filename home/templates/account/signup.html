@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load allauth %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+
+{% if form.error %}
+Form is error
+{% endif %}
+
+<div class="max-w-md mx-auto my-auto space-y-4 p-2">
+  <h1 class="myh1">Sign Up</h1>
+  <form method="post" action="{{ action_url }}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-primary btn-sm" value="Submit" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+</div>
+
+{% endblock content %}

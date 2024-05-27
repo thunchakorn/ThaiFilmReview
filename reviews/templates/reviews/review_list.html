@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Reviews{% endblock title %}
+
+{% block content %}
+<div class="mx-auto max-w-md md:max-w-2xl">
+  {% include "reviews/partials/review_list.html" %}
+  <div id="indicator" class="htmx-indicator">
+    <div class="flex justify-center">
+      <span class="loading loading-dots loading-xl"></span>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,16 @@
+<div class="rating rating-md">
+  <input type="radio" name="{{ widget.name }}" class="rating-hidden" checked />
+  {% for group, options, index in widget.optgroups %}
+      {% for option in options %}
+          <input 
+            type="radio" 
+            id="{{ option.id_for_label }}" 
+            name="{{ widget.name }}" 
+            value="{{ option.value }}" 
+            class="mask mask-star-2 bg-prime"
+            {% if option.attrs %}{% include "django/forms/widgets/attrs.html" %}{% endif %}
+            {% if option.selected %} checked {% endif %}
+          />
+      {% endfor %}
+  {% endfor %}
+</div>

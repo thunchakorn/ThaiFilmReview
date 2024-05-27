@@ -4,6 +4,8 @@ import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
 
+import films.models
+
 
 class Migration(migrations.Migration):
     initial = True
@@ -38,8 +40,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("first_name", models.CharField(max_length=100)),
-                ("last_name", models.CharField(max_length=100)),
+                ("name", models.CharField(max_length=200)),
             ],
         ),
         migrations.CreateModel(
@@ -55,26 +56,34 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=100)),
-                ("en_name", models.CharField(max_length=100, null=True)),
-                ("release_date", models.DateField(null=True)),
-                ("year", models.IntegerField()),
+                ("release_date", models.DateField(null=True, blank=True)),
                 (
-                    "duration",
-                    models.IntegerField(
+                    "poster",
+                    models.ImageField(
                         null=True,
-                        validators=[
-                            django.core.validators.MinValueValidator(
-                                0, "Duration must be greater than 1 minute"
-                            )
-                        ],
+                        blank=True,
+                        upload_to="film_poster/",
+                        storage=films.models.OverwriteImageStorage(),
                     ),
                 ),
-                ("poster", models.ImageField(null=True, upload_to="film_poster/")),
                 ("genres", models.ManyToManyField(to="films.genre")),
                 (
                     "directors",
                     models.ManyToManyField(
                         related_name="directed_films", to="films.person"
+                    ),
+                ),
+                (
+                    "slug",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        max_length=200,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                regex="^[\\u0E00-\\u0E7Fa-zA-Z0-9_]+\\Z"
+                            )
+                        ],
                     ),
                 ),
             ],
@@ -91,7 +100,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=100, null=True)),
+                ("name", models.CharField(max_length=100, null=True, blank=True)),
                 (
                     "film",
                     models.ForeignKey(
@@ -102,6 +111,30 @@ class Migration(migrations.Migration):
                     "person",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE, to="films.person"
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="Link",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=100, null=True)),
+                ("link", models.URLField(blank=True, null=True)),
+                (
+                    "film",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="links",
+                        to="films.film",
                     ),
                 ),
             ],

@@ -1,0 +1,17 @@
+<div class="flex items-center space-x-4">
+  <div class="rating rating-lg rating-half">
+    <input disabled type="radio" class="mask mask-star-2 mask-half-1 bg-prime" {% if overall_rating >= 0.5 and overall_rating < 1 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-2 bg-prime" {% if overall_rating >= 1 and overall_rating < 1.5 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-1 bg-prime" {% if overall_rating >= 1.5 and overall_rating < 2 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-2 bg-prime" {% if overall_rating >= 2 and overall_rating < 2.5 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-1 bg-prime" {% if overall_rating >= 2.5 and overall_rating < 3 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-2 bg-prime" {% if overall_rating >= 3 and overall_rating < 3.5 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-1 bg-prime" {% if overall_rating >= 3.5 and overall_rating < 4 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-2 bg-prime" {% if overall_rating >= 4 and overall_rating < 4.5 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-1 bg-prime" {% if overall_rating >= 4.5 and overall_rating < 5 %} checked {% endif %} />
+    <input disabled type="radio" class="mask mask-star-2 mask-half-2 bg-prime" {% if overall_rating >= 5 and overall_rating < 0 %} checked {% endif %} />
+  </div>
+  <h2 class="myh2">
+    {{ overall_rating }}
+  </h2>
+</div>

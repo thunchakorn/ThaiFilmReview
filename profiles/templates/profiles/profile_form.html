@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ object.user }} profile update{% endblock title %}
+
+{% block content %}
+<div class="max-w-lg mx-auto space-y-4 glass p-4">
+  <h1 class="myh1">แก้ไขโปรไฟล์</h1>
+  {% if form.profile_pic.value %}<img class="mx-auto rounded-3xl" src="/{{ form.profile_pic.value }}">{% endif %}
+  <form method="post" enctype="multipart/form-data" action="{% url 'profiles:update'%}">
+    {% crispy form form.helper %}
+  </form>
+</div>
+
+{% endblock content %}
