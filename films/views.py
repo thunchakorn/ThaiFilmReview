@@ -11,7 +11,7 @@ from films import serializers
 
 class FilmListView(ListView):
     model = Film
-    paginate_by = 2
+    paginate_by = 10
     ordering = ["-release_date", "name"]
     context_object_name = "film_list"
 
