@@ -4,6 +4,8 @@ import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
 
+import films.models
+
 
 class Migration(migrations.Migration):
     initial = True
@@ -57,7 +59,12 @@ class Migration(migrations.Migration):
                 ("release_date", models.DateField(null=True, blank=True)),
                 (
                     "poster",
-                    models.ImageField(null=True, blank=True, upload_to="film_poster/"),
+                    models.ImageField(
+                        null=True,
+                        blank=True,
+                        upload_to="film_poster/",
+                        storage=films.models.OverwriteImageStorage(),
+                    ),
                 ),
                 ("genres", models.ManyToManyField(to="films.genre")),
                 (
