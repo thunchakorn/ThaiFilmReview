@@ -65,7 +65,7 @@
               {{ film.reviews_count }}
             </td>
             <td>
-              {{ film.average_rating }}
+              {{ film.average_rating|floatformat:2 }}
             </td>
           </tr>
         {% endfor %}

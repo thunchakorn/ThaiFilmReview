@@ -57,7 +57,7 @@
         </div>
         <div class="stat">
           <div class="stat-title">คะแนนเฉลี่ย</div>
-          <div class="stat-value">{{ film.average_rating }}</div>
+          <div class="stat-value">{{ film.average_rating|floatformat:2 }}</div>
         </div>
       </div>
       <div class="card-actions justify-end mt-auto">
