@@ -150,18 +150,6 @@ class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         object.profile = self.request.user.profile
         object.film = film
 
-        object.overall_rating = (
-            sum(
-                [
-                    object.direction_rating,
-                    object.screenplay_rating,
-                    object.acting_rating,
-                    object.visual_rating,
-                    object.sound_rating,
-                ]
-            )
-            / 5
-        )
         return super().form_valid(form)
 
     def get_success_url(self):

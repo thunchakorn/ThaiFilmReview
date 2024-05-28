@@ -78,6 +78,23 @@ class Review(models.Model):
         # and object.get_absolute_url in template
         return reverse("reviews:detail", kwargs={"pk": self.pk})
 
+    def save(self, *args, **kwargs):
+
+        self.overall_rating = (
+            sum(
+                [
+                    self.direction_rating,
+                    self.screenplay_rating,
+                    self.acting_rating,
+                    self.visual_rating,
+                    self.sound_rating,
+                ]
+            )
+            / 5
+        )
+
+        return super().save(*args, **kwargs)
+
 
 class Comment(models.Model):
     class Meta:
