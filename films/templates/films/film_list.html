@@ -40,7 +40,7 @@
                 {% if user.is_authenticated %}
                   <div>
                   {% if not film.is_user_review %}
-                    <a href="{% url "films:create-review" film.slug %}">
+                    <a href="{% url "reviews:create" film.slug %}">
                     <button class="btn btn-sm btn-primary btn-circle">
                       <svg class="size-3 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                         <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
