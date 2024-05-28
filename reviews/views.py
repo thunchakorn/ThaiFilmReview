@@ -15,7 +15,6 @@ from django.urls import reverse, reverse_lazy
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
 
 from reviews.models import Review, Like, Comment
 from reviews.forms import ReviewForm
@@ -25,7 +24,7 @@ from films.models import Film
 
 class ReviewListView(ListView):
     model = Review
-    paginate_by = 2
+    paginate_by = 5
     context_object_name = "review_list"
     ordering = ["-created_at"]
 
