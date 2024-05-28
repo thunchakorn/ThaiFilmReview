@@ -30,7 +30,7 @@
         </h2>
         {% show_overall_rating review.overall_rating %}
         <div class="line-clamp-3">
-          {{ review.full_review }}
+          {{ review.full_review|linebreaks }}
         </div>
       </div>
       <div class="card-actions justify-between items-center">
