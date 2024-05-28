@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+  network_tfr:
+    driver: bridge
+
+volumes:
+    volume_tfr_db:
+
+services:
+  app:
+    container_name: tfr_app
+    hostname: app
+    build: .
+    restart: unless-stopped
+    tty: true
+    volumes:
+        - ./:/app/
+    ports:
+      - "8000:8000"
+    networks:
+      - network_tfr
+    depends_on:
+      - postgres_db
+    env_file: .env
+    command: python -m gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --host 0.0.0.0
+
+  postgres_db:
+    container_name: postgres_db
+    hostname: postgres_db
+    image: postgres:14.4-bullseye
+    restart: always
+    networks:
+        - network_tfr
+    volumes:
+        - volume_tfr_db:/data/postgres
+    env_file: .env
+    environment:
+      PGDATA: /data/postgres
+      TZ: 'Asia/Bangkok'
+      PGTZ: 'Asia/Bangkok'
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
