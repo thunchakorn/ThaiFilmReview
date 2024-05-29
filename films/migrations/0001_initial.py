@@ -78,6 +78,7 @@ class Migration(migrations.Migration):
                     models.CharField(
                         blank=True,
                         default="",
+                        db_index=True,
                         max_length=200,
                         validators=[
                             django.core.validators.RegexValidator(
