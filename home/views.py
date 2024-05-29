@@ -1,14 +1,12 @@
-from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.shortcuts import redirect
+from django.views.generic import TemplateView
 from django.urls import reverse
 
 
 def main_view(request):
-    return redirect(reverse("reviews:list"))
+    if request.method == "GET":
+        return redirect(reverse("reviews:list"))
 
 
-class CriteriaView(View):
+class CriteriaView(TemplateView):
     template_name = "home/criteria.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
