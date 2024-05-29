@@ -7,7 +7,10 @@
 
 {% block content %}
 <div class="px-1 max-w-md md:max-w-2xl mx-auto space-y-2">
-  <h1 class="myh1">รายชื่อหนัง</h1>
+  <div class="flex justify-between items-center">
+    <h1 class="myh1">รายชื่อหนัง</h1>
+    <a class="opacity-50 hover:underline hover:opacity-70" href="/api/films/">API</a>
+  </div>
   {% crispy form form.helper %}
   <div class="overflow-x-auto">
     <table class="table table-pin-cols">
