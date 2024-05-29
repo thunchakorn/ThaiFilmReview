@@ -48,6 +48,8 @@ class FilmFilter(django_filters.FilterSet):
         choices=(
             ("-release_date", "วันที่เข้าฉาย ใหม่ไปเก่า"),
             ("release_date", "วันที่เข้าฉาย เก่าไปใหม่"),
+            ("-reviews_count", "จำนวนรีวิว มากไปน้อย"),
+            ("-average_rating", "คะแนนเฉลี่ย มากไปน้อย"),
         ),
         label="เรียงลำดับ",
     )
