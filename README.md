@@ -28,7 +28,7 @@ This project is a showcase of my ability to use various Django functionalities. 
 
 ### Models
 
-- `OneToOneField`: for extending `AUTH_USER_MODEL`
+- `OneToOneField`: for extending `AUTH_USER_MODEL` and use signal to triggering create profile when user is created
 - `SlugField`: for identifying instance instead of pk
 - Custom `FileSystemStorage`: for overwritting same file name in `ImageField`
 - `ManyToManyField` with additional field through custom intermediate table
