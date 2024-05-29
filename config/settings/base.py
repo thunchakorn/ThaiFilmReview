@@ -22,7 +22,7 @@ APP_NAME = "TFR"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-DEBUG = False
+DEBUG = os.getenv("DEBUG", False)
 ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
@@ -92,7 +92,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
-                "home.context_processors.settings",
+                "home.context_processors.settings",  # add settings object to context
             ],
         },
     },
@@ -155,7 +155,6 @@ INTERNAL_IPS = [
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 LOGIN_REDIRECT_URL = "/"
