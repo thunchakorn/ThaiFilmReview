@@ -12,7 +12,7 @@ class FilmDetailSerializer(serializers.HyperlinkedModelSerializer):
     directors = serializers.StringRelatedField(many=True, read_only=True)
     links = serializers.SlugRelatedField(many=True, read_only=True, slug_field="link")
     actors = RoleSerializer(many=True, source="role_set")
-    average_rating = serializers.FloatField(source="avg_rating", read_only=True)
+    average_rating = serializers.FloatField(read_only=True)
 
     class Meta:
         model = Film

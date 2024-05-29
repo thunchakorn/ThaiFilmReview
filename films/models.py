@@ -69,6 +69,7 @@ class Film(models.Model):
         blank=True,
         max_length=200,
         validators=[RegexValidator(regex=r"^[\u0E00-\u0E7Fa-zA-Z0-9_]+\Z")],
+        db_index=True,
     )
     objects = FilmManager.as_manager()
 
@@ -86,7 +87,7 @@ class Film(models.Model):
 
 class Role(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="roles")
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     def __str__(self) -> str:

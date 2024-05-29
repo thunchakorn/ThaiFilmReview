@@ -46,3 +46,9 @@ class FilmDetailView(DetailView):
         )
 
         return qs
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        roles = self.object.roles.select_related("person").all()
+        ctx["roles"] = roles
+        return ctx

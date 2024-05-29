@@ -31,7 +31,7 @@
       <div>
         <div class="text-lg font-medium">นักแสดงนำ</div>
         <div class="grid grid-cols-6">
-            {% for role in film.role_set.all  %}
+            {% for role in roles  %}
             <p class='col-span-4'>
               {{ role.person }} 
             </p>

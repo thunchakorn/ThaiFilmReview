@@ -1,12 +1,11 @@
 from rest_framework import viewsets
 from films import serializers
-from django.db.models import Avg
 
 from films.models import Film
 
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Film.objects.all().annotate(avg_rating=Avg("reviews__overall_rating"))
+    queryset = Film.objects.with_reviews_data().all()
     lookup_field = "slug"
 
     def get_serializer_class(self):

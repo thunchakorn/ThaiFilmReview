@@ -22,7 +22,9 @@ class ProfileDetail(DetailView):
         qs = qs.annotate(
             followers_count=Count("followers", distinct=True),
             reviews_count=Count("reviews", distinct=True),
-            likes_received_count=Count("reviews", filter=Q(reviews__likes__value=1)),
+            likes_received_count=Count(
+                "reviews__likes", filter=Q(reviews__likes__value=1)
+            ),
         )
 
         return qs
