@@ -62,3 +62,6 @@ This project is a showcase of my ability to use various Django functionalities. 
 - **django-crispy-forms** for helping with forms
 - **django-filter** for easily filtering feature
 - **django-debug-toolbar** for monitor debugging and optimizing performance
+
+## Other features
+- Use `python manage.py loaddata initial` to load initial fixture data

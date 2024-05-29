@@ -34,16 +34,17 @@ class ReviewListView(ListView):
         return super().get_template_names()
 
     def get_queryset(self):
-        query_profile_id = self.request.GET.get("profile_id")
-        query_film_id = self.request.GET.get("film_id")
-
-        qs = self.model.objects.with_like_and_comment(
+        qs = super().get_queryset()
+        qs = qs.with_like_and_comment(
             profile=(
                 self.request.user.profile
                 if self.request.user.is_authenticated
                 else None
             )
         )
+
+        query_profile_id = self.request.GET.get("profile_id")
+        query_film_id = self.request.GET.get("film_id")
 
         if query_profile_id:
             qs = qs.filter(profile_id=query_profile_id)
@@ -55,12 +56,6 @@ class ReviewListView(ListView):
             query_profile_id or query_film_id
         ):
             qs = qs.filter(profile_id__in=self.request.user.profile.followings.all())
-
-        ordering = self.get_ordering()
-        if ordering:
-            if isinstance(ordering, str):
-                ordering = (ordering,)
-            qs = qs.order_by(*ordering)
 
         return qs.select_related("film", "profile")
 
@@ -124,12 +119,17 @@ class ReviewDetailView(DetailView):
     model = Review
 
     def get_queryset(self) -> QuerySet[Any]:
-        if self.request.user.is_authenticated:
-            return self.model.objects.with_like_and_comment(
-                profile=self.request.user.profile
-            ).select_related("film", "profile")
+        qs = super().get_queryset()
+        qs = qs.with_like_and_comment(
+            profile=(
+                self.request.user.profile
+                if self.request.user.is_authenticated
+                else None
+            )
+        )
 
-        return self.model.objects.with_like_and_comment().select_related("film")
+        qs = qs.select_related("film", "profile")
+        return qs
 
 
 class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

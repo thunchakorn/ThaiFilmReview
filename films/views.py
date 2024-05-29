@@ -1,12 +1,9 @@
 from typing import Any
-from django.db.models import Count, Avg, Exists, OuterRef
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
-from rest_framework import viewsets
 
 from films.models import Film
 from films.filters import FilmFilter
-from films import serializers
 
 
 class FilmListView(ListView):
@@ -17,19 +14,13 @@ class FilmListView(ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         qs = super().get_queryset()
-        qs = qs.annotate(
-            reviews_count=Count("reviews"),
-            average_rating=Avg("reviews__overall_rating"),
-        )
-
-        if self.request.user.is_authenticated:
-            qs = qs.annotate(
-                is_user_review=Exists(
-                    Film.objects.filter(
-                        id=OuterRef("id"), reviews__profile=self.request.user.profile
-                    )
-                )
+        qs = qs.with_reviews_data(
+            profile=(
+                self.request.user.profile
+                if self.request.user.is_authenticated
+                else None
             )
+        )
 
         self.filterset = FilmFilter(self.request.GET, queryset=qs)
 
@@ -41,33 +32,17 @@ class FilmListView(ListView):
         return context
 
 
-class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Film.objects.all().annotate(avg_rating=Avg("reviews__overall_rating"))
-    lookup_field = "slug"
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            return serializers.FilmDetailSerializer
-        return serializers.FilmListSerializer
-
-
 class FilmDetailView(DetailView):
     model = Film
 
     def get_queryset(self) -> QuerySet[Any]:
         qs = super().get_queryset()
-        qs = qs.annotate(
-            reviews_count=Count("reviews"),
-            average_rating=Avg("reviews__overall_rating"),
-        )
-
-        if self.request.user.is_authenticated:
-            qs = qs.annotate(
-                is_user_review=Exists(
-                    Film.objects.filter(
-                        id=OuterRef("id"), reviews__profile=self.request.user.profile
-                    )
-                )
+        qs = qs.with_reviews_data(
+            profile=(
+                self.request.user.profile
+                if self.request.user.is_authenticated
+                else None
             )
+        )
 
         return qs

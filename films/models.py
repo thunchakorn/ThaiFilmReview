@@ -19,6 +19,25 @@ class OverwriteImageStorage(FileSystemStorage):
         return s
 
 
+class FilmManager(models.QuerySet):
+    def with_reviews_data(self, profile=None):
+        self = self.annotate(
+            reviews_count=models.Count("reviews"),
+            average_rating=models.Avg("reviews__overall_rating"),
+        )
+
+        if profile:
+            self = self.annotate(
+                is_user_review=models.Exists(
+                    Film.objects.filter(
+                        id=models.OuterRef("id"), reviews__profile=profile
+                    )
+                )
+            )
+
+        return self
+
+
 class Genre(models.Model):
     name = models.CharField(max_length=100)
 
@@ -51,6 +70,7 @@ class Film(models.Model):
         max_length=200,
         validators=[RegexValidator(regex=r"^[\u0E00-\u0E7Fa-zA-Z0-9_]+\Z")],
     )
+    objects = FilmManager.as_manager()
 
     def __str__(self) -> str:
         return f"{self.name} ({self.release_date.year})"

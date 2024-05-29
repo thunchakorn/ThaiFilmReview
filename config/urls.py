@@ -24,7 +24,7 @@ urlpatterns = [
 
 
 if settings.DEBUG:
-    print("DEBUG MODE")
+    print("DEBUG MODE".center(100, "-"))
 
     import debug_toolbar
 

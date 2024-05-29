@@ -2,9 +2,10 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from films import views
+from films import viewsets
 
 router = DefaultRouter()
-router.register(r"films", views.FilmViewSet)
+router.register(r"films", viewsets.FilmViewSet)
 
 app_name = "films"
 

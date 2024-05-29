@@ -8,7 +8,7 @@ from films.models import Film
 from profiles.models import Profile
 
 
-class ReviewsManager(models.Manager):
+class ReviewsManager(models.QuerySet):
     def with_like_and_comment(self, profile=None):
         self = self.annotate(
             likes__count=models.Count(
@@ -63,7 +63,7 @@ class Review(models.Model):
     full_review = models.CharField(max_length=12000)
 
     created_at = models.DateTimeField(auto_now_add=True)
-    objects = ReviewsManager()
+    objects = ReviewsManager.as_manager()
 
     class Meta:
         constraints = [
