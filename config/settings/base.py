@@ -162,3 +162,55 @@ ACCOUNT_SIGNUP_REDIRECT_URL = "profiles:update"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_SESSION_REMEMBER = True
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} == {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file_info": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/tfr.info.log",
+            "formatter": "verbose",
+            "maxBytes": 1024**2,
+            "backupCount": 2,
+        },
+        "file_error": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/tfr.error.log",
+            "formatter": "verbose",
+            "maxBytes": 1024**2,
+            "backupCount": 2,
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": False,
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file_info"],
+        },
+        "django.request": {
+            "handlers": ["mail_admins", "file_error"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}

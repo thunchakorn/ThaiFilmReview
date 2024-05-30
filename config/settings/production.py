@@ -23,7 +23,8 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = "thaifilmreviewweb@gmail.com"
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
-SERVER_EMAIL = "thaifilmreviewweb-server@gmail.com"
+SERVER_EMAIL = "thaifilmreviewweb@gmail.com"
+# ADMINS = [("admin", "admin@mail.com")] ERROR log receiver list
 
 DATABASES = {
     "default": {
