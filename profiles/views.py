@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Exists, OuterRef
 from django.contrib.messages.views import SuccessMessageMixin
 
 from profiles.models import Profile
@@ -28,15 +28,16 @@ class ProfileDetail(DetailView):
             ),
         )
 
-        return qs
-
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context["is_follow"] = self.object.followers.filter(
-                user=self.request.user
-            ).exists()
-        return context
+            qs = qs.annotate(
+                is_follow=Exists(
+                    Profile.objects.filter(
+                        user=self.request.user, followings=OuterRef("pk")
+                    )
+                )
+            )
+
+        return qs
 
 
 class ProfileUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
