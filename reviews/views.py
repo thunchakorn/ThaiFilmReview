@@ -15,6 +15,7 @@ from django.urls import reverse, reverse_lazy
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django_htmx.http import HttpResponseClientRedirect
 
 from reviews.models import Review, Like, Comment
 from reviews.forms import ReviewForm
@@ -71,9 +72,7 @@ class LikeReview(View):
     def post(self, request, pk: int):
 
         if not request.user.is_authenticated and self.request.htmx:
-            response = HttpResponse("Login")
-            response["HX-Redirect"] = reverse("account_login")
-            return response
+            return HttpResponseClientRedirect(reverse("account_login"))
 
         profile = self.request.user.profile
         like_value = int(request.GET.get("value"))
