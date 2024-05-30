@@ -11,4 +11,5 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return serializers.FilmDetailSerializer
+        # else self.action == "retrieve"
         return serializers.FilmListSerializer

@@ -64,7 +64,6 @@ class Film(models.Model):
     )
     directors = models.ManyToManyField(to=Person, related_name="directed_films")
     slug = models.CharField(
-        default="",
         null=False,
         blank=True,
         max_length=200,

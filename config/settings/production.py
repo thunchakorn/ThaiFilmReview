@@ -42,7 +42,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # STORAGES = {
 #     "default": {
-#         "BACKEND": "storages.backends.s3.S3Storage",
+#         "BACKEND": "storages.backends.s3.S3Storage", # need django-storages extension
 #         "OPTIONS": {
 #         },
 #     },

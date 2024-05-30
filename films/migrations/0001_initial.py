@@ -77,7 +77,6 @@ class Migration(migrations.Migration):
                     "slug",
                     models.CharField(
                         blank=True,
-                        default="",
                         db_index=True,
                         max_length=200,
                         validators=[
