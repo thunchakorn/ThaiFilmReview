@@ -13,7 +13,7 @@ router.registry.extend(FilmRouter.registry)
 urlpatterns = [
     path("", include("home.urls")),
     path("reviews/", include("reviews.urls")),
-    path("admin/", admin.site.urls),
+    path("no-enter/", admin.site.urls),
     path("films/", include("films.urls")),
     path("profiles/", include("profiles.urls")),
     path("accounts/", include("allauth.urls")),
