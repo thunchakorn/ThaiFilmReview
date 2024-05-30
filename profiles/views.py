@@ -1,14 +1,15 @@
 from typing import Any
 
+from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.views import View
-from django.views.generic import DetailView
-from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import DetailView, UpdateView
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q
-from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 from profiles.models import Profile
 from profiles.forms import ProfileForm
@@ -38,29 +39,28 @@ class ProfileDetail(DetailView):
         return context
 
 
-class ProfileUpdate(LoginRequiredMixin, View):
+class ProfileUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
     template_name = "profiles/profile_form.html"
+    success_message = "อัปเดตโปรไฟล์สำเร็จ"  # from SuccessMessageMixin
 
-    def get(self, request):
-        profile = get_object_or_404(Profile, id=request.user.profile.id)
-        form = ProfileForm(instance=profile)
-        ctx = {"form": form}
-        return render(request, self.template_name, ctx)
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model:
+        obj = self.model.objects.filter(pk=self.request.user.profile.id).get()
+        return obj
 
-    def post(self, request):
-        profile = get_object_or_404(Profile, id=request.user.profile.id)
-        if request.FILES:
-            request.FILES["profile_pic"].name = f"{request.user.username}.jpg"
-        form = ProfileForm(request.POST, request.FILES or None, instance=profile)
+    def form_valid(self, form):
+        object = form.save(commit=False)
 
-        if not form.is_valid():
-            ctx = {"form": form}
-            return render(request, self.template_name, ctx)
+        if self.request.FILES:
+            self.request.FILES["profile_pic"].name = f"{self.request.user.username}.jpg"
+            object.profile_pic = self.request.FILES["profile_pic"]
 
-        profile = form.save()
-        messages.add_message(request, messages.SUCCESS, "อัปเดตโปรไฟล์สำเร็จ")
+        object.save()
+        return super().form_valid(form)
 
-        return redirect(reverse("profiles:detail", kwargs={"slug": profile.slug}))
+    def get_success_url(self) -> str:
+        return reverse("profiles:detail", kwargs={"slug": self.object.slug})
 
 
 class ProfileFollowToggle(LoginRequiredMixin, View):

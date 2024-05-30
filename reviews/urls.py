@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 
 from reviews import views
 
@@ -11,13 +11,20 @@ urlpatterns = [
         views.ReviewCreateView.as_view(),
         name="create",
     ),
-    path("<uuid:pk>/", views.ReviewDetailView.as_view(), name="detail"),
-    path("<uuid:pk>/delete/", views.ReviewDeleteView.as_view(), name="delete"),
-    path("<uuid:pk>/update/", views.ReviewUpdateView.as_view(), name="update"),
-    path("<uuid:pk>/like/", views.LikeReview.as_view(), name="like-toggle"),
     path(
-        "<uuid:pk>/comment/create/",
-        views.CommentReview.as_view(),
-        name="create-comment",
+        "<uuid:pk>/",
+        include(
+            [
+                path("", views.ReviewDetailView.as_view(), name="detail"),
+                path("delete/", views.ReviewDeleteView.as_view(), name="delete"),
+                path("update/", views.ReviewUpdateView.as_view(), name="update"),
+                path("like/", views.LikeReview.as_view(), name="like-toggle"),
+                path(
+                    "comment/create/",
+                    views.CommentReview.as_view(),
+                    name="create-comment",
+                ),
+            ]
+        ),
     ),
 ]
