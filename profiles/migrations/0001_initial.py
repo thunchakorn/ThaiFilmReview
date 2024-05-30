@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                         storage=OverwriteStorage(),
                     ),
                 ),
-                ("slug", models.SlugField(blank=True, default="", max_length=200)),
+                ("slug", models.SlugField(blank=True, max_length=200)),
                 ("updated", models.DateTimeField(auto_now=True)),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 (

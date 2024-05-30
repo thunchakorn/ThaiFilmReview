@@ -105,7 +105,9 @@ class Migration(migrations.Migration):
                 (
                     "film",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="films.film"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="roles",
+                        to="films.film",
                     ),
                 ),
                 (
