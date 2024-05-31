@@ -34,19 +34,19 @@ def test_profile_detail_followers_count(client, profiles):
 def test_profile_detail_is_follow(client, profiles):
     response = client.get(reverse("profiles:detail", kwargs={"slug": "user1"}))
     context = response.context
-    assert context.get("is_follow") is None
+    assert hasattr(context.get("object"), "is_follow") is False
 
     profile_2 = profiles[1]
     client.force_login(profile_2.user)
     response = client.get(reverse("profiles:detail", kwargs={"slug": "user1"}))
     context = response.context
-    assert context.get("is_follow") is True
+    assert context.get("object").is_follow is True
 
     profile_3 = profiles[2]
     client.force_login(profile_3.user)
     response = client.get(reverse("profiles:detail", kwargs={"slug": "user1"}))
     context = response.context
-    assert context.get("is_follow") is False
+    assert context.get("object").is_follow is False
 
 
 def test_follow_toggle(client, profiles):
