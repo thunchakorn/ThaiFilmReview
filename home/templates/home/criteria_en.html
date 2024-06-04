@@ -1,18 +1,16 @@
 {% extends "base.html" %}
-{% load cache %}
 
 {% block title %}Criteria{% endblock title %}
 
 {% block content %}
-{% cache 86400 criteria %}
 <div class="space-y-4 p-2">
-  <h1 class="myh1">เกณฑ์พิจารณาการให้คะแนนแต่ละด้าน</h1>
+  <h1 class="myh1">Rating Criteria</h1>
   <div>
-    <h2 class="myh2">ด้านงานแสดง</h2>
+    <h2 class="myh2">Acting</h2>
     <ul class="list-inside">
-      <li>ความน่าเชื่อถือของการแสดง</li>
-      <li>เคมีและการรับส่งระหว่างตัวละคร</li>
-      <li>การสื่ออารมณ์ต่างๆ</li>
+      <li>Believability</li>
+      <li>Chemistry and Dynamic Between Characters</li>
+      <li>Emotional Delivery</li>
     </ul>
     <div class="grid grid-cols-1 justify-items-center max-w-md mx-auto">
       <img class="object-contain" src="https://64.media.tumblr.com/1ac1f62e6354a5d7fbfe5d208f10b506/88d5884ac4d56e95-49/s540x810/edcc015e472c7927dfddd268ef0bead3ea9aaf83.gifv">
@@ -27,13 +25,13 @@
   </div>
   <div class="divider my-0.5"></div>
   <div>
-    <h2 class="myh2">ด้านงานภาพและงานสร้าง</h2>
+    <h2 class="myh2">Cinematography and Production</h2>
     <ul class="list-inside">
-      <li>การจัดวางองค์ประกอบของภาพ</li>
-      <li>การจัดแสงและสี</li>
-      <li>การวางมุมกล้องและการเคลื่อนกล้อง</li>
-      <li>ฉากและของประกอบฉาก</li>
-      <li>แต่งหน้าทำผม</li>
+      <li>Composition</li>
+      <li>Lighting and Color Palette</li>
+      <li>Camera Angles and Movements</li>
+      <li>Sets and Props</li>
+      <li>Makeup and Hairstyling</li>
     </ul>
     <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2 max-w-md mx-auto">
       <div>
@@ -61,14 +59,14 @@
   <div class="divider my-0.5"></div>
   <div>
     <h2 class="myh2" id="sound">
-      ด้านงานเสียง
+      Sound
       <a class="headerlink" href="#sound" title="Permalink to this headline">¶</a>
     </h2>
     <ul class="list-inside">
-      <li>sound effect</li>
-      <li>ดนตรีประกอบ</li>
-      <li>เพลงประกอบ</li>
-      <li>การผสมเสียงและตัดต่อเสียง</li>
+      <li>Sound Effect</li>
+      <li>Score</li>
+      <li>Music</li>
+      <li>Sound Mixing, Recording, Editing, Design</li>
     </ul>
     <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2 max-w-md mx-auto">
       <iframe src="https://www.youtube.com/embed/4JZ-o3iAJv4?si=wWwDfl5cideT9tR4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -77,12 +75,12 @@
   </div>
   <div class="divider my-0.5"></div>
   <div>
-    <h2 class="myh2">ด้านงานบทภาพยนตร์</h2>
+    <h2 class="myh2">Screenplay</h2>
     <ul class="list-inside">
-      <li>โครงสร้างของเรื่องราว</li>
-      <li>ความสดใหม่ของเรื่อง</li>
-      <li>การพัฒนาของตัวละคร</li>
-      <li>คุณภาพของบทพูด</li>
+      <li>Narrative Structure</li>
+      <li>Originality</li>
+      <li>Character Development</li>
+      <li>Dialogue Quality</li>
     </ul>
     <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2 max-w-md mx-auto">
       <div>
@@ -97,13 +95,13 @@
   </div>
   <div class="divider my-0.5"></div>
   <div>
-    <h2 class="myh2">ด้านงานกำกับ</h2>
+    <h2 class="myh2">Direction</h2>
     <ul class="list-inside">
-      <li>เอกลักษณ์ส่วนตัวของผู้กำกับ</li>
-      <li>จังหวะการเล่าเรื่องน่าติดตาม</li>
-      <li>การลำดับภาพ</li>
-      <li>ความสะเทือนอารมณ์ของหนัง</li>
-      <li>สารที่หนังสื่อสารออกมา</li>
+      <li>Director style</li>
+      <li>Pacing</li>
+      <li>Editing</li>
+      <li>Emotional Impact</li>
+      <li>Theme and Messages</li>
     </ul>
     <div class="grid grid-cols-1 grid-flow-row justify-items-center space-y-2 max-w-md mx-auto">
       <div>
@@ -124,6 +122,5 @@
   <div>
   </div>
 </div>
-{% endcache %}
 
 {% endblock content %}

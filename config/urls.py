@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 
 from rest_framework.routers import DefaultRouter
 
@@ -11,16 +12,20 @@ router = DefaultRouter()
 router.registry.extend(FilmRouter.registry)
 
 urlpatterns = [
-    path("", include("home.urls")),
-    path("reviews/", include("reviews.urls")),
     path("no-enter/", admin.site.urls),
-    path("films/", include("films.urls")),
-    path("profiles/", include("profiles.urls")),
     path("accounts/", include("allauth.urls")),
     path("api/", include(router.urls)),
+    # path("i18n/", include("django.conf.urls.i18n")),
     # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # path("", include("django.contrib.auth.urls")),
 ]
+
+urlpatterns += i18n_patterns(
+    path("", include("home.urls")),
+    path("reviews/", include("reviews.urls")),
+    path("films/", include("films.urls")),
+    path("profiles/", include("profiles.urls")),
+)
 
 
 if settings.DEBUG:
