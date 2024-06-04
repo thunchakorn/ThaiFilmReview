@@ -22,8 +22,6 @@ from reviews.forms import ReviewForm
 
 from films.models import Film
 
-from asgiref.sync import sync_to_async
-
 
 class ReviewListView(ListView):
     model = Review
