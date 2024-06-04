@@ -22,6 +22,8 @@ from reviews.forms import ReviewForm
 
 from films.models import Film
 
+from asgiref.sync import sync_to_async
+
 
 class ReviewListView(ListView):
     model = Review
@@ -69,27 +71,29 @@ class ReviewListView(ListView):
 class LikeReview(View):
     template_name = "reviews/partials/review_likes_button.html"
 
-    def post(self, request, pk: int):
+    async def post(self, request, pk: int):
 
-        if not request.user.is_authenticated and self.request.htmx:
+        user = await request.auser()
+
+        if not user.is_authenticated and self.request.htmx:
             return HttpResponseClientRedirect(reverse("account_login"))
 
-        profile = self.request.user.profile
+        profile = user.profile
         like_value = int(request.GET.get("value"))
-        like_instance = Like.objects.filter(profile=profile, review_id=pk).first()
+        like_instance = await Like.objects.filter(
+            profile=profile, review_id=pk
+        ).afirst()
 
         if not like_instance:
             like = Like(review_id=pk, profile=profile, value=like_value)
-            like.save()
+            await like.asave()
         elif like_instance.value == like_value:
-            like_instance.delete()
+            await like_instance.adelete()
         else:
             like_instance.value = like_value
-            like_instance.save()
+            await like_instance.asave()
 
-        review = Review.objects.with_like_and_comment(
-            profile=self.request.user.profile
-        ).get(id=pk)
+        review = await Review.objects.with_like_and_comment(profile=profile).aget(id=pk)
 
         return render(
             request,
