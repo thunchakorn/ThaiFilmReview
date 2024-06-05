@@ -1,7 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
 
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import (
@@ -12,9 +11,14 @@ from django.views.generic import (
     CreateView,
 )
 from django.urls import reverse, reverse_lazy
-
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    PermissionRequiredMixin,
+)
+from django.utils.translation import gettext as _
+from django.http import HttpResponse
 from django_htmx.http import HttpResponseClientRedirect
 
 from reviews.models import Review, Like, Comment
@@ -194,3 +198,14 @@ class ReviewDeleteView(
 
     def get_success_message(self, cleaned_data):
         return self.success_message.format(film=self.object.film)
+
+
+class MarkSpoilerReviewView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ["reviews.mark_as_spoiler"]
+
+    def post(self, request, pk: int):
+        review = Review.objects.filter(pk=pk).first()
+        review.is_spoiler = True
+        review.save()
+        text = _("Spoiler")
+        return HttpResponse(f'<p class="text-error">{text}!</p>')

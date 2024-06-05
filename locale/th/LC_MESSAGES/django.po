@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-04 16:09+0700\n"
+"POT-Creation-Date: 2024-06-05 16:21+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,17 +34,29 @@ msgstr "ภาษา"
 msgid "by"
 msgstr "โดย"
 
-#: reviews/templates/reviews/partials/review_list.html:51
-msgid "spoiler alert!"
+#: reviews/templates/reviews/partials/review_list.html:37
+#, fuzzy
+#| msgid "spoiler alert!"
+msgid "Spoiler Alert"
 msgstr "มีสปอยล์!"
 
 #: reviews/templates/reviews/partials/review_list.html:55
-msgid "full review"
+#: reviews/templates/reviews/review_detail.html:134
+#, fuzzy
+#| msgid "full review"
+msgid "Full Review"
 msgstr "รีวิวเต็ม"
 
-#: reviews/templates/reviews/partials/review_list.html:79
+#: reviews/templates/reviews/partials/review_list.html:78
 msgid "No Reviews"
 msgstr "ไม่มีรีวิว"
+
+#: reviews/templates/reviews/review_detail.html:136 reviews/views.py:210
+msgid "Spoiler"
+msgstr "มีสปอยล์"
+
+#~ msgid "full review"
+#~ msgstr "รีวิวเต็ม"
 
 #~ msgid "Rating Criteria"
 #~ msgstr "เกณฑ์การให้คะแนน"

@@ -69,6 +69,9 @@ class Review(models.Model):
         constraints = [
             models.UniqueConstraint(fields=["profile", "film"], name="unique_review")
         ]
+        permissions = [
+            ("mark_as_spoiler", "Can change is_spoiler to True"),
+        ]
 
     def __str__(self) -> str:
         return f"{self.profile}-{self.film}"
@@ -100,6 +103,9 @@ class Comment(models.Model):
     class Meta:
         ordering = [
             "-created_at",
+        ]
+        permissions = [
+            ("ban_comment", "Can ban comment"),
         ]
 
     profile = models.ForeignKey(

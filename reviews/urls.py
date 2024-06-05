@@ -18,6 +18,11 @@ urlpatterns = [
                 path("", views.ReviewDetailView.as_view(), name="detail"),
                 path("delete/", views.ReviewDeleteView.as_view(), name="delete"),
                 path("update/", views.ReviewUpdateView.as_view(), name="update"),
+                path(
+                    "update/spoiler/",
+                    views.MarkSpoilerReviewView.as_view(),
+                    name="spoiler",
+                ),
                 path("like/", views.LikeReview.as_view(), name="like-toggle"),
                 path(
                     "comment/create/",

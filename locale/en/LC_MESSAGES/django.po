@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-04 16:09+0700\n"
+"POT-Creation-Date: 2024-06-05 16:04+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,14 +34,22 @@ msgstr ""
 msgid "by"
 msgstr ""
 
-#: reviews/templates/reviews/partials/review_list.html:51
-msgid "spoiler alert!"
+#: reviews/templates/reviews/partials/review_list.html:37
+msgid "Spoiler Alert"
 msgstr ""
 
 #: reviews/templates/reviews/partials/review_list.html:55
 msgid "full review"
 msgstr ""
 
-#: reviews/templates/reviews/partials/review_list.html:79
+#: reviews/templates/reviews/partials/review_list.html:78
 msgid "No Reviews"
+msgstr ""
+
+#: reviews/templates/reviews/review_detail.html:134
+msgid "Full Review"
+msgstr ""
+
+#: reviews/templates/reviews/review_detail.html:136 reviews/views.py:214
+msgid "Spoiler"
 msgstr ""
