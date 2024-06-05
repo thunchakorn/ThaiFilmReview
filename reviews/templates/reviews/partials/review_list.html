@@ -30,8 +30,13 @@
           </a>
         </h2>
         {% show_overall_rating review.overall_rating %}
-        <div class="line-clamp-3">
-          {{ review.full_review|linebreaks }}
+        <div class="relative">
+          <div class="line-clamp-5 whitespace-pre-wrap">{{ review.full_review }}</div>
+          {% if review.is_spoiler  %}
+            <div class="absolute w-full h-full scale-105 top-0 backdrop-blur-sm flex items-center justify-center text-3xl text-error">
+              ⚠️ {% trans "Spoiler Alert" %} ⚠️
+            </div>
+          {% endif %}
         </div>
       </div>
       <div class="card-actions justify-between items-center">
@@ -47,13 +52,7 @@
         </div>
         <div class="flex">
           <div>
-            {% if review.is_spoiler  %}
-            <div class="tooltip tooltip tooltip tooltip-error" data-tip="{% trans 'spoiler alert!' %}">
-              ⚠️
-            </div>
-            {% endif %}
             <a class="link link-primary" href="{{ review.get_absolute_url }}">{% trans "full review" %}</a>
-            
           </div>
         </div>
       </div>

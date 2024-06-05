@@ -128,12 +128,9 @@
       </div>
     </div>
   </section>
-  <section class="rounded-2xl bg-base-100 p-4 md:p-8 space-y-4">
-    <h2 class="myh2 inline">รีวิวเต็ม</h2>
-    {% if review.is_spoiler %}<h2 class="myh2 inline text-error">มีสปอยล์!!</h2>{% endif %}
-    <div>
-      {{ review.full_review|linebreaks }}
-    </div>
+  <section class="rounded-2xl bg-base-100 p-4 md:p-8 space-y-2">
+    <h2 class="myh2 inline">รีวิวเต็ม{% if review.is_spoiler %} <h2 class="myh2 inline text-error">มีสปอยล์!!</h2>{% endif %}</h2>
+    <div class="whitespace-pre-wrap">{{ review.full_review }}</div>
   </section>
   <section class="rounded-2xl bg-base-100 p-4 md:p-8 space-y-4">
     <div class="flex justify-between">
