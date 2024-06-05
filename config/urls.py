@@ -14,6 +14,7 @@ router.registry.extend(FilmRouter.registry)
 urlpatterns = [
     path("no-enter/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path("accounts/", include("allauth.socialaccount.urls")),
     path("api/", include(router.urls)),
     # path("i18n/", include("django.conf.urls.i18n")),
     # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),

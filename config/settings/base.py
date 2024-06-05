@@ -176,7 +176,8 @@ ACCOUNT_SESSION_REMEMBER = True
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
-
+ACCOUNT_EMAIL_VERIFICATION = "optional"  # user can continue within the app but will receive an email to verify the email address
+SOCIALACCOUNT_LOGIN_ON_GET = False
 
 LOGGING = {
     "version": 1,
