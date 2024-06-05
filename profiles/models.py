@@ -24,6 +24,7 @@ class OverwriteStorage(FileSystemStorage):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, null=False, blank=False, unique=True)
     profile_pic = models.ImageField(
         null=True, blank=True, upload_to="profile_pic/", storage=OverwriteStorage()
     )
@@ -40,11 +41,14 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.name
 
     def save(self, commit=True, *args, **kwargs):
+        username = self.user.username
+        self.name = username
+
         if not self.slug:
-            self.slug = slugify(self.user.username)
+            self.slug = slugify(username)
 
         if self.profile_pic and commit:
             image_resize(self.profile_pic, 200, 200)

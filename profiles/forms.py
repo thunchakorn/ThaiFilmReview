@@ -12,6 +12,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = [
             "profile_pic",
+            "name",
             "bio",
         ]
 
@@ -21,6 +22,7 @@ class ProfileForm(forms.ModelForm):
         self.helper.label_class = "my-form-label block mb-1"
         self.helper.layout = Layout(
             Field("profile_pic", css_class="file-input"),
+            "name",
             "bio",
             Submit("submit", "Submit", css_class="btn-sm"),
         )
