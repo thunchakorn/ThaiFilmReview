@@ -37,4 +37,4 @@ class FilmListSerializer(serializers.HyperlinkedModelSerializer):
             "name",
         )
         lookup_field = "slug"
-        extra_kwargs = {"url": {"lookup_field": "slug"}}
+        extra_kwargs = {"url": {"lookup_field": "slug", "view_name": "film-detail"}}

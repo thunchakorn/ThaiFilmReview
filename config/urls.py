@@ -4,21 +4,20 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 
-from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
-from films.urls import router as FilmRouter
-
-router = DefaultRouter()
-router.registry.extend(FilmRouter.registry)
 
 urlpatterns = [
     path("no-enter/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("accounts/", include("allauth.socialaccount.urls")),
-    path("api/", include(router.urls)),
     # path("i18n/", include("django.conf.urls.i18n")),
-    # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    # path("", include("django.contrib.auth.urls")),
+]
+
+# API URLS
+urlpatterns += [
+    path("api/", include("config.api_router")),  # API base url
+    path("api/auth-token/", obtain_auth_token),  # DRF auth token
 ]
 
 urlpatterns += i18n_patterns(

@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from films import serializers
+from films.api import serializers
 
 from films.models import Film
 
