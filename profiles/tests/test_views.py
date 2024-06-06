@@ -1,6 +1,18 @@
 import pytest
 from pytest_django import asserts
 from django.urls import reverse
+from allauth.socialaccount.models import SocialApp
+
+
+@pytest.fixture
+def site():
+    social_app = SocialApp.objects.create(
+        provider="google",
+        name="google",
+        client_id="1234567890",
+        secret="0987654321",
+    )
+    return social_app
 
 
 @pytest.fixture
@@ -49,7 +61,7 @@ def test_profile_detail_is_follow(client, profiles):
     assert context.get("object").is_follow is False
 
 
-def test_follow_toggle(client, profiles):
+def test_follow_toggle(client, profiles, site):
     response = client.post(reverse("profiles:follow", kwargs={"slug": "user1"}))
     asserts.assertRedirects(
         response,
