@@ -12,10 +12,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+env = environ.Env()
+env.read_env(BASE_DIR / ".env")
 
 # Default app name
 APP_NAME = "TFR"
@@ -23,7 +28,9 @@ APP_NAME = "TFR"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = env.bool("DJANGO_DEBUG", False)
+
+ADMINS = [("admin", "thunchakorn.suw@gmail.com")]  # ERROR log receiver list
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -162,9 +169,18 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
+# EMAIL
+# ------------------------------------------------------------------------------
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_TIMEOUT = 5
 
+DEFAULT_FROM_EMAIL = "thaifilmreviewweb <noreply@thaifilmreviewweb.com>"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_SUBJECT_PREFIX = "[thaifilmreviewweb] "
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[thaifilmreviewweb] "  # from django-allauth
+
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
@@ -175,11 +191,20 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SESSION_REMEMBER = True
 
+ACCOUNT_RATE_LIMITS = False  # TODO
+
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # user can continue within the app but will receive an email to verify the email address
 SOCIALACCOUNT_LOGIN_ON_GET = False
 
+# CRISPY
+# ------------------------------------------------------------------------------
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
+
+# LOGGING
+# ------------------------------------------------------------------------------
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

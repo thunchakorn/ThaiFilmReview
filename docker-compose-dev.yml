@@ -5,7 +5,8 @@ networks:
     driver: bridge
 
 volumes:
-    volume_tfr_db:
+    tfr_postgres_data: {}
+    tfr_postgres_data_backups: {}
 
 services:
   app:
@@ -22,26 +23,33 @@ services:
     networks:
       - network_tfr
     depends_on:
-      - postgres_db
+      - postgres
+      - mailpit
     env_file: .env
     environment:
       DEBUG: true
-    command: python manage.py runserver 0.0.0.0:8000
+      DJANGO_DATABASE_URL: psql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    command: ./entrypoint.sh
 
-  postgres_db:
-    container_name: postgres_db
-    hostname: postgres_db
-    image: postgres:14.4-bullseye
+  postgres:
+    container_name: tfr_postgres
+    image: postgres:16.3-bullseye
     restart: always
     networks:
         - network_tfr
     volumes:
-        - volume_tfr_db:/data/postgres
+        - tfr_postgres_data:/var/lib/postgresql/data
+        - tfr_postgres_data_backups:/backups
     env_file: .env
     environment:
       PGDATA: /data/postgres
       TZ: 'Asia/Bangkok'
       PGTZ: 'Asia/Bangkok'
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  mailpit:
+    image: docker.io/axllent/mailpit:latest
+    container_name: tfr_mailpit
+    ports:
+      - "8025:8025"
+    networks:
+      - network_tfr

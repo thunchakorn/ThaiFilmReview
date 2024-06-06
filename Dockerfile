@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-    && apt-get install -y postgresql
+    && apt-get install -y postgresql gettext
 
 WORKDIR /app
 
@@ -14,5 +14,3 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-
-# RUN ./build.sh

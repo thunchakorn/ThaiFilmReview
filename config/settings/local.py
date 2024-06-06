@@ -1,14 +1,16 @@
 from .base import *
+from .base import env
 
 
-SECRET_KEY = "django-insecure-(1mo=!yrwopz)w(3ckyjl*i41&#=0su!v@lrp_up%02^ntz58o"
+SECRET_KEY = env.str(
+    "DJANGO_SECRET_KEY",
+    default="%_y0fhl97jc(wy1ed!^p_mpk3%b%u0mvw1i428nhzqa^p&f-+",
+)
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+
+DATABASES = {"default": env.db_url("DJANGO_DATABASE_URL")}
 
 # EMAIL
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# ------------------------------------------------------------------------------
+EMAIL_HOST = "mailpit"
+EMAIL_PORT = 1025
