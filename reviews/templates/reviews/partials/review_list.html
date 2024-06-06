@@ -22,7 +22,7 @@
       <div class="space-y-2">
         <h2 class="card-title myh2 flex justify-start">
           <a class="hover:underline" href="{{ review.film.get_absolute_url}}">
-            {{ review.film }} 
+            {{ review.film }}
           </a>
           <div>{% translate "by" %}</div>
           <a class="hover:underline flex space-x-1" href="{% url "profiles:detail" review.profile %}">
@@ -59,12 +59,12 @@
     </div>
   </article>
   {% if forloop.last and page_obj.has_next %}
-    <div 
-      class="divider my-0.5" 
-      hx-get="{% url "reviews:list" %}?page={{ page_obj.number|add:1 }}{% if profile_id is not None %}&profile_id={{profile_id}}{% endif %}" 
-      hx-trigger="revealed" 
-      hx-swap="afterend" 
-      hx-target="this" 
+    <div
+      class="divider my-0.5"
+      hx-get="{% url "reviews:list" %}?page={{ page_obj.number|add:1 }}{% if profile_id is not None %}&profile_id={{profile_id}}{% endif %}"
+      hx-trigger="revealed"
+      hx-swap="afterend"
+      hx-target="this"
       hx-indicator="#indicator"
     >
     </div>
@@ -75,6 +75,6 @@
 
 {% empty %}
 <h1 class="myh2 mt-12 text-center">
-  - {% trans "No Reviews" %} - 
+  - {% trans "No Reviews" %} -
 </h1>
 {% endfor %}

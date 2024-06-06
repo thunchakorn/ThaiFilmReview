@@ -82,7 +82,6 @@ class Review(models.Model):
         return reverse("reviews:detail", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
-
         self.overall_rating = (
             sum(
                 [

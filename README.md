@@ -35,7 +35,7 @@ This project is a showcase of my ability to use various Django functionalities. 
 - Custom object managers to optimize SQL querying
 
 ### Views
-- Using class-based views: `DeleteView`, `ListView`, `DetailView`, `UpdateView`, `View` 
+- Using class-based views: `DeleteView`, `ListView`, `DetailView`, `UpdateView`, `View`
 - Using mixins: `LoginRequiredMixin`, `SuccessMessageMixin`, `UserPassesTestMixin`
 
 ### Forms
@@ -50,8 +50,8 @@ This project is a showcase of my ability to use various Django functionalities. 
 - Custom error files e.g. 404.html 500.html etc.
 
 ### Admin
-- Customize the admin fieldset and inline display 
- 
+- Customize the admin fieldset and inline display
+
 ## Tools and Extensions
 - **htmx** and **django-htmx** for dynamic website without using javascript
 - **Tailwindcss** and **Daisyui** for styling and components

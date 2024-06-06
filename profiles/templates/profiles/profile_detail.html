@@ -15,7 +15,7 @@
               <div class="bg-neutral text-neutral-content w-24 rounded-3xl">
                 <span class="text-3xl">{{ profile.user.username|first }}</span>
               </div>
-            </div> 
+            </div>
           {% endif %}
         </div>
       </div>
@@ -24,7 +24,7 @@
         <p>
           {% if profile.bio %}{{ profile.bio }}{% endif %}
         </p>
-        
+
         <div class="stats stats-horizontal shadow">
           <div class="stat">
             <div class="stat-title">#ผู้ติดตาม</div>
@@ -41,7 +41,7 @@
       </div>
       {% if user.is_authenticated and user.profile != profile %}
       <div>
-        <button 
+        <button
           class="btn btn-primary btn-sm"
           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
           hx-post={% url "profiles:follow" profile.slug %}
@@ -63,9 +63,9 @@
       {% endif %}
     </div>
   </section>
-  <div 
-    hx-get="{% url "reviews:list" %}?page=1&profile_id={{profile.id}}" 
-    hx-trigger="intersect once" 
+  <div
+    hx-get="{% url "reviews:list" %}?page=1&profile_id={{profile.id}}"
+    hx-trigger="intersect once"
   >
   </div>
 </div>

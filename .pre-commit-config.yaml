@@ -16,6 +16,7 @@ repos:
       - id: check-case-conflict
       - id: check-docstring-first
       - id: detect-private-key
+
   - repo: local
     hooks:
     - id: pytest
@@ -23,3 +24,15 @@ repos:
       pass_filenames: false
       language: system
       entry: pytest .
+
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.3
+    hooks:
+      - id: prettier
+        types_or: [javascript, css, sass, scss]
+        args: ["--single-quote", "--no-semi"]

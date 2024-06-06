@@ -67,7 +67,6 @@ image_types = {
 
 
 def image_resize(image, width, height):
-
     img = Image.open(image)
 
     if img.width > width or img.height > height:

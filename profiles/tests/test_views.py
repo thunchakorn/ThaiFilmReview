@@ -35,7 +35,6 @@ def profiles(django_user_model):
 
 
 def test_profile_detail_followers_count(client, profiles):
-
     response = client.get(reverse("profiles:detail", kwargs={"slug": "user2"}))
     context = response.context
     user1 = context["object"]

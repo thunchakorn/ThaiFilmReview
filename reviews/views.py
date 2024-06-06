@@ -74,7 +74,6 @@ class LikeReview(View):
     template_name = "reviews/partials/review_likes_button.html"
 
     async def post(self, request, pk: int):
-
         user = await request.auser()
 
         if not user.is_authenticated and self.request.htmx:

@@ -19,7 +19,7 @@
       {% if film.en_name %}
       {% endif %}
       <div>
-        {{ film.release_date }} / 
+        {{ film.release_date }} /
         {% for genre in film.genres.all %}
           <div class="badge badge-neutral">{{genre|upper}}</div>
         {% endfor %}
@@ -33,7 +33,7 @@
         <div class="grid grid-cols-6">
             {% for role in roles  %}
             <p class='col-span-4'>
-              {{ role.person }} 
+              {{ role.person }}
             </p>
             <p class='col-span-2'>
               {{ role.name }}
@@ -46,7 +46,7 @@
           <div class="text-lg font-medium">ลิงค์: </div>
 
         {% for link in film.links.all %}
-          <a class="link" href={{link.link}}>{{ link.name }}</a>, 
+          <a class="link" href={{link.link}}>{{ link.name }}</a>,
         {% endfor %}
         </div>
       </div>
@@ -76,11 +76,11 @@
       </div>
     </div>
   </section>
-  <div 
-    hx-get="{% url "reviews:list" %}?page=1&film_id={{film.id}}" 
-    hx-trigger="intersect once" 
+  <div
+    hx-get="{% url "reviews:list" %}?page=1&film_id={{film.id}}"
+    hx-trigger="intersect once"
   >
   </div>
-  
+
 </div>
 {% endblock content %}

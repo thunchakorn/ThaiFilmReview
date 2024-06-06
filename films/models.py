@@ -10,7 +10,6 @@ from common.utils import slugify
 
 
 class OverwriteImageStorage(FileSystemStorage):
-
     def get_valid_name(self, name: str) -> str:
         s = str(name).strip().replace(" ", "_")
         s = re.sub(r"(?u)[^\u0E00-\u0E7Fa-zA-Z0-9-_.]", "", s)
