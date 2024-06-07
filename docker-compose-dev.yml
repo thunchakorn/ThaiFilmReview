@@ -6,7 +6,6 @@ networks:
 
 volumes:
     tfr_postgres_data: {}
-    tfr_postgres_data_backups: {}
 
 services:
   app:
@@ -39,7 +38,6 @@ services:
         - network_tfr
     volumes:
         - tfr_postgres_data:/var/lib/postgresql/data
-        - tfr_postgres_data_backups:/backups
     env_file: .env
     environment:
       PGDATA: /data/postgres

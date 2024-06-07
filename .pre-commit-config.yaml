@@ -22,8 +22,10 @@ repos:
     - id: pytest
       name: pytest
       pass_filenames: false
+      entry: ./.venv/bin/pytest .
       language: system
-      entry: pytest .
+      types: [python]
+      always_run: true
 
   - repo: https://github.com/psf/black
     rev: 23.1.0
