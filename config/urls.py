@@ -9,8 +9,6 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path("no-enter/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
-    path("accounts/", include("allauth.socialaccount.urls")),
     # path("i18n/", include("django.conf.urls.i18n")),
 ]
 
@@ -22,6 +20,8 @@ urlpatterns += [
 
 urlpatterns += i18n_patterns(
     path("", include("home.urls")),
+    path("accounts/", include("allauth.urls")),
+    path("accounts/", include("allauth.socialaccount.urls")),
     path("reviews/", include("reviews.urls")),
     path("films/", include("films.urls")),
     path("profiles/", include("profiles.urls")),

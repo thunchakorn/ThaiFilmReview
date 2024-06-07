@@ -61,13 +61,13 @@ def test_profile_detail_is_follow(client, profiles):
 
 
 def test_follow_toggle(client, profiles, site):
-    response = client.post(reverse("profiles:follow", kwargs={"slug": "user1"}))
+    response = client.post(
+        reverse("profiles:follow", kwargs={"slug": "user1"}), follow=True
+    )
+    expected_url = f'{reverse("account_login")}?next={reverse("profiles:follow", kwargs={"slug": "user1"})}'
     asserts.assertRedirects(
         response,
-        reverse("account_login")
-        + "?next="
-        + reverse("profiles:follow", kwargs={"slug": "user1"}),
-        302,
+        expected_url,
     )
 
     profile_1 = profiles[0]
