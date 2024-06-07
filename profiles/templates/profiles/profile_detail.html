@@ -43,7 +43,6 @@
       <div>
         <button
           class="btn btn-primary btn-sm"
-          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
           hx-post={% url "profiles:follow" profile.slug %}
           hx-trigger="click throttle:1s"
         >

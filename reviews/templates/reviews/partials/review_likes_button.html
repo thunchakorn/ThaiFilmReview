@@ -1,7 +1,6 @@
 <div class="join" id="likesarea-{{review.pk}}">
   <button
     class="btn join-item btn-sm border-primary {% if review.profile_like_value == 1 %}btn-primary{% endif %}"
-    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-post="{% url 'reviews:like-toggle' review.pk %}?value=1"
     hx-swap="outerHTML"
     hx-target="#likesarea-{{review.pk}}"
@@ -10,7 +9,6 @@
   </button>
   <button
     class="btn join-item btn-sm rounded-r-full border-error {% if review.profile_like_value == -1 %}btn-error{% endif %}"
-    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-post="{% url 'reviews:like-toggle' review.pk %}?value=-1"
     hx-swap="outerHTML"
     hx-target="#likesarea-{{review.pk}}"

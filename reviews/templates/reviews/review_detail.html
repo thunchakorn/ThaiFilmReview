@@ -138,7 +138,6 @@
       <div
         class="link tooltip"
         data-tip="Mark this review as spoiler"
-        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         hx-post="{% url "reviews:spoiler" review.pk  %}"
         hx-confirm="Are you sure to mark this review as spoiler review?"
         hx-swap="outerHTML"
@@ -179,7 +178,6 @@
         <form
           class="flex flex-1 form space-x-2"
           hx-post="{% url "reviews:create-comment" review.pk %}"
-          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
           hx-on::after-request="this.reset()"
           hx-target="#comment"
           hx-swap="afterbegin"

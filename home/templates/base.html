@@ -34,6 +34,7 @@
 
   <!-- HTMX -->
   <script src="{% static 'js/htmx.min.js' %}"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
 
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +44,7 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
   {% block head %} {% endblock %}
 </head>
-<body class="bg-base-300 h-full min-h-screen">
+<body class="bg-base-300 h-full min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <header class="navbar sticky bg-base-100 top-0 border-b z-50 max-h-16">
     <div class="flex-1 navbar-start">
       <a href="{% url 'reviews:list' %}"><h1 class="text-xl font-medium text-primary">ThaiFilmReview</h1></a>
@@ -106,7 +107,20 @@
 
     </div>
   </header>
-  <navbar class="flex justify-evenly items-center border-t fixed left-0 bottom-0 w-full h-10 z-40 md:top-14 md:h-full md:w-10 md:border-r md:border-t-0 md:flex-col bg-base-100">
+  <navbar class="flex justify-evenly items-center border-t fixed left-0 bottom-0 w-full h-10 z-40 md:top-16 md:h-full md:pt-4 md:w-10 md:border-r md:border-t-0 md:flex-col md:justify-start bg-base-100 md:space-y-8">
+    {% if user.is_authenticated %}
+    <div
+      class="indicator size-6 flex place-items-center place-content-center dropdown dropdown-right"
+      hx-ext="ws" ws-connect="/ws/notifications/"
+      >
+      <span class="indicator-item badge badge-info"></span>
+      <svg tabindex="0" role="button" class="size-6 hover:size-8 ease-out duration-600 dark:fill-prime" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+        <path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112v25.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V208c0-61.9 50.1-112 112-112zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/>
+      </svg>
+      <ul id="notification-dropdown" tabindex="0" class="dropdown-content z-[1] ml-2 menu p-2 shadow bg-base-100 rounded-box w-52"></ul>
+    </div>
+    {% endif %}
     <div class="size-6 flex place-items-center place-content-center">
       <a href="{% url 'reviews:list' %}" >
         <svg class="size-6 hover:size-8 ease-out duration-300 dark:fill-prime" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
