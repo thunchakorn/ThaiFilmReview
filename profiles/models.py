@@ -6,27 +6,17 @@ from django.core.files import File
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
-from django.core.files.storage import FileSystemStorage
 
 from PIL import Image
-
-
-class OverwriteStorage(FileSystemStorage):
-    """
-    Overwrite file if filename exists.
-    """
-
-    def get_available_name(self, name, **kwargs):
-        if self.exists(name):
-            os.remove(os.path.join(settings.MEDIA_ROOT, name))
-        return name
 
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=False, blank=False, unique=True)
     profile_pic = models.ImageField(
-        null=True, blank=True, upload_to="profile_pic/", storage=OverwriteStorage()
+        null=True,
+        blank=True,
+        upload_to=lambda instance, _: f"film_poster/{instance.name}.jpg",
     )
     bio = models.CharField(max_length=1000, null=True, blank=True)
     followings = models.ManyToManyField(

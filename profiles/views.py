@@ -54,7 +54,6 @@ class ProfileUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         object = form.save(commit=False)
 
         if self.request.FILES:
-            self.request.FILES["profile_pic"].name = f"{self.request.user.username}.jpg"
             object.profile_pic = self.request.FILES["profile_pic"]
 
         object.save()

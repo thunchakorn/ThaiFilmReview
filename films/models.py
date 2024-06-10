@@ -3,19 +3,8 @@ import re
 from django.urls import reverse
 from django.db import models
 from django.core.validators import RegexValidator
-from django.core.files.storage import FileSystemStorage
-from django.core.exceptions import SuspiciousFileOperation
 
 from common.utils import slugify
-
-
-class OverwriteImageStorage(FileSystemStorage):
-    def get_valid_name(self, name: str) -> str:
-        s = str(name).strip().replace(" ", "_")
-        s = re.sub(r"(?u)[^\u0E00-\u0E7Fa-zA-Z0-9-_.]", "", s)
-        if s in {"", ".", ".."}:
-            raise SuspiciousFileOperation("Could not derive file name from '%s'" % name)
-        return s
 
 
 class FilmManager(models.QuerySet):
@@ -55,7 +44,9 @@ class Film(models.Model):
     name = models.CharField(max_length=100)
     release_date = models.DateField(null=True, blank=True)
     poster = models.ImageField(
-        null=True, blank=True, upload_to="film_poster/", storage=OverwriteImageStorage()
+        null=True,
+        blank=True,
+        upload_to=lambda instance, _: f"film_poster/{instance.slug}.jpg",
     )
     genres = models.ManyToManyField(to=Genre)
     actors = models.ManyToManyField(
