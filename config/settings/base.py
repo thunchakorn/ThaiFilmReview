@@ -251,10 +251,12 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "file_info"],
+            "handlers": ["console"],
+            # "handlers": ["console", "file_info"],
         },
         "django.request": {
-            "handlers": ["mail_admins", "file_error"],
+            "handlers": ["mail_admins"],
+            # "handlers": ["mail_admins", "file_error"],
             "level": "ERROR",
             "propagate": False,
         },
