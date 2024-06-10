@@ -8,7 +8,7 @@ SECRET_KEY = env.str(
 )
 
 
-DATABASES = {"default": env.db_url("DJANGO_DATABASE_URL")}
+DATABASES = {"default": env.db_url("DATABASE_URL")}
 
 # EMAIL
 # ------------------------------------------------------------------------------

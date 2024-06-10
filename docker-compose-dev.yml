@@ -27,7 +27,7 @@ services:
     env_file: .env
     environment:
       DEBUG: true
-      DJANGO_DATABASE_URL: psql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      DATABASE_URL: psql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     command: ./entrypoint.sh
 
   postgres:
