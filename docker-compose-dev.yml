@@ -28,7 +28,9 @@ services:
     environment:
       DEBUG: true
       DATABASE_URL: psql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-    command: ./entrypoint.sh
+    command: >
+      bash -c "./start.sh
+      && uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --reload --reload-include '*.html'"
 
   postgres:
     container_name: tfr_postgres
@@ -40,7 +42,6 @@ services:
         - tfr_postgres_data:/var/lib/postgresql/data
     env_file: .env
     environment:
-      PGDATA: /data/postgres
       TZ: 'Asia/Bangkok'
       PGTZ: 'Asia/Bangkok'
 

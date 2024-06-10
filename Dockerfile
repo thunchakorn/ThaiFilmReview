@@ -9,8 +9,15 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY requirements.txt .
+RUN addgroup --system django \
+    && adduser --system --ingroup django django
+
+COPY --chown=django:django requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY --chown=django:django . .
+
+RUN chown -R django:django /app
+
+USER django

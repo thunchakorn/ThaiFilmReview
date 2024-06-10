@@ -31,7 +31,6 @@ EMAIL_HOST_PASSWORD = env.str("DJANGO_EMAIL_HOST_PASSWORD")
 # ------------------------------------------------------------------------------
 DATABASES = {"default": env.db_url("DATABASE_URL")}
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # STORAGES = {
