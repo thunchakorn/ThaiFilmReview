@@ -1,11 +1,13 @@
 from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import get_user_model
 from allauth.account.auth_backends import AuthenticationBackend
-from django.contrib.auth.models import User
 
 
 class CustomAuthenticationBackend(ModelBackend):
+    # since User's profile is always need, optimize by select_related
     def get_user(self, user_id):
         try:
+            User = get_user_model()
             user = User.objects.select_related("profile").get(pk=user_id)
         except User.DoesNotExist:
             return None
@@ -13,8 +15,10 @@ class CustomAuthenticationBackend(ModelBackend):
 
 
 class CustomAllAuthAuthenticationBackend(AuthenticationBackend):
+    # since User's profile is always need, optimize by select_related
     def get_user(self, user_id):
         try:
+            User = get_user_model()
             user = User.objects.select_related("profile").get(pk=user_id)
         except User.DoesNotExist:
             return None

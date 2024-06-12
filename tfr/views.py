@@ -7,7 +7,7 @@ class MainView(RedirectView):
 
 
 class CriteriaView(TemplateView):
-    template_name = "home/criteria_{language_code}.html"
+    template_name = "pages/criteria_{language_code}.html"
 
     def get_template_names(self) -> list[str]:
         t = self.template_name.format(language_code=self.request.LANGUAGE_CODE)

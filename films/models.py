@@ -1,4 +1,4 @@
-import re
+from pathlib import Path
 
 from django.urls import reverse
 from django.db import models
@@ -40,13 +40,18 @@ class Person(models.Model):
         return self.name
 
 
+def get_upload_to(instance, filename):
+    img_suffix = Path(filename).name.split(".")[-1]
+    return f"film_poster/{instance.slug}.{img_suffix}"
+
+
 class Film(models.Model):
     name = models.CharField(max_length=100)
     release_date = models.DateField(null=True, blank=True)
     poster = models.ImageField(
         null=True,
         blank=True,
-        upload_to=lambda instance, _: f"film_poster/{instance.slug}.jpg",
+        upload_to=get_upload_to,
     )
     genres = models.ManyToManyField(to=Genre)
     actors = models.ManyToManyField(

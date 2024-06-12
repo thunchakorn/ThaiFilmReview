@@ -26,7 +26,7 @@ class NotificationConsumer(WebsocketConsumer):
         instance = event["instance"]
         commentor = instance.profile
         review = instance.review
-        html = get_template("home/partials/notification.html").render(
+        html = get_template("tfr/partials/notification.html").render(
             context={
                 "message": f"{commentor} has commented your review on {review.film}",
                 "link": reverse("reviews:detail", kwargs={"pk": review.pk}),
@@ -38,7 +38,7 @@ class NotificationConsumer(WebsocketConsumer):
         instance = event["instance"]
         liker = instance.profile
         review = instance.review
-        html = get_template("home/partials/notification.html").render(
+        html = get_template("tfr/partials/notification.html").render(
             context={
                 "message": f"{liker} has liked your review on {review.film}",
                 "link": reverse("reviews:detail", kwargs={"pk": review.pk}),

@@ -18,6 +18,7 @@ from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+APPS_DIR = BASE_DIR / "tfr"
 
 env = environ.Env()
 env.read_env(BASE_DIR / ".env")
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "django_htmx",
     "films.apps.FilmsConfig",
-    "home.apps.HomeConfig",
+    "tfr.apps.TfrConfig",
     "reviews.apps.ReviewsConfig",
     "profiles.apps.ProfilesConfig",
 ]
@@ -92,7 +93,7 @@ CACHES = {
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "home/templates"],
+        "DIRS": [APPS_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -101,7 +102,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
-                "home.context_processors.settings",  # add settings object to context
+                "tfr.context_processors.settings",  # add SETTINGS object to context
             ],
         },
     },
@@ -161,7 +162,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "static/"
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(APPS_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -190,7 +191,6 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "[thaifilmreviewweb] "  # from django-allauth
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
-ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_SIGNUP_REDIRECT_URL = "profiles:update"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 

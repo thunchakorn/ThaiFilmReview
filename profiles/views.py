@@ -11,8 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q, Exists, OuterRef
 from django.contrib.messages.views import SuccessMessageMixin
 
-from profiles.models import Profile
-from profiles.forms import ProfileForm
+from .models import Profile
+from .forms import ProfileForm
 
 
 class ProfileDetail(DetailView):

@@ -16,7 +16,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
-from home.routing import websocket_urlpatterns
+from tfr.routing import websocket_urlpatterns
 
 if base.DEBUG:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")

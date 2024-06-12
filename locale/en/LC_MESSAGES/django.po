@@ -26,7 +26,7 @@ msgstr "English"
 msgid "Thai"
 msgstr "Thai"
 
-#: home/templates/base.html:57
+#: tfr/templates/base.html:57
 msgid "Lang"
 msgstr ""
 

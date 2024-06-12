@@ -1,6 +1,6 @@
 from django import forms
 
-from profiles.models import Profile
+from .models import Profile
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
@@ -27,5 +27,6 @@ class ProfileForm(forms.ModelForm):
             Submit("submit", "Submit", css_class="btn-sm"),
         )
 
+    name = forms.CharField(max_length=100, label="ชื่อที่แสดง")
     bio = forms.CharField(max_length=1000, label="เกี่ยวกับฉัน")
     profile_pic = forms.ImageField(label="รูปโปรไฟล์")

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from films.models import Film
+from ..models import Film
 
 
 class RoleSerializer(serializers.Serializer):

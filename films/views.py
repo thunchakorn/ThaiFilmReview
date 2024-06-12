@@ -2,8 +2,8 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
 
-from films.models import Film
-from films.filters import FilmFilter
+from .models import Film
+from .filters import FilmFilter
 
 
 class FilmListView(ListView):

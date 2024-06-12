@@ -13,14 +13,14 @@
           {% else %}
             <div class="avatar placeholder rounded-3xl">
               <div class="bg-neutral text-neutral-content w-24 rounded-3xl">
-                <span class="text-3xl">{{ profile.user.username|first }}</span>
+                <span class="text-3xl">{{ profile.name|first }}</span>
               </div>
             </div>
           {% endif %}
         </div>
       </div>
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <h1 class="text-5xl font-bold">{{ profile.user.username }}</h1>
+        <h1 class="text-5xl font-bold">{{ profile.name }}</h1>
         <p>
           {% if profile.bio %}{{ profile.bio }}{% endif %}
         </p>

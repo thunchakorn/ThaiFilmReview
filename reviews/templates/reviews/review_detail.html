@@ -34,7 +34,7 @@
             {% else %}
               <div class="avatar placeholder">
                 <div class="bg-primary text-primary-content rounded-3xl w-24">
-                  <span class="text-4xl">{{ review.profile.user.username|first }}</span>
+                  <span class="text-4xl">{{ review.profile.name|first }}</span>
                 </div>
               </div>
             {% endif %}
@@ -171,7 +171,7 @@
         {% else %}
           <div class="avatar placeholder">
             <div class="bg-primary text-primary-content rounded-2xl w-12">
-              <span class="text-xl non-select">{{ user.username|first }}</span>
+              <span class="text-xl non-select">{{ user.profile.name|first }}</span>
             </div>
           </div>
         {% endif %}

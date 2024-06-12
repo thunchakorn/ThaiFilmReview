@@ -1,7 +1,7 @@
 from rest_framework import viewsets
-from films.api import serializers
 
-from films.models import Film
+from . import serializers
+from ..models import Film
 
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):

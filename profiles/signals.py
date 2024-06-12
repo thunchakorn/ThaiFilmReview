@@ -4,14 +4,14 @@ from django.conf import settings
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
-from profiles.models import Profile
+from .models import Profile
 from reviews.models import Comment, Like
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, name=instance.username)
 
         channel_layer = get_channel_layer()
         group_name = "user-notifications"

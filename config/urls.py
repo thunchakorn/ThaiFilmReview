@@ -21,7 +21,7 @@ urlpatterns += [
 ]
 
 urlpatterns += i18n_patterns(
-    path("", include("home.urls")),
+    path("", include("tfr.urls")),
     path("reviews/", include("reviews.urls")),
     path("films/", include("films.urls")),
     path("profiles/", include("profiles.urls")),
