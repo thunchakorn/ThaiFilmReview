@@ -1,6 +1,6 @@
 # Thai Film Review Web Application
 
-[DEMO](https://thunchakorn.pythonanywhere.com/)
+[Heroku-demo](https://thaifilmreview-89c6f8cce2d8.herokuapp.com/)
 
 This project is a showcase of my ability to use various Django functionalities. It is a web application where users can review Thai films, like and dislike reviews, and comment on them. Users can also rate different aspects of films, such as Cinematography, Direction, Acting, Screenplay/Story, Music/Score, and Overall Quality.
 
