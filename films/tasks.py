@@ -26,6 +26,9 @@ _FULL_MONTHS = [
 
 @shared_task
 def scrape_film_nangdee():
+    """
+    for periodic task (crontab 0 0 * * *)
+    """
     URL = "https://www.nangdee.com/movies/?t=1&mt=1"
     CLASS_NAME = "col-xs-6 col-sm-3"
     page = requests.get(URL)
