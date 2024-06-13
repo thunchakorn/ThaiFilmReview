@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "debug_toolbar",
+    "django_celery_beat",
     "django_filters",
     "rest_framework",
     "crispy_forms",
@@ -75,7 +75,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -262,3 +261,17 @@ LOGGING = {
         },
     },
 }
+
+# CELERY
+# -----------------------------------------------------
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://redis:6379")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_RESULT_EXTENDED = True
+CELERY_RESULT_BACKEND_ALWAYS_RETRY = True
+CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

@@ -6,9 +6,10 @@ networks:
 
 volumes:
     tfr_postgres_data: {}
+    tfr_redis_data: {}
 
 services:
-  app:
+  app: &django
     image: tfr_app
     container_name: tfr_app
     hostname: app
@@ -52,3 +53,33 @@ services:
       - "8025:8025"
     networks:
       - network_tfr
+
+  redis:
+    image: redis:7.2.5
+    container_name: tfr_redis
+    networks:
+      - network_tfr
+    volumes:
+      - tfr_redis_data:/data
+
+  celeryworker:
+    <<: *django
+    image: tfr_celery_worker
+    container_name: tfr_celery_worker
+    depends_on:
+      - redis
+      - postgres
+      - mailpit
+    ports: []
+    command: celery -A config.celery worker -l INFO
+
+  celerybeat:
+    <<: *django
+    image: tfr_celery_beat
+    container_name: tfr_celery_beat
+    depends_on:
+      - redis
+      - postgres
+      - mailpit
+    ports: []
+    command: celery -A config.celery beat -l INFO
