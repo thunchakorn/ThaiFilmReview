@@ -72,7 +72,7 @@ This project is a showcase of my ability to use various Django functionalities. 
 - **django-crispy-forms** for helping with forms.
 - **django-filter** for easily filtering feature.
 - **django-debug-toolbar** for monitor debugging and optimizing performance.
-- **celery** for running periodic and background asynchronouse task.
+- **celery** for running periodic and background asynchronouse task by using `Redis` as broker and backend.
 - **django-celery-beat** store the periodic task schedule in the database.
 - **django-storages** for managing uploaded file on cloud storage.
 
