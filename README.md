@@ -6,15 +6,9 @@ This project is a showcase of my ability to use various Django functionalities. 
 
 ## Features
 
-- **User Authentication**: Users can sign up, log in, forget password, change password,and manage their profiles.
-- **Film Reviews**: Users can write reviews for any Thai film, and other users can like, dislike, and comment on these reviews.
-- **Rating System**: Users can rate films on various aspects:
-    - Cinematography
-    - Direction
-    - Acting
-    - Screenplay/Story
-    - Music/Score
-    - Overall Quality
+- **User Authentication**: Users can sign up and log in with Google, forget password, change password,and manage their profiles.
+- **Film Reviews**: Write, like, dislike, and comment on reviews.
+- **Rating System**: Rate films on Cinematography, Direction, Acting, Screenplay/Story, Music/Score, and Overall Quality.
 - **Following/Follower**: User can follow other user to see new review on feed.
 - **Periodic update film**: New films are updated automatically.
 
@@ -29,45 +23,44 @@ This project is a showcase of my ability to use various Django functionalities. 
 
 ### Models
 
-- `OneToOneField`: for extending `AUTH_USER_MODEL` and use signal to triggering create profile when user is created.
-- `SlugField`: for identifying instance instead of pk.
-- Custom `FileSystemStorage`: for overwritting same file name in `ImageField`.
-- `ManyToManyField` with additional field through custom intermediate table.
-- Custom object managers to optimize SQL querying.
+- **OneToOneField**: Extend `AUTH_USER_MODEL` and use signals to create profiles.
+- **SlugField**: Identify instances instead of primary keys.
+- **ManyToManyField**: Use a custom intermediate table.
+- **Custom Managers**: Optimize SQL queries.
 
 ### Views
-- Using class-based views: `DeleteView`, `ListView`, `DetailView`, `UpdateView`, `View`.
-- Using mixins: `LoginRequiredMixin`, `SuccessMessageMixin`, `UserPassesTestMixin`.
+- **Class-based generic Views**: `DeleteView`, `ListView`, `DetailView`, `UpdateView`, `View`.
+- **Mixins**: `LoginRequiredMixin`, `SuccessMessageMixin`, `UserPassesTestMixin`.
 
 ### Forms
-- Custom `ChoiceWidget`.
-- Integrate with crispy_forms helper.
-- `django_filters` for easily filter and sort in `ListView`.
+- **Custom Widgets**: Custom `ChoiceWidget`.
+- **crispy_forms**: Integrate with `crispy_forms` helper.
+- **django_filters**: Easily filter and sort in `ListView`.
 
 ### Templates
-- Template inheritance.
-- Custom filters and tags.
-- Partial template with `include` tag.
-- Custom error files e.g. 404.html 500.html etc..
+- **Inheritance**: Template inheritance.
+- **Custom Filters and Tags**: Custom filters and tags.
+- **Partials**: Partial templates with `include` tag.
+- **Custom Error Pages**: Custom 404.html, 500.html, etc.
 
 ### Permission
-- Add *moderator* group for permissions checking, for example in MarkSpoilerReviewView.
+- **Moderator Group**: Add moderator permissions, e.g., for marking spoilers.
 
 ### Custom `django-admin` Command
 - Add *create_moderator_group* command for adding *moderator* group.
 
 ### Admin
-- Customize the admin fieldset and inline display.
+- **Customization**: Customize admin fieldsets and inlines.
 
 ### Websocket
-- Notify users with when their reviews are commented or liked, using websocket that connected when logged in.
+- **Real-time Notifications**: Notify users when their reviews are liked or commented on.
 
 ### Internationalization and Localization
-- Have 2 languages: English and Thai.
+- **Multi-language Support**: English and Thai.
 
 ## Deployment
-- Deploying to Heroku defined in Procfile, with heroku-postgresql addons.
-- Using Cloudflare R2 for storing uploaded media file.
+- **Heroku**: Deploy with Heroku using a `Procfile` and `heroku-postgresql` addons.
+- **Cloudflare R2**: Store uploaded media files.
 
 ## Tools and Extensions
 - **htmx** and **django-htmx** for dynamic website without using javascript.
@@ -81,6 +74,12 @@ This project is a showcase of my ability to use various Django functionalities. 
 - **django-debug-toolbar** for monitor debugging and optimizing performance.
 - **celery** for running periodic and background asynchronouse task.
 - **django-celery-beat** store the periodic task schedule in the database.
+- **django-storages** for managing uploaded file on cloud storage.
 
-## Other features
-- Use `python manage.py loaddata initial` to load initial fixture data.
+## Other Features
+
+- **Initial Data Load**: Use `python manage.py loaddata initial` to load initial fixture data.
+
+## Demo
+
+Check out the [live demo](https://thaifilmreview-89c6f8cce2d8.herokuapp.com).
