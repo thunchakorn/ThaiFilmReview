@@ -80,6 +80,25 @@ def scrape_film_nangdee():
         link = Link.objects.get_or_create(name="nangdee", link=data["link"], film=film)
 
 
+@shared_task
+def add_poster():
+    links = Link.objects.filter(name="nangdee", film__poster="")
+    print(len(links))
+    for i, link in enumerate(links):
+        print(i, link)
+        data = get_film_data(link.link)
+        img_data = requests.get(data["image_url"]).content
+        buffer = io.BytesIO(img_data)
+        image = SimpleUploadedFile(
+            name=f"{data['title']}.jpg", content=img_data, content_type="image/jpeg"
+        )
+        image.file = buffer
+
+        film = link.film
+        film.poster = image
+        film.save()
+
+
 def get_film_data(link):
     data = {}
     page = requests.get(link)
