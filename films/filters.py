@@ -1,10 +1,19 @@
 from django import forms
+from django.db.models import F, OrderBy
 import django_filters
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 from .models import Film, Genre
+
+
+class NullLastOrderingFilter(django_filters.OrderingFilter):
+    def get_ordering_value(self, param):
+        value = super().get_ordering_value(param)
+        return OrderBy(
+            F(value.lstrip("-")), descending=value.startswith("-"), nulls_last=True
+        )
 
 
 class FilmFilterForm(forms.Form):
@@ -39,7 +48,7 @@ class FilmFilter(django_filters.FilterSet):
         widget=forms.SelectMultiple,
     )
 
-    order_by = django_filters.OrderingFilter(
+    order_by = NullLastOrderingFilter(
         fields=(("release_date", "release_date"),),
         field_labels={
             "release_date": "วันที่เข้าฉาย",
