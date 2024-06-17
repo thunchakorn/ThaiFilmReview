@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load filter_pagination %}
 
 {% block title %}
   หนังไทย
@@ -77,15 +78,17 @@
   </div>
   <div class="flex justify-end">
     <div class="join">
-      {% if page_obj.has_previous %}
-      <a href="?page=1" class="join-item btn btn-sm">«</a>
-      <a href="?page={{ page_obj.previous_page_number }}" class="join-item btn btn-sm">‹</a>
-      {% endif %}
-      <button class="join-item btn btn-disabled btn-sm">{{ page_obj.number }}</button>
-      {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}" class="join-item btn btn-sm">›</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}" class="join-item btn btn-sm">»</a>
-      {% endif %}
+      {% with query=request.GET.urlencode %}
+        {% if page_obj.has_previous %}
+        <a href={% get_pagination_url 1 query %} class="join-item btn btn-sm">«</a>
+        <a href={% get_pagination_url page_obj.previous_page_number query %} class="join-item btn btn-sm">‹</a>
+        {% endif %}
+        <button class="join-item btn btn-disabled btn-sm">{{ page_obj.number }}</button>
+        {% if page_obj.has_next %}
+        <a href={% get_pagination_url page_obj.next_page_number query %} class="join-item btn btn-sm">›</a>
+        <a href={% get_pagination_url page_obj.paginator.num_pages query %} class="join-item btn btn-sm">»</a>
+        {% endif %}
+      {% endwith %}
     </div>
   </div>
 </div>
