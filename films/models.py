@@ -65,6 +65,11 @@ class Film(models.Model):
         validators=[RegexValidator(regex=r"^[\u0E00-\u0E7Fa-zA-Z0-9_]+\Z")],
         db_index=True,
     )
+    reviews_summary = models.CharField(
+        null=True,
+        blank=True,
+        max_length=5000,
+    )
     objects = FilmManager.as_manager()
 
     def __str__(self) -> str:
