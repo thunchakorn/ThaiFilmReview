@@ -151,5 +151,6 @@ def summarize_review():
     )
     for film in films:
         reviews = [review.full_review for review in film.reviews.all()]
-        film.review_summary = summarize_review_map_reduce(reviews)
+        review_summary = summarize_review_map_reduce(reviews)
+        film.update(reviews_summary=review_summary)
         film.save()
