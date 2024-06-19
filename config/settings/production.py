@@ -30,6 +30,7 @@ EMAIL_HOST_PASSWORD = env.str("DJANGO_EMAIL_HOST_PASSWORD")
 # DATABASE
 # ------------------------------------------------------------------------------
 DATABASES = {"default": env.db_url("DATABASE_URL")}
+DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 
 # STORAGE
 # ------------------------------------------------------------------------------
