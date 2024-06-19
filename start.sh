@@ -8,7 +8,7 @@ set -o errexit
 python manage.py migrate --no-input
 
 # load initial data
-python manage.py loaddata initial
+# python manage.py loaddata initial
 
 # create moderator group
 python manage.py create_moderator_group
