@@ -275,3 +275,14 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# LANGCHAIN
+# -----------------------------------------------------
+os.environ["OPENAI_API_KEY"] = env.str("OPENAI_API_KEY")
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
+
+# Custom Films app setting
+# -----------------------------------------------------
+NUM_REVIEWS_SUMMARY = 5

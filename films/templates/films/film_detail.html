@@ -76,6 +76,12 @@
       </div>
     </div>
   </section>
+  {% if film.reviews_summary %}
+  <div class="bg-base-100 p-4 space-y-4 rounded-3xl shadow-xl">
+    <div class="myh2">Reviews Summary By AI</div>
+    <div class="whitespace-pre-wrap">{{ film.reviews_summary }}</div>
+  </div>
+  {% endif %}
   <div
     hx-get="{% url "reviews:list" %}?page=1&film_id={{film.id}}"
     hx-trigger="intersect once"

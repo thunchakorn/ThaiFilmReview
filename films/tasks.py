@@ -2,11 +2,14 @@ import io
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
 
 from celery import shared_task
 
 from .models import Film, Genre, Person, Link, Role
+from .utils import summarize_review_map_reduce
 
 _FULL_MONTHS = [
     "มกราคม",
@@ -80,7 +83,6 @@ def scrape_film_nangdee():
         link = Link.objects.get_or_create(name="nangdee", link=data["link"], film=film)
 
 
-@shared_task
 def add_poster():
     links = Link.objects.filter(name="nangdee", film__poster="")
     print(len(links))
@@ -138,3 +140,16 @@ def get_film_data(link):
         image_url=soup.find("div", class_="featured-art").find("img")["src"],
     )
     return data
+
+
+@shared_task
+def summarize_review():
+    films = (
+        Film.objects.prefetch_related("reviews")
+        .with_reviews_data()
+        .filter(reviews_count__gte=settings.NUM_REVIEWS_SUMMARY)
+    )
+    for film in films:
+        reviews = [review.full_review for review in film.reviews.all()]
+        film.review_summary = summarize_review_map_reduce(reviews)
+        film.save()
