@@ -150,7 +150,8 @@ def summarize_review():
         .filter(reviews_count__gte=settings.NUM_REVIEWS_SUMMARY)
     )
     for film in films:
+        print(film)
         reviews = [review.full_review for review in film.reviews.all()]
         review_summary = summarize_review_map_reduce(reviews)
-        film.update(reviews_summary=review_summary)
+        film.reviews_summary = review_summary
         film.save()
