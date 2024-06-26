@@ -6,24 +6,7 @@ from django.core.validators import RegexValidator
 
 from common.utils import slugify
 
-
-class FilmManager(models.QuerySet):
-    def with_reviews_data(self, profile=None):
-        self = self.annotate(
-            reviews_count=models.Count("reviews"),
-            average_rating=models.Avg("reviews__overall_rating"),
-        )
-
-        if profile:
-            self = self.annotate(
-                is_user_review=models.Exists(
-                    Film.objects.filter(
-                        id=models.OuterRef("id"), reviews__profile=profile
-                    )
-                )
-            )
-
-        return self
+from .managers import FilmManager
 
 
 class Genre(models.Model):

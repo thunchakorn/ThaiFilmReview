@@ -1,6 +1,8 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 from .models import Film
 from .filters import FilmFilter
@@ -32,6 +34,7 @@ class FilmListView(ListView):
         return context
 
 
+@method_decorator(cache_page(60 * 60), name="dispatch")
 class FilmDetailView(DetailView):
     model = Film
 
