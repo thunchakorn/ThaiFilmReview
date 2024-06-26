@@ -31,7 +31,7 @@ APP_NAME = "TFR"
 
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
-ADMINS = [("admin", "thailfilmreviewweb@gmail.com")]  # ERROR log receiver list
+ADMINS = [("admin", "thaifilmreviewweb@gmail.com")]  # ERROR log receiver list
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
