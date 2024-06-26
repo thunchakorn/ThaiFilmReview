@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build-tailwind": "tailwindcss --input tfr/static/css/input.css --output tfr/static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "daisyui": "^4.12.8",
+    "tailwindcss": "^3.4.4"
+  }
+}

@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .myh1 {
+    @apply text-3xl font-semibold;
+  }
+
+  .myh2 {
+    @apply text-xl font-medium;
+  }
+
+  .my-form-label {
+    @apply text-sm font-medium;
+  }
+}
