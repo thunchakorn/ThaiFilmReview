@@ -6,7 +6,12 @@ module.exports = {
     './**/templates/**/**/*.{html,js}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        error: '#fb7185',
+        prime: '#f2cd3f',
+      },
+    },
     fontFamily: {
       sans: ['Kanit', 'Arial Narrow', 'Arial', 'sans-serif'],
     },

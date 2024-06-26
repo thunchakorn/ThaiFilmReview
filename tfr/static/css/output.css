@@ -4443,7 +4443,7 @@ html {
 
 .border-error {
   --tw-border-opacity: 1;
-  border-color: var(--fallback-er, oklch(var(--er) / var(--tw-border-opacity)));
+  border-color: rgb(251 113 133 / var(--tw-border-opacity));
 }
 
 .border-primary {
@@ -4476,6 +4476,11 @@ html {
   background-color: var(--fallback-p, oklch(var(--p) / var(--tw-bg-opacity)));
 }
 
+.bg-prime {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 205 63 / var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -4496,7 +4501,7 @@ html {
 }
 
 .fill-error {
-  fill: var(--fallback-er, oklch(var(--er) / 1));
+  fill: #fb7185;
 }
 
 .stroke-black {
@@ -4615,7 +4620,7 @@ html {
 
 .text-error {
   --tw-text-opacity: 1;
-  color: var(--fallback-er, oklch(var(--er) / var(--tw-text-opacity)));
+  color: rgb(251 113 133 / var(--tw-text-opacity));
 }
 
 .text-neutral-content {
@@ -4904,4 +4909,12 @@ html {
     font-size: 1rem;
     line-height: 1.5rem;
   }
+}
+
+.dark\:fill-prime:where([data-theme='dark'], [data-theme='dark'] *) {
+  fill: #f2cd3f;
+}
+
+.dark\:stroke-prime:where([data-theme='dark'], [data-theme='dark'] *) {
+  stroke: #f2cd3f;
 }
