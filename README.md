@@ -4,6 +4,14 @@
 
 This project is a showcase of my ability to use various Django functionalities. It is a web application where users can review Thai films, like and dislike reviews, and comment on them. Users can also rate different aspects of films, such as Cinematography, Direction, Acting, Screenplay/Story, Music/Score, and Overall Quality.
 
+## Images
+
+![detail](tfr/media/image/detail.png)
+![list](tfr/media/image/list.png)
+![main](tfr/media/image/main.png)
+![notify](tfr/media/image/notify.png)
+![sign_up](tfr/media/image/sign_up.png)
+
 ## Features
 
 - **User Authentication**: Users can sign up and log in with Google, forget password, change password,and manage their profiles.
@@ -11,6 +19,7 @@ This project is a showcase of my ability to use various Django functionalities. 
 - **Rating System**: Rate films on Cinematography, Direction, Acting, Screenplay/Story, Music/Score, and Overall Quality.
 - **Following/Follower**: User can follow other user to see new review on feed.
 - **Periodic update film**: New films are updated automatically.
+- **Notification**: Notify users when their reviews get liked or commented.
 
 ## Project Apps
 
