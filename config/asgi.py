@@ -18,9 +18,12 @@ from channels.security.websocket import AllowedHostsOriginValidator
 
 from tfr.routing import websocket_urlpatterns
 
+print("base.DEBUG", base.DEBUG)
 if base.DEBUG:
+    print("use:", "config.settings.local")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 else:
+    print("use:", "config.settings.production")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
 
 application = ProtocolTypeRouter(
