@@ -6,7 +6,7 @@ from .base import env
 # https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 DEBUG = False
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOST", ["tfr-a58c1acd07b8.herokuapp.com"])
+ALLOWED_HOSTS = ["tfr-a58c1acd07b8.herokuapp.com"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
